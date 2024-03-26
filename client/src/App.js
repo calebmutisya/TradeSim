@@ -1,4 +1,4 @@
-import {Routes, Route} from 'react-router-dom'
+import {BrowserRouter as Router,Routes, Route} from 'react-router-dom'
 import './css/App.css';
 import Layout from './layouts/Layout.js'
 import Home from './pages/Home.js'
@@ -12,18 +12,20 @@ import Profile from './pages/Profile.js'
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home/>}/>
-        <Route path="/markets" element={<Markets/>}/>
-        <Route path="/news" element={<News/>}/>
-        <Route path="/analysis" element={<Analysis/>}/>
-        <Route path="/guide" element={<Guide/>}/>
-        <Route path="/article" element={<Article/>}/>
-        <Route path="/about" element={<About/>}/>
-        <Route path="/profile" element={<Profile/>}/>
-      </Route>
-    </Routes>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home/>}/>
+          <Route path="/markets" element={<Markets/>}/>
+          <Route path="/news" element={<News/>}/>
+          <Route path="/analysis" element={<Analysis/>}/>
+          <Route path="/guide" element={<Guide/>}/>
+          <Route path="/article" element={<Article/>}/>
+          <Route path="/about" element={<About/>}/>
+          <Route path="/profile" element={<Profile/>}/>
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
