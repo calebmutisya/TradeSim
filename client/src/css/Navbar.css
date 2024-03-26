@@ -1,0 +1,71 @@
+nav{
+    padding-left: 60px;
+    padding-right: 60px;
+    display: flex;
+    height: 64px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.07);
+}
+.logo{
+    display: flex;
+    font-size: 20px;
+    font-weight: bold;
+}
+.logo:hover{
+    cursor: pointer;
+}
+.logo img{
+    margin-right: 6px;
+}
+.links a{
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    margin-right: 25px;
+}
+.links a:hover{
+    color: rgb(0, 140, 255);
+    font-size: 18px;
+    transition: 1.5s;
+}
+.btnsect{
+    display: flex;
+    flex-direction: row;
+}
+button{
+    position: relative;
+    width: 130px;
+    height:40px;
+    margin-right: 20px;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    background: linear-gradient(270deg, rgba(117,205,255,1) 0%, rgba(117,205,255,1) 42%, rgba(0,163,255,1) 76%);
+    border: 1px solid white; 
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+button:after {
+    content: "";
+    background: white;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px!important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.9s
+}
+button:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+
+
