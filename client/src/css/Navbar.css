@@ -25,7 +25,7 @@ nav{
     margin-right: 25px;
 }
 .links a:hover{
-    color: rgb(0, 140, 255);
+    color: rgba(117,205,255,1);
     font-size: 18px;
     transition: 1.5s;
 }
