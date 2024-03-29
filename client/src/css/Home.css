@@ -90,3 +90,81 @@ span{
     opacity: 1;
     transition: 0s
 }
+.cardssect{
+    padding-left: 3vw;
+    padding-right: 3vw;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.card{
+    width: 360px;
+    height: 464px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers vertically */
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.card:hover .cardbg {
+    -webkit-transform: scale(10);
+    -ms-transform: scale(10);
+    transform: scale(10);
+}
+.card:hover .cardbg2 {
+    -webkit-transform: scale(10);
+    -ms-transform: scale(10);
+    transform: scale(10);
+}
+/* .card:hover .p4{
+    color: white;
+} */
+.cardbg {
+    height: 128px;
+    width: 128px;
+    background: linear-gradient(270deg, rgba(117,205,255,1) 0%, rgba(117,205,255,1) 42%, rgba(0,163,255,1) 76%);
+    z-index: 1;
+    position: absolute;
+    bottom: -75px;
+    left: -75px;
+  
+    border-radius: 50%;
+  
+    -webkit-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+}
+.cardbg2 {
+    height: 64px;
+    width: 64px;
+    background-color: gold;
+    z-index: 1;
+    position: absolute;
+    bottom: -35px;
+    left: -35px;
+  
+    border-radius: 50%;
+  
+    -webkit-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+}
+.imgslot{
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+.cardimg{
+    width: 339px;
+    height: 360px;
+}
+.p4{
+    color: black;
+    text-align: center;
+    z-index: 1;
+}
