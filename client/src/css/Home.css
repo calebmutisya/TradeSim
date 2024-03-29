@@ -1,0 +1,92 @@
+.banner{
+    width: 100vw;
+}
+.image{
+    position: relative;
+}
+.txtsect{
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 3vw;
+    padding-right: 3vw;
+}
+.p1{
+    width: 50vw;
+    display: flex;
+    font-size: 44px;
+    font-weight: bold;
+    margin-top: 100px;
+}
+.p2{
+    width: 50vw;
+    display: flex;
+    text-align: justify;
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 30px;
+}
+.p3{
+    display: flex;
+    font-size: 14px;
+}
+.rating{
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+}
+.rating div{
+    margin-right: 10px;
+}
+span{
+    height: 24px;
+    width: 2px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.recommend{
+    margin-top: 30px;
+}
+.lily{
+    display: flex;
+    align-items: center;
+}
+.lily img{
+    margin-right: 10px;
+}
+.b1{
+    position: relative;
+    width: 220px;
+    height:40px;
+    margin-right: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    background: linear-gradient(270deg, rgba(117,205,255,1) 0%, rgba(117,205,255,1) 42%, rgba(0,163,255,1) 76%);
+    border: none; 
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+.b1:after {
+    content: "";
+    background: white;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px!important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.9s
+}
+.b1:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
