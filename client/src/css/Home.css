@@ -168,3 +168,43 @@ span{
     text-align: center;
     z-index: 1;
 }
+.practice{
+    /* padding-left: 3vw;
+    padding-right: 3vw; */
+    margin-top: 100px;
+    margin-bottom: -4px;
+    /* background-image: url('../assets/practice.png'); */
+}
+.practice2{
+    position: relative;
+}
+.banner3{
+    width: 100vw;
+}
+.card2{
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60vw;
+    height: 300px;
+    padding: 35px;
+    color: black;
+
+    border: 1px solid rgba(255, 255, 255, .25);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.45);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+
+    backdrop-filter: blur(15px);
+}
+.p5{
+    font-size: 36px;
+    font-weight: 500;
+    text-align: center;
+}
+.p6{
+    text-align: center;
+}
