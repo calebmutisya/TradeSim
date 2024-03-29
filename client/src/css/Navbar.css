@@ -26,7 +26,7 @@ nav{
 }
 .links a:hover{
     color: rgba(117,205,255,1);
-    font-size: 18px;
+    /* font-size: 18px; */
     transition: 1.5s;
 }
 .btnsect{
