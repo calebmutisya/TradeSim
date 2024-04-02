@@ -37,7 +37,11 @@ export default function Markets() {
           </div>
         </div>
         <div className='chart'>
-        {selectedSymbol && <TradingViewWidget key={selectedSymbol} symbol={selectedSymbol} />}
+          {selectedSymbol ? (
+              <TradingViewWidget key={selectedSymbol} symbol={selectedSymbol} />
+            ) : (
+              <p className='instructions'>Please select a symbol to see its chart</p>
+          )}
         </div>
       </div>
       <div>

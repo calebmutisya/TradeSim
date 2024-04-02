@@ -63,3 +63,7 @@
     border-radius: 4px;
     overflow: hidden;
 }
+.instructions{
+    color: black;
+    text-align: center;
+}
