@@ -1,0 +1,65 @@
+.market{
+    padding-left: 3vw;
+    padding-right: 3vw;
+}
+.chartsec{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+}
+
+.btns{
+    display: flex;
+    padding: 10px;
+    font-size: 12px;
+}
+.btns img{
+    margin-right: 10px;
+}
+
+.fxlist{
+    width: 200px;
+    height: 750px;
+    background-color: white;
+    color: black;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+.bm{
+    display: flex;
+    background-color: white;
+    width: 106px;
+    color: black;
+}
+.pairscont{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+.fxs{
+    font-size: 12px;
+    width: 160px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: space-around;
+}
+.fxs:hover{
+    background-color: rgb(205, 205, 205);
+    cursor: pointer;
+}
+.slash{
+    line-height: 24px;
+}
+.chart{
+    width: 1120px;
+    height: 750px;
+    background-color: rgb(255, 255, 255);
+    margin-left: 15px;
+    border-radius: 4px;
+    overflow: hidden;
+}
