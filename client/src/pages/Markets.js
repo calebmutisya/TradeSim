@@ -43,9 +43,37 @@ export default function Markets() {
               <p className='instructions'>Please select a symbol to see its chart</p>
           )}
         </div>
+        <div className='buynsell'>
+          <p className='p9'>MARKET PRICE: 1.53637</p>
+          <div className='buysec'>
+            <button className='buy'>Buy</button>
+            <input className='lotinput' placeholder='Input Lot' type='number' min={0.01} max={11.00}/>
+            <button className='sell'>Sell</button>
+          </div>
+          <div className=' stoploss'>
+            <div className='label'>StopLoss</div>
+            <div className='numslot'><input type='number' min={0}/></div>
+          </div>
+          <div className='stoploss'>
+            <div className='label'>Take Profit</div>
+            <div className='numslot'><input type='number' min={0}/></div>
+          </div>
+          <div className='ordersec'>
+            <p className='p9'>ORDER PRICE</p>
+            <div className='stoploss'>
+              <div className='label'>Buy@ </div>
+              <div className='numslot'><input type='number' min={0}/></div>
+            </div>
+            <div className='stoploss'>
+              <div className='label'>Sell@</div>
+              <div className='numslot'><input type='number' min={0}/></div>
+            </div>
+            <div></div>
+          </div>
+          <hr/>
+        </div>
       </div>
       <div>
-        <div>Buy and Sell</div>
         <div>Trades</div>
         <div>Heat Map</div>
       </div>

@@ -67,3 +67,83 @@
     color: black;
     text-align: center;
 }
+.buynsell{
+    width: 420px;
+    height: 717px;
+    margin-left: 15px;
+    padding: 15px;
+    border: 2px solid white;
+    border-radius: 8px;
+}
+.buysec{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 15px;
+}
+.buy{
+    width: 135px;
+    text-align: center;
+    padding: auto;
+    background-color: #00D1FF;
+    border-radius: 8px;
+    border: 1px solid white;
+    color: white;
+    font-size: 16px;
+}
+.buy:hover {
+    cursor: pointer;
+    border: 1px solid  #00d1ff;
+    background-color:  white;
+    color: #00d1ff;
+    transition: 0.15s;
+}
+.sell{
+    width: 135px;
+    text-align: center;
+    background-color: #FF5353;
+    border-radius: 8px;
+    color: white;
+    border: 1px solid white;
+    font-size: 16px;
+}
+.sell:hover {
+    cursor: pointer;
+    border: 1px solid  #FF5353;
+    background-color:  white;
+    color: #FF5353;
+    transition: 0.15s;
+}
+.lotinput{
+    width: 110px;
+    line-height: 24px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 4px;
+}
+.stoploss{
+    display: flex;
+    align-items: center;
+}
+.stoploss input{
+    width: 100%;
+    height: 24px;
+    margin-top: 10px;
+    text-align: center;
+}
+.label{
+    width: 50%;
+    height: 24px;
+    text-align: center;
+}
+.ordersec{
+    margin-top: 25px;
+}
+.p9{
+    text-align: center;
+}
+hr{
+    margin-top: 15px;
+    height: 1px;
+    background-color: white;
+}

@@ -15,8 +15,8 @@ export default function Navbar() {
         <NavLink to="/about">About Us</NavLink>
       </div>
       <div className='btnsect'>
-        <button>Login</button>
-        <button>Sign Up</button>
+        <button className='navbtn'>Login</button>
+        <button className='navbtn'>Sign Up</button>
       </div>
     </nav>
   )
