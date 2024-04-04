@@ -4,7 +4,10 @@ import { fxpairs } from '../constants/constants'
 import fire from '../assets/fire.svg'
 import watchlist from '../assets/watchlist.svg'
 import star from '../assets/star.svg'
+import cross from '../assets/cross.svg'
+import dots from '../assets/dots.svg'
 import TradingViewWidget from '../constants/TradingViewWidget';
+import Heatmap from '../constants/Heatmap';
 
 
 export default function Markets() {
@@ -72,9 +75,50 @@ export default function Markets() {
           <hr/>
         </div>
       </div>
-      <div>
-        <div>Trades</div>
-        <div>Heat Map</div>
+      <div className='mytrades'>
+        <div className='tradelog'>
+          <div className='tradebtns'>
+            <button className='tradebtn1'>Open Trades</button>
+            <button className='tradebtn2'>Closed Trades</button>
+          </div>
+          <div className='tradedata'>
+            <div className='trade1'>
+              <img className='dots' src={dots}/>
+              <div className='currency'>EUR/USD</div>
+              <div className='position'>BUY</div>
+              <div className='tp'>TP: 000.000</div>
+              <div className='sl'>SL: 000.000</div>
+              <div className='lot'>LOT: 0.01</div>
+              <div className='pnl'>PNL: 120.21</div>
+              <img className='cross' src={cross}/>
+            </div>
+            <div className='trade1'>
+              <img className='dots' src={dots}/>
+              <div className='currency'>EUR/USD</div>
+              <div className='position'>BUY</div>
+              <div className='tp'>TP: 000.000</div>
+              <div className='sl'>SL: 000.000</div>
+              <div className='lot'>LOT: 0.01</div>
+              <div className='pnl'>PNL: 120.21</div>
+              <img className='cross' src={cross}/>
+            </div>
+            <div className='trade1'>
+              <img className='dots' src={dots}/>
+              <div className='currency'>EUR/USD</div>
+              <div className='position'>BUY</div>
+              <div className='tp'>TP: 000.000</div>
+              <div className='sl'>SL: 000.000</div>
+              <div className='lot'>LOT: 0.01</div>
+              <div className='pnl'>PNL: 120.21</div>
+              <img className='cross' src={cross}/>
+            </div>
+            <div>Trade2</div>
+          </div>
+        </div>
+        <div className='heatmap'>
+          <p>Show off a snapshot of currency market action. This widget lets you spot strong and weak currencies and see how they compare to each other, all in real-time.</p>
+          <Heatmap/>
+        </div>
       </div>
     </div>
   )

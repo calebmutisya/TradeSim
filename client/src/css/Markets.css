@@ -185,3 +185,91 @@ hr{
     color: #FF5353;
     transition: 0.15s;
 }
+.mytrades{
+    margin-top: 15px;
+    margin-bottom: 50px;
+    display: flex;
+}
+.tradelog{
+    width: 600px;
+    height: 400px;
+    border-radius: 8px;
+    border: 2px solid white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.tradebtns{
+    display: flex;
+    width: 600px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.tradebtn1{
+    width: 50%;
+    height: 30px;
+    border-top-left-radius: 8px;
+    background-color: white;
+    font-size: 14px;
+}
+.tradebtn2{
+    width: 50%;
+    height: 30px;
+    border-top-right-radius: 8px;
+    background-color: white;
+    font-size: 14px;
+}
+.trade1{
+    display: flex;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.dots{
+    height: 24px;
+    width: 10px;
+}
+.cross{
+    height: 24px;
+    width: 24px;
+}
+.currency{
+    width: 96px;
+    line-height: 24px;
+    text-align: center;
+}
+.position{
+    width: 58px;
+    line-height: 24px;
+    text-align: center;
+    color: #00d1ff;
+}
+.tp{
+    width: 97px;
+    line-height: 24px;
+    text-align: center;
+}
+.sl{
+    width: 97px;
+    line-height: 24px;
+    text-align: center;
+}
+.lot{
+    width: 76px;
+    line-height: 24px;
+    text-align: center;
+}
+.pnl{
+    width: 140px;
+    line-height: 24px;
+    text-align: center;
+}
+.heatmap{
+    overflow: hidden;
+    width: 600px;
+    height: 370px;
+    padding: 10px;
+    margin-left: 15px;
+}
+.heatmap p{
+    font-size: 10px;
+}
