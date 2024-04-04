@@ -11,8 +11,8 @@ function Heatmap(){
         script.async = true;
         script.innerHTML = `
             {
-                "width": 550,
-                "height": 400,
+                "width": 600,
+                "height": 380,
                 "currencies": [
                     "EUR",
                     "USD",
@@ -21,8 +21,7 @@ function Heatmap(){
                     "CHF",
                     "AUD",
                     "CAD",
-                    "NZD",
-                    "CNY"
+                    "NZD"
                 ],
                 "isTransparent": false,
                 "colorTheme": "dark",

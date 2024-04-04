@@ -116,9 +116,12 @@ export default function Markets() {
           </div>
         </div>
         <div className='heatmap'>
-          <p>Show off a snapshot of currency market action. This widget lets you spot strong and weak currencies and see how they compare to each other, all in real-time.</p>
+          <p>Shows off a snapshot of currency market action. This widget lets you spot strong and weak currencies and see how they compare to each other, all in real-time.</p>
           <Heatmap/>
         </div>
+      </div>
+      <div>
+        EconomicCalendar
       </div>
     </div>
   )

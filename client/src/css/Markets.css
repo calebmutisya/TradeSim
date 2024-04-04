@@ -266,8 +266,7 @@ hr{
 .heatmap{
     overflow: hidden;
     width: 600px;
-    height: 370px;
-    padding: 10px;
+    height: 400px;
     margin-left: 15px;
 }
 .heatmap p{
