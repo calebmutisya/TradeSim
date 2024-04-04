@@ -228,9 +228,15 @@ hr{
     height: 24px;
     width: 10px;
 }
+.dots:hover {
+    cursor: pointer;
+}
 .cross{
     height: 24px;
     width: 24px;
+}
+.cross:hover {
+    cursor: pointer;
 }
 .currency{
     width: 96px;
@@ -270,5 +276,14 @@ hr{
     margin-left: 15px;
 }
 .heatmap p{
+    font-size: 10px;
+}
+.calendar{
+    overflow: hidden;
+    width: 500px;
+    height: 400px;
+    margin-left: 15px;
+}
+.calendar p{
     font-size: 10px;
 }

@@ -8,6 +8,7 @@ import cross from '../assets/cross.svg'
 import dots from '../assets/dots.svg'
 import TradingViewWidget from '../constants/TradingViewWidget';
 import Heatmap from '../constants/Heatmap';
+import Calendar from '../constants/Calendar';
 
 
 export default function Markets() {
@@ -119,9 +120,10 @@ export default function Markets() {
           <p>Shows off a snapshot of currency market action. This widget lets you spot strong and weak currencies and see how they compare to each other, all in real-time.</p>
           <Heatmap/>
         </div>
-      </div>
-      <div>
-        EconomicCalendar
+        <div className='calendar'>
+          <p>Keep an eye on key upcoming economic events, announcements, and news. Plus, set up filters in a few clicks, selecting for event importance and affected currencies.</p>
+          <Calendar/>
+        </div>
       </div>
     </div>
   )
