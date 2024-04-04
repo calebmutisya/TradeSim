@@ -60,15 +60,14 @@ export default function Markets() {
           </div>
           <div className='ordersec'>
             <p className='p9'>ORDER PRICE</p>
-            <div className='stoploss'>
-              <div className='label'>Buy@ </div>
-              <div className='numslot'><input type='number' min={0}/></div>
+            <div className='orderprice'>
+              <button className='buyat'>Buy@ </button>
+              <input className='orderinput' type='number' min={0}/>
             </div>
-            <div className='stoploss'>
-              <div className='label'>Sell@</div>
-              <div className='numslot'><input type='number' min={0}/></div>
+            <div className='orderprice'>
+              <button className='sellat'>Sell@</button>
+              <input className='orderinput' type='number' min={0}/>
             </div>
-            <div></div>
           </div>
           <hr/>
         </div>

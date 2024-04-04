@@ -7,7 +7,6 @@
     display: flex;
     flex-direction: row;
 }
-
 .btns{
     display: flex;
     padding: 10px;
@@ -16,14 +15,12 @@
 .btns img{
     margin-right: 10px;
 }
-
 .fxlist{
     width: 200px;
     height: 750px;
     background-color: white;
     color: black;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-radius: 8px;
 }
 .bm{
     display: flex;
@@ -146,4 +143,44 @@ hr{
     margin-top: 15px;
     height: 1px;
     background-color: white;
+}
+.orderprice{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.buyat{
+    width: 30%;
+    height: 30px;
+    background-color: #00D1FF;
+    border-radius: 8px;
+    border: 1px solid white;
+    color: white;
+    font-size: 16px;
+}
+.buyat:hover {
+    cursor: pointer;
+    border: 1px solid  #00d1ff;
+    background-color:  white;
+    color: #00d1ff;
+    transition: 0.15s;
+}
+.orderinput{
+    width: 50%;
+}
+.sellat{
+    width: 30%;
+    height: 30px;
+    background-color: #FF5353;
+    border-radius: 8px;
+    color: white;
+    border: 1px solid white;
+    font-size: 16px;
+}
+.sellat:hover {
+    cursor: pointer;
+    border: 1px solid  #FF5353;
+    background-color:  white;
+    color: #FF5353;
+    transition: 0.15s;
 }
