@@ -1,0 +1,14 @@
+.newssec{
+    overflow: hidden;
+    justify-content: center;
+    width: 936px;
+    margin: auto;
+}
+.storydet{
+    text-align: center;
+}
+header{
+    font-size: 32px;
+    margin-top: 15px;
+    text-align: center;
+}
