@@ -51,7 +51,7 @@ export default function Markets() {
           <p className='p9'>MARKET PRICE: 1.53637</p>
           <div className='buysec'>
             <button className='buy'>Buy</button>
-            <input className='lotinput' placeholder='Input Lot' type='number' min={0.01} max={11.00}/>
+            <input className='lotinput' placeholder='Lot: 0.01-10' type='number' min={0.01} max={11.00}/>
             <button className='sell'>Sell</button>
           </div>
           <div className=' stoploss'>
