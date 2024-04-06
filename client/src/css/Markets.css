@@ -8,25 +8,24 @@
     flex-direction: row;
 }
 .btns{
-    display: flex;
     padding: 10px;
-    font-size: 12px;
 }
 .btns img{
     margin-right: 10px;
 }
 .fxlist{
-    width: 200px;
+    width: 185px;
     height: 750px;
-    background-color: white;
-    color: black;
+    background-color: black;
+    border: 1px solid white;
+    color: white;
     border-radius: 8px;
 }
 .bm{
-    display: flex;
-    background-color: white;
     width: 106px;
-    color: black;
+    margin: auto;
+    font-size: 18px;
+    color: white;
 }
 .pairscont{
     display: flex;
@@ -35,7 +34,7 @@
 }
 .fxs{
     font-size: 12px;
-    width: 160px;
+    width: 140px;
     height: 30px;
     display: flex;
     flex-direction: row;
@@ -46,7 +45,8 @@
     justify-content: space-around;
 }
 .fxs:hover{
-    background-color: rgb(205, 205, 205);
+    background-color: rgb(255, 255, 255);
+    color: black;
     cursor: pointer;
 }
 .slash{
@@ -69,7 +69,7 @@
     height: 717px;
     margin-left: 15px;
     padding: 15px;
-    border: 2px solid white;
+    border: 1px solid white;
     border-radius: 8px;
 }
 .buysec{
@@ -118,19 +118,18 @@
     font-size: 14px;
     border-radius: 4px;
 }
-.stoploss{
+.mpstoploss{
     display: flex;
-    align-items: center;
+    align-items: baseline;
 }
-.stoploss input{
+.mpstoploss input{
     width: 100%;
     height: 24px;
     margin-top: 10px;
     text-align: center;
 }
-.label{
+.mplabel{
     width: 50%;
-    height: 24px;
     text-align: center;
 }
 .ordersec{
@@ -194,7 +193,7 @@ hr{
     width: 600px;
     height: 400px;
     border-radius: 8px;
-    border: 2px solid white;
+    border: 1px solid white;
     padding-left: 10px;
     padding-right: 10px;
 }

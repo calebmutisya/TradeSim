@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import '../css/Markets.css'
 import { fxpairs } from '../constants/constants'
 import fire from '../assets/fire.svg'
-import watchlist from '../assets/watchlist.svg'
-import star from '../assets/star.svg'
 import cross from '../assets/cross.svg'
 import dots from '../assets/dots.svg'
 import TradingViewWidget from '../constants/TradingViewWidget';
@@ -25,12 +23,10 @@ export default function Markets() {
         <div className='fxlist'>
           <div className='btns'>
             <div className='bm'><img src={fire}/>FXPAIRS</div>
-            <div className='bm'><img src={watchlist}/>WATCHLIST</div>
           </div>
           <div className='pairscont'>
             {fxpairs.map((fxpair)=>(
               <div className='fxs' key={fxpair} onClick={() => handlePairClick(`PEPPERSTONE:${fxpair.pair1}${fxpair.pair2}`)}>
-                <div><img className='star' src={star}/></div>
                 <div><img src={fxpair.img1}/></div>
                 <div>{fxpair.pair1}</div>
                 <div className='slash'>|</div>
@@ -54,12 +50,12 @@ export default function Markets() {
             <input className='lotinput' placeholder='Lot: 0.01-10' type='number' min={0.01} max={11.00}/>
             <button className='sell'>Sell</button>
           </div>
-          <div className=' stoploss'>
-            <div className='label'>StopLoss</div>
+          <div className=' mpstoploss'>
+            <div className='mplabel'>StopLoss</div>
             <div className='numslot'><input type='number' min={0}/></div>
           </div>
-          <div className='stoploss'>
-            <div className='label'>Take Profit</div>
+          <div className='mpstoploss'>
+            <div className='mplabel'>Take Profit</div>
             <div className='numslot'><input type='number' min={0}/></div>
           </div>
           <div className='ordersec'>
