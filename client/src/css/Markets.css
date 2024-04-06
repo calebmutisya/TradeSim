@@ -236,6 +236,7 @@ hr{
 }
 .cross:hover {
     cursor: pointer;
+    background-color: #FF5353;
 }
 .currency{
     width: 96px;
