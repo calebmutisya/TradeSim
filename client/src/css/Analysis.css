@@ -49,27 +49,44 @@
     color: #00D1FF;
 }
 .pasttrades{
-    width: 553px;
+    width: 552px;
+    height: 510px;
+    border: 1px solid white;
+    border-radius: 4px;
+    padding: 15px;
 }
 .contname{
     font-size: 22px;
     text-align: center;
+    margin-bottom: 10px;
+}
+.contname2{
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 10px;
 }
 .logdetails{
     width: 100%;
     height: 34px;
     display: flex;
     align-items: center;
-    padding-left: 5px;
     background-color: white;
     color: black;
     border-radius: 4px;
     font-size: 12px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.logdetails:hover{
+    background-color: black;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.15s;
 }
 .date{
     width: 110px;
+    padding: 5px;
 }
 .pastpair{
     width: 96px;
@@ -88,12 +105,15 @@
 }
 .rankcont{
     width: 552px;
-    height: 310px;
-    margin-left: 30px;
+    height: 510px;
+    border: 1px solid white;
+    border-radius: 4px;
+    padding: 15px;
 }
 .ranksec{
-    width: 100%;
-    height: 255px;
+    width: 95%;
+    margin: auto;
+    height: 455px;
     padding: 5px;
     background-color: white;
     color: black;
@@ -109,4 +129,36 @@
     align-items: center;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+.rankdet:hover{
+    background-color: black;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.15s;
+}
+.rankno{
+    width: 28px;
+    font-size: 14px;
+    text-align: center;
+}
+.name{
+    width: 142px;
+    font-size: 12px;
+    text-align: center;
+}
+.tradesnums{
+    width: 103px;
+    font-size: 12px;
+    text-align: center;
+}
+.winrate{
+    width: 105px;
+    font-size: 12px;
+    text-align: center;
+}
+.capital{
+    width: 85px;
+    font-size: 14px;
+    text-align: center;
 }

@@ -34,49 +34,51 @@ export default function Analysis() {
       <div className='analysislog'>
         <div className='pasttrades'>
           <div className='contname'>Trades Log</div>
-          <div className='logdetails'>
-            <div className='date'>25 March 2024</div>
-            <div className='pastpair'>EUR/USD</div>
-            <div className='pastposition'>BUY</div>
-            <div className='takeprofit'>TP:156.676</div>
-            <div className='stoploss'>SL: 132.378</div>
-            <div className='profit'>PNL: 120.00</div>
-          </div>
-          <div className='logdetails'>
-            <div className='date'>25 March 2024</div>
-            <div className='pastpair'>EUR/USD</div>
-            <div className='pastposition'>BUY</div>
-            <div className='takeprofit'>TP:156.676</div>
-            <div className='stoploss'>SL: 132.378</div>
-            <div className='profit'>PNL: -120.00</div>
-          </div>
-          <div className='logdetails'>
-            <div className='date'>25 March 2024</div>
-            <div className='pastpair'>EUR/USD</div>
-            <div className='pastposition'>BUY</div>
-            <div className='takeprofit'>TP:156.676</div>
-            <div className='stoploss'>SL: 132.378</div>
-            <div className='profit'>PNL: -120.00</div>
-          </div>
-          <div className='logdetails'>
-            <div className='date'>25 March 2024</div>
-            <div className='pastpair'>EUR/USD</div>
-            <div className='pastposition'>BUY</div>
-            <div className='takeprofit'>TP:156.676</div>
-            <div className='stoploss'>SL: 132.378</div>
-            <div className='profit'>PNL: -120.00</div>
-          </div>
-          <div className='logdetails'>
-            <div className='date'>25 March 2024</div>
-            <div className='pastpair'>EUR/USD</div>
-            <div className='pastposition'>BUY</div>
-            <div className='takeprofit'>TP:156.676</div>
-            <div className='stoploss'>SL: 132.378</div>
-            <div className='profit'>PNL: -120.00</div>
+          <div className='ranksec'>
+            <div className='logdetails'>
+              <div className='date'>25 March 2024</div>
+              <div className='pastpair'>EUR/USD</div>
+              <div className='pastposition'>BUY</div>
+              <div className='takeprofit'>TP:156.676</div>
+              <div className='stoploss'>SL: 132.378</div>
+              <div className='profit'>PNL: 120.00</div>
+            </div>
+            <div className='logdetails'>
+              <div className='date'>25 March 2024</div>
+              <div className='pastpair'>EUR/USD</div>
+              <div className='pastposition'>BUY</div>
+              <div className='takeprofit'>TP:156.676</div>
+              <div className='stoploss'>SL: 132.378</div>
+              <div className='profit'>PNL: -120.00</div>
+            </div>
+            <div className='logdetails'>
+              <div className='date'>25 March 2024</div>
+              <div className='pastpair'>EUR/USD</div>
+              <div className='pastposition'>BUY</div>
+              <div className='takeprofit'>TP:156.676</div>
+              <div className='stoploss'>SL: 132.378</div>
+              <div className='profit'>PNL: -120.00</div>
+            </div>
+            <div className='logdetails'>
+              <div className='date'>25 March 2024</div>
+              <div className='pastpair'>EUR/USD</div>
+              <div className='pastposition'>BUY</div>
+              <div className='takeprofit'>TP:156.676</div>
+              <div className='stoploss'>SL: 132.378</div>
+              <div className='profit'>PNL: -120.00</div>
+            </div>
+            <div className='logdetails'>
+              <div className='date'>25 March 2024</div>
+              <div className='pastpair'>EUR/USD</div>
+              <div className='pastposition'>BUY</div>
+              <div className='takeprofit'>TP:156.676</div>
+              <div className='stoploss'>SL: 132.378</div>
+              <div className='profit'>PNL: -120.00</div>
+            </div>
           </div>
         </div>
         <div className='rankcont'>
-          <div className='contname'>Rankings</div>
+          <div className='contname2'>Rankings</div>
           <div className='ranksec'>
             <div className='rankdet'>
               <div className='rankno'>1</div>
