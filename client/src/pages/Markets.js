@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../css/Markets.css'
 import { fxpairs } from '../constants/constants'
 import fire from '../assets/fire.svg'
+import robot from '../assets/robot.svg'
 import cross from '../assets/cross.svg'
 import dots from '../assets/dots.svg'
 import TradingViewWidget from '../constants/TradingViewWidget';
@@ -40,7 +41,12 @@ export default function Markets() {
           {selectedSymbol ? (
               <TradingViewWidget key={selectedSymbol} symbol={selectedSymbol} />
             ) : (
-              <p className='instructions'>Please select a symbol to see its chart</p>
+              <div>
+                <p className='instructions'>Please select a symbol to see its chart</p>
+                <div className='robosec'>
+                  <img className='robot' src={robot}/>
+                </div>
+              </div>
           )}
         </div>
         <div className='buynsell'>

@@ -64,6 +64,23 @@
     color: black;
     text-align: center;
 }
+.robosec{
+    width: 400px;
+    margin: auto;
+    margin-top: 100px;
+}
+.robot{
+    height: 400px;
+    animation: bounceAnimation 0.5s infinite alternate;
+}
+@keyframes bounceAnimation {
+    0% {
+        transform: translateY(10px); /* Start position */
+    }
+    100% {
+        transform: translateY(-30px); /* End position (adjust the value as needed) */
+    }
+}
 .buynsell{
     width: 420px;
     height: 717px;
