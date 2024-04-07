@@ -101,18 +101,23 @@ span{
     margin-bottom: 50px;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-evenly; 
 }
 .card{
     width: 360px;
+    min-width: 360px;
     height: 464px;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center; /* Centers vertically */
     align-items: center;
-    background-color: white;
-    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+
+    backdrop-filter: blur(15px);
     overflow: hidden;
 }
 .card:hover .cardbg {
@@ -125,9 +130,9 @@ span{
     -ms-transform: scale(10);
     transform: scale(10);
 }
-/* .card:hover .p4{
-    color: white;
-} */
+.card:hover .p4{
+    color: black;
+}
 .cardbg {
     height: 128px;
     width: 128px;
@@ -168,7 +173,7 @@ span{
     height: 360px;
 }
 .p4{
-    color: black;
+    color: white;
     text-align: center;
     z-index: 1;
 }
