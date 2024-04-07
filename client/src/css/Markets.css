@@ -54,6 +54,7 @@
 }
 .chart{
     width: 1120px;
+    min-width: 500px;
     height: 750px;
     background-color: rgb(255, 255, 255);
     margin-left: 15px;
