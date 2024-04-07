@@ -3,6 +3,10 @@
 }
 .image{
     position: relative;
+    height: 100vh;
+    background-image: url('../assets/homebanner.png');
+    background-size: cover;
+    background-repeat: no-repeat; 
 }
 .txtsect{
     position: absolute;
@@ -176,23 +180,24 @@ span{
     /* background-image: url('../assets/practice.png'); */
 }
 .practice2{
-    position: relative;
+    height: 600px;
+    background-image: url(../assets/practice.png);
+    background-size: cover;
+    background-repeat: no-repeat; 
 }
 .banner3{
     width: 100vw;
 }
 .card2{
-    position: absolute;
-    top: 25%;
-    left: 25%;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 60vw;
+    min-width: 400px;
+    margin: auto;
     height: 300px;
     padding: 35px;
     color: black;
-
     border: 1px solid rgba(255, 255, 255, .25);
     border-radius: 20px;
     background-color: rgba(255, 255, 255, 0.45);

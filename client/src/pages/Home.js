@@ -1,19 +1,16 @@
 import React from 'react'
 import '../css/Home.css'
-import banner from '../assets/homebanner.png'
 import goldstar from '../assets/goldstar.svg'
 import lily from '../assets/Lily.svg'
 import card1 from '../assets/card1.png'
 import card2 from '../assets/card2.png'
 import card3 from '../assets/card3.png'
-import practice from '../assets/practice.png'
 
 export default function Home() {
   return (
     <div>
       <div>
         <div className='image'>
-          <img className='banner' src={banner}/>
           <div className='txtsect'>
             <p className='p1'>
               Practice Trading Without Risking<br/>
@@ -74,7 +71,6 @@ export default function Home() {
       </div>
       <div className='practice'>
         <div className='practice2'>
-          <img className='banner3' src={practice}/>
           <div className='card2'>
             <p className='p5'>Start Practicing Today</p>
             <p className='p6'>“TradeSim is the best paper trading web app I've used. It's user-friendly and provides a realistic trading experience.” -<br/> Leah Gonzalez</p>
