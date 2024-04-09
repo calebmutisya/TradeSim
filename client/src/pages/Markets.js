@@ -118,13 +118,15 @@ export default function Markets() {
             <div>Trade2</div>
           </div>
         </div>
-        <div className='heatmap'>
-          <p>Shows off a snapshot of currency market action. This widget lets you spot strong and weak currencies and see how they compare to each other, all in real-time.</p>
-          <Heatmap/>
-        </div>
-        <div className='calendar'>
-          <p>Keep an eye on key upcoming economic events, announcements, and news. Plus, set up filters in a few clicks, selecting for event importance and affected currencies.</p>
-          <Calendar/>
+        <div className='tview'>
+          <div className='heatmap'>
+            <p>Shows off a snapshot of currency market action. This widget lets you spot strong and weak currencies and see how they compare to each other, all in real-time.</p>
+            <Heatmap/>
+          </div>
+          <div className='calendar'>
+            <p>Keep an eye on key upcoming economic events, announcements, and news. Plus, set up filters in a few clicks, selecting for event importance and affected currencies.</p>
+            <Calendar/>
+          </div>
         </div>
       </div>
     </div>

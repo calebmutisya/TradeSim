@@ -305,3 +305,165 @@ hr{
 .calendar p{
     font-size: 10px;
 }
+.tview{
+    display: flex;   
+}
+@media(max-width:1280px){
+    .mytrades{
+        display: flex;
+        flex-direction: column;
+    }
+    .tradelog{
+        margin: auto;
+    }
+    .tview{
+        display: flex;   
+    }
+
+}
+@media(max-width:1200px){
+    .market{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .chartsec{
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+    }
+    .pairscont {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        padding: 10px;
+        column-gap: 5px;
+        row-gap: 5px;
+    }
+    .fxlist{
+        width: 90vw;
+        margin: auto;
+        height: auto;
+        margin-bottom: 10px;
+    }
+    .fxs {
+        flex-basis: calc(33.333% - 10px); /* Adjust as needed */
+        margin-bottom: 5px; /* Adjust as needed */
+    }
+    .chart{
+        width: 90vw;
+        margin: auto;
+    }
+    .buynsell{
+        width: 420px;
+        margin: auto;
+        margin-top: 10px;
+    }
+    .mytrades{
+        display: flex;
+        flex-direction: column;
+    }
+    .heatmap{
+        overflow: hidden;
+        width: 90vw;
+        max-width: 600px;
+        height: 400px;
+        margin: auto;
+        margin-bottom: 20px;
+    }
+    .calendar{
+        overflow: hidden;
+        width: 90vw;
+        max-width: 500px;
+        height: 400px;
+        margin: auto;
+    }
+    .tradelog{
+        margin: auto;
+        margin-bottom: 20px;
+    }
+
+}
+@media(max-width:1024px){
+    .market{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .chartsec{
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+    }
+    .pairscont {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr ;
+        padding: 10px;
+        column-gap: 5px;
+        row-gap: 5px;
+    }
+    .fxlist{
+        width: 90vw;
+        margin: auto;
+        height: auto;
+        margin-bottom: 10px;
+    }
+    .tview{
+        display: flex;
+        flex-direction: column;  
+    }
+
+}
+@media(max-width:670px){
+    .chartsec{
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+    }
+    .pairscont {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        padding: 5px;
+        column-gap: 5px;
+        row-gap: 5px;
+    }
+    .chart{
+        width: 90vw;
+        min-width: 400px;
+        margin: auto;
+    }
+    .tradelog{
+        width: 90vw;
+        max-width: 600px;
+        margin: auto;
+        margin-bottom: 20px;
+    }
+    .tradebtns{
+        width: 90vw;
+    }
+}
+@media(max-width:412px){
+    .market{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .pairscont {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 5px;
+        column-gap: 5px;
+        row-gap: 5px;
+    }
+    .chart{
+        min-width: 400px;
+        margin: auto;
+    }
+    .buynsell{
+        width: 400px;
+        margin-left: 0px;
+        padding: 0px;
+    }
+    .buy{
+        width: 30%;
+    }
+    .sell{
+        width: 30%;
+    }
+}
