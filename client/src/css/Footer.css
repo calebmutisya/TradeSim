@@ -39,3 +39,21 @@
     margin-right: 10px;
     font-size: 12px;
 }
+
+@media(max-width:600px){
+    .footer{
+        display: flex;
+        flex-direction: column;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .intouch{
+        margin-bottom: 30px;
+    }
+    .iconscont img{
+        height: 18px;
+    }
+    .footlinks a{
+        font-size: 10px;
+    }
+}

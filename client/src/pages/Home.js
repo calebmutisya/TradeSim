@@ -8,7 +8,7 @@ import card3 from '../assets/card3.png'
 
 export default function Home() {
   return (
-    <div>
+    <div className='home'>
       <div>
         <div className='image'>
           <div className='txtsect'>
@@ -17,7 +17,8 @@ export default function Home() {
               Real money
             </p>
             <p className='p2'>
-              Welcome  to TradeSim, the ultimate paper trading web app for forex  instruments.<br/> Test your trading strategies and improve your skills  without the risk of losing real money.
+              Welcome  to TradeSim, the ultimate paper trading web app for forex  instruments.<br/>
+              <br/> Test your trading strategies and improve your skills  without the risk of losing real money.
             </p>
             <button className='b1'>EXPLORE MARKETS</button>
             <div className='rating'>
