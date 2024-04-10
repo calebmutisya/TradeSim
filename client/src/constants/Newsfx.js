@@ -15,8 +15,8 @@ function Newsfx(){
                 "market": "forex",
                 "isTransparent": false,
                 "displayMode": "regular",
-                "width": 936,
-                "height": 850,
+                "width": "100%",
+                "height": "100%",
                 "colorTheme": "dark",
                 "locale": "en"
             }`;

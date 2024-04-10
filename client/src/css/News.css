@@ -2,6 +2,7 @@
     overflow: hidden;
     justify-content: center;
     width: 936px;
+    height: 100vh;
     margin: auto;
 }
 .storydet{
@@ -11,4 +12,15 @@ header{
     font-size: 32px;
     margin-top: 15px;
     text-align: center;
+}
+@media(max-width: 1280px){
+    .newssec{
+        overflow: hidden;
+        justify-content: center;
+        max-width: 936px;
+        width: 90vw;
+        min-width: 400px;
+        height: 100vh;
+        margin: auto;
+    }
 }
