@@ -23,6 +23,17 @@ class User(db.Model):
     # Define relationship with Closedtrades
     closedtrades = db.relationship('Closedtrades', backref='user', cascade="all, delete-orphan", passive_deletes=True)
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "capital": self.capital,
+            "firstname": self.firstname,
+            "lastname": self.lastname,
+            "profile_img": self.profile_img,
+        }
+
 
 
 class Opentrades(db.Model):
