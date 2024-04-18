@@ -2,15 +2,13 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
 from sqlalchemy import func
 from datetime import datetime
-from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy import Enum
 
 db = SQLAlchemy()
 
-class User(db.Model, SerializerMixin):
+class User(db.Model):
     __tablename__ = 'users'
 
-    serialize_rules = ('open_trades','closed_trades')
     id= db.Column(db.Integer, primary_key=True)
     username= db.Column(db.String(80),nullable=False ,unique=True)
     email= db.Column(db.String(120),nullable=False ,unique=True)
@@ -20,11 +18,16 @@ class User(db.Model, SerializerMixin):
     lastname= db.Column(db.String(64), nullable=True)
     profile_img= db.Column(db.LargeBinary, nullable=True)
 
+    # Define relationship with Opentrades
+    opentrades = db.relationship('Opentrades', backref='user', cascade="all, delete-orphan", passive_deletes=True)
+    # Define relationship with Closedtrades
+    closedtrades = db.relationship('Closedtrades', backref='user', cascade="all, delete-orphan", passive_deletes=True)
 
-class Opentrades(db.Model, SerializerMixin):
+
+
+class Opentrades(db.Model):
     __tablename__='open_trades'
 
-    serialize_rules = ('user',)
     id=db.Column(db.Integer,primary_key=True)
     user_id=db.Column(db.Integer,db.ForeignKey('users.id',ondelete="CASCADE"), nullable=False)
     currency_pair=db.Column(db.String(50), nullable=False)
@@ -37,10 +40,9 @@ class Opentrades(db.Model, SerializerMixin):
     open_date = db.Column(db.DateTime, default=func.now(), nullable=False)
 
 
-class Closedtrades(db.Model, SerializerMixin):
+class Closedtrades(db.Model):
     __tablename__='closed_trades'
 
-    serialize_rules = ('user',)
     id=db.Column(db.Integer,primary_key=True)
     user_id=db.Column(db.Integer,db.ForeignKey('users.id',ondelete="CASCADE"), nullable=False)
     currency_pair=db.Column(db.String(50))
