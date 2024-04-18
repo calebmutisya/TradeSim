@@ -32,3 +32,20 @@ def add_users():
         db.session.commit()
         return jsonify({"success": "User added successfully!"}), 201
 
+#update user
+@user_bp.route("/users/<int:user_id>", methods=['PATCH'])
+def update_user(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"message":"User not found"}),404
+    
+    data=request.get_json()
+
+    data.pop('password', None)
+
+    for key, value in data.items():
+        setattr(user,key,value)
+    db.session.commit()
+
+    return jsonify({"message":"User updated succesfully"}),200
+
