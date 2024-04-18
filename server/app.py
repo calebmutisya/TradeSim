@@ -7,8 +7,6 @@ from views import *
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
-
-db = SQLAlchemy()
 db.init_app(app)
 migrate = Migrate(app, db)
 

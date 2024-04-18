@@ -8,7 +8,7 @@ from sqlalchemy import Enum
 db = SQLAlchemy()
 
 class User(db.Model, SerializerMixin):
-    __tablename__ = 'user'
+    __tablename__ = 'users'
 
     serialize_rules = ('open_trades','closed_trades')
     id= db.Column(db.Integer, primary_key=True)
@@ -30,6 +30,7 @@ class Opentrades(db.Model, SerializerMixin):
     currency_pair=db.Column(db.String(50), nullable=False)
     position = db.Column(Enum('BUY', 'SELL', name='position_type'))
     tp=db.Column(db.Integer, nullable=True)
+    ep=db.Column(db.Integer, nullable=False)
     sl=db.Column(db.Float, nullable=True)
     lot=db.Column(db.Integer, nullable=False)
     pnl=db.Column(db.Float, nullable=True)
@@ -45,13 +46,9 @@ class Closedtrades(db.Model, SerializerMixin):
     currency_pair=db.Column(db.String(50))
     position=db.Column(db.String, nullable=False)
     tp=db.Column(db.Integer, nullable=False)
+    ep=db.Column(db.Integer, nullable=False)
     sl=db.Column(db.Float, nullable=False)
     lot=db.Column(db.Integer, nullable=False)
     pnl=db.Column(db.Float, nullable=False)
     open_date = db.Column(db.DateTime, default=func.now(), nullable=False)
 
-
-class TokenBlocklist(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    jti =  db.Column(db.String(100),nullable=True)
-    created_at = db.Column(db.DateTime(), default=func.now())
