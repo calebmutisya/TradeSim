@@ -50,6 +50,20 @@ class Opentrades(db.Model):
     pnl=db.Column(db.Float, nullable=True)
     open_date = db.Column(db.DateTime, default=func.now(), nullable=False)
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "currency_pair": self.currency_pair,
+            "position": self.position,
+            "tp": self.tp,
+            "ep": self.ep,
+            "sl": self.sl,
+            "lot": self.lot,
+            "pnl": self.pnl,
+            "open_date": self.open_date.strftime('%Y-%m-%d %H:%M:%S')
+        }
+
 
 class Closedtrades(db.Model):
     __tablename__='closed_trades'
