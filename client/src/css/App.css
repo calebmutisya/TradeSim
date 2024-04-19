@@ -9,3 +9,6 @@
   font-family: "Roboto Slab", serif;
   color: white;
 }
+.ticker{
+  overflow: hidden;
+}
