@@ -1,5 +1,8 @@
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint, current_app
+from werkzeug.utils import secure_filename  
 from models import db, User
+from forms import RegistrationForm
+import os
 
 user_bp = Blueprint('user_bp', __name__)
 
@@ -14,23 +17,34 @@ def get_users():
 # add user
 @user_bp.route("/addusers", methods=["POST"])
 def add_users():
-    data = request.get_json()
-    username = data['username']
-    email = data['email']
-    password = data['password']
+    form = RegistrationForm(request.form)
+    if form.validate_on_submit():
+        username = form.username.data
+        email = form.email.data
+        password = form.password.data
+        profile_img = request.files['profile_img']  # Get profile image from form data
 
-    check_username = User.query.filter_by(username=username).first()
-    check_email = User.query.filter_by(email=email).first()
-    
+        # Check if username or email already exist
+        if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
+            return jsonify({"error": "User with this email/username already exists!"})
 
-    if check_username or check_email :
-        return jsonify({"error": "User email/username/phone already exist!"})
+        # Save the profile image if provided
+        if profile_img:
+            filename = secure_filename(profile_img.filename)
+            upload_folder = current_app.config['UPLOAD_FOLDER']
+            profile_img.save(os.path.join(upload_folder, filename))
 
-    else:
-        new_user = User(email=email, password=password, username=username)
+
+        # Create a new user instance
+        new_user = User(email=email, password=password, username=username, profile_img=filename if profile_img else None)
+
+        # Add and commit the new user to the database
         db.session.add(new_user)
         db.session.commit()
+
         return jsonify({"success": "User added successfully!"}), 201
+
+    return jsonify({"error": "Invalid form data"}), 400
 
 #update user
 @user_bp.route("/users/<int:user_id>", methods=['PATCH'])

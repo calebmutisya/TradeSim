@@ -5,8 +5,11 @@ from models import db,User,Opentrades,Closedtrades
 
 from views import *
 
+import os
+
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
+app.config['UPLOAD_FOLDER'] = './imguploads'
 db.init_app(app)
 migrate = Migrate(app, db)
 
