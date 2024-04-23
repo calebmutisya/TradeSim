@@ -1,8 +1,10 @@
 from flask import request, jsonify, Blueprint, current_app
-from werkzeug.utils import secure_filename  
+from werkzeug.security import generate_password_hash
+from flask_jwt_extended import  jwt_required, get_jwt_identity
+from werkzeug.utils import secure_filename 
+import os
 from models import db, User
 from forms import RegistrationForm
-import os
 
 user_bp = Blueprint('user_bp', __name__)
 
@@ -17,55 +19,65 @@ def get_users():
 # add user
 @user_bp.route("/addusers", methods=["POST"])
 def add_users():
-    form = RegistrationForm(request.form)
-    if form.validate_on_submit():
-        username = form.username.data
-        email = form.email.data
-        password = form.password.data
-        profile_img = request.files['profile_img']  # Get profile image from form data
+    data = request.json  # Get JSON data from request body
 
-        # Check if username or email already exist
-        if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
-            return jsonify({"error": "User with this email/username already exists!"})
+    # Extract fields from JSON data
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
+    
 
-        # Save the profile image if provided
-        if profile_img:
-            filename = secure_filename(profile_img.filename)
-            upload_folder = current_app.config['UPLOAD_FOLDER']
-            profile_img.save(os.path.join(upload_folder, filename))
+    # Check if any required fields are missing
+    if not (username and email and password ):
+        return jsonify({"error": "Missing required fields"}), 400
 
+    # Check if username or email already exist
+    if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
+        return jsonify({"error": "User with this email/username already exists!"}), 400
 
-        # Create a new user instance
-        new_user = User(email=email, password=password, username=username, profile_img=filename if profile_img else None)
+    
 
-        # Add and commit the new user to the database
-        db.session.add(new_user)
-        db.session.commit()
+    # Create a new user instance
+    new_user = User(email=email, password=password, username=username)
 
-        return jsonify({"success": "User added successfully!"}), 201
+    # Add and commit the new user to the database
+    db.session.add(new_user)
+    db.session.commit()
 
-    return jsonify({"error": "Invalid form data"}), 400
+    return jsonify({"success": "User added successfully!"}), 201
 
 #update user
 @user_bp.route("/users/<int:user_id>", methods=['PATCH'])
+@jwt_required()
 def update_user(user_id):
+    current_user_id = get_jwt_identity()
+    if current_user_id != user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
     user = User.query.get(user_id)
     if not user:
-        return jsonify({"message":"User not found"}),404
+        return jsonify({"message":"User not found"}), 404
     
-    data=request.get_json()
+    data = request.get_json()
 
+    # Remove password field from data
     data.pop('password', None)
 
+    # Update user attributes
     for key, value in data.items():
-        setattr(user,key,value)
+        setattr(user, key, value)
     db.session.commit()
 
-    return jsonify({"message":"User updated succesfully"}),200
+    return jsonify({"message":"User updated successfully"}), 200
 
 #delete user
 @user_bp.route("/users/<int:user_id>", methods=["DELETE"])
+@jwt_required()
 def delete_user(user_id):
+    current_user_id = get_jwt_identity()
+    if current_user_id != user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
     user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
