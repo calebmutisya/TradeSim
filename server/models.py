@@ -93,3 +93,7 @@ class Closedtrades(db.Model):
             "open_date": self.open_date.strftime('%Y-%m-%d %H:%M:%S')
         }
 
+class TokenBlocklist(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    jti =  db.Column(db.String(100),nullable=True)
+    created_at = db.Column(db.DateTime(), default=func.now())
