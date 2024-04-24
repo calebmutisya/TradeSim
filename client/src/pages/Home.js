@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import '../css/Home.css'
 import goldstar from '../assets/goldstar.svg'
 import lily from '../assets/Lily.svg'
@@ -20,7 +21,9 @@ export default function Home() {
               Welcome  to TradeSim, the ultimate paper trading web app for forex  instruments.<br/>
               <br/> Test your trading strategies and improve your skills  without the risk of losing real money.
             </p>
-            <button className='b1'>EXPLORE MARKETS</button>
+            <NavLink to="/markets">
+              <button className='b1'>EXPLORE MARKETS</button>
+            </NavLink>
             <div className='rating'>
               <div>
                 <img src={goldstar}/>
@@ -75,7 +78,9 @@ export default function Home() {
           <div className='card2'>
             <p className='p5'>Start Practicing Today</p>
             <p className='p6'>“TradeSim is the best paper trading web app I've used. It's user-friendly and provides a realistic trading experience.” -<br/> Leah Gonzalez</p>
-            <button className='b1'>JOIN US</button>
+            <NavLink to="/guide">
+              <button className='b1'>HOW TO TRADE</button>
+            </NavLink>
           </div>
         </div>
       </div>
