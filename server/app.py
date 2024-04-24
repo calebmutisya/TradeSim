@@ -20,6 +20,9 @@ app.config["JWT_SECRET_KEY"] = "fjhjdjhfiskyfvdgvydklvsrfl"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt.init_app(app)
 
+# Set secret key for Flask-WTF
+app.config['SECRET_KEY'] = '1396f8e2aa42a3ad4142ef2617691495'
+
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(user_bp)
