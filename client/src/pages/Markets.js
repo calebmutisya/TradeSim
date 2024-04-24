@@ -43,6 +43,10 @@ export default function Markets() {
     setSelectedSymbol(symbol);
   };
 
+  const handleApiClick = (apiSymbol) => {
+    setApiSymbol(apiSymbol);
+  };
+
   return (
     <div className='market'>
       <div className='chartsec'>
@@ -52,7 +56,12 @@ export default function Markets() {
           </div>
           <div className='pairscont'>
             {fxpairs.map((fxpair, index)=>(
-              <div className='fxs' key={index} onClick={() => handlePairClick(`PEPPERSTONE:${fxpair.pair1}${fxpair.pair2}`)}>
+              <div className='fxs' key={index} 
+              onClick={() => {
+                handlePairClick(`PEPPERSTONE:${fxpair.pair1}${fxpair.pair2}`);
+                handleApiClick(`${fxpair.pair1.toLowerCase()}-${fxpair.pair2.toLowerCase()}`);
+              }}
+              >
                 <div><img src={fxpair.img1}/></div>
                 <div>{fxpair.pair1}</div>
                 <div className='slash'>|</div>
