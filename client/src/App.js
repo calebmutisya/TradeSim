@@ -9,12 +9,10 @@ import Guide from './pages/Guide.js'
 import Article from './pages/Article.js'
 import About from './pages/About.js'
 import Profile from './pages/Profile.js'
-import MarketProvider from './context/MarketContext.js';
 
 
 function App() {
   return (
-    <MarketProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -29,7 +27,6 @@ function App() {
           </Route>
         </Routes>
       </Router>
-    </MarketProvider>
   );
 }
 

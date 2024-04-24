@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios'; // Import Axios for making HTTP requests
 import '../css/Markets.css'
 import { fxpairs } from '../constants/constants'
@@ -14,27 +14,34 @@ import Calendar from '../constants/Calendar';
 export default function Markets() {
 
   const [selectedSymbol, setSelectedSymbol] = useState(null);
-  const [marketPrice, setMarketPrice] = useState(null);
-
-  useEffect(() => {
-    // Fetch market price when selectedSymbol changes
-    if (selectedSymbol) {
-      fetchMarketPrice(selectedSymbol);
-    }
-  }, [selectedSymbol]);
-
-  const fetchMarketPrice = async (symbol) => {
+  const [apiSymbol,setApiSymbol] = useState('eur-usd');
+  const [marketData, setMarketData] = useState(null);
+  
+  const fetchMarketPrice = async (currencyPair) => {
     try {
-      const response = await axios.get(`/api/market-price/${symbol}`);
-      setMarketPrice(response.data.marketPrice);
+      const response = await axios.get(`/api/market-price/${currencyPair}`);
+      setMarketData(response.data);
     } catch (error) {
       console.error('Error fetching market price:', error);
     }
   };
 
+  useEffect(() => {
+    // Update apiSymbol when selectedSymbol changes
+    if (selectedSymbol && selectedSymbol.pair1 && selectedSymbol.pair2) {
+      const currencyPair = `${selectedSymbol.pair1.toLowerCase()}-${selectedSymbol.pair2.toLowerCase()}`;
+      setApiSymbol(currencyPair);
+    }
+  }, [selectedSymbol]);
+
+  useEffect(() => {
+    // Fetch market price when apiSymbol changes
+    fetchMarketPrice(apiSymbol);
+  }, [apiSymbol]);
+
   const handlePairClick = (symbol) => {
     setSelectedSymbol(symbol);
-  }
+  };
 
   return (
     <div className='market'>
@@ -44,8 +51,8 @@ export default function Markets() {
             <div className='bm'><img src={fire}/>FXPAIRS</div>
           </div>
           <div className='pairscont'>
-            {fxpairs.map((fxpair)=>(
-              <div className='fxs' key={fxpair} onClick={() => handlePairClick(`PEPPERSTONE:${fxpair.pair1}${fxpair.pair2}`)}>
+            {fxpairs.map((fxpair, index)=>(
+              <div className='fxs' key={index} onClick={() => handlePairClick(`PEPPERSTONE:${fxpair.pair1}${fxpair.pair2}`)}>
                 <div><img src={fxpair.img1}/></div>
                 <div>{fxpair.pair1}</div>
                 <div className='slash'>|</div>
@@ -68,8 +75,8 @@ export default function Markets() {
           )}
         </div>
         <div className='buynsell'>
-          {marketPrice && (
-            <p className="p9">MARKET PRICE: {marketPrice}</p>
+          {marketData && (
+            <p className="p9">MARKET PRICE: {marketData.marketPrice}</p>
           )}
           <div className='buysec'>
             <button className='buy'>Buy</button>
