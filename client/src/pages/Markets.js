@@ -97,7 +97,12 @@ export default function Markets() {
         </div>
         <div className='buynsell'>
           {marketData && (
-            <p className="p9">MARKET PRICE: {marketData.marketPrice}</p>
+            <p className="p9">
+              MARKET PRICE: {marketData.marketPrice}
+              <br/>
+              <span className='refresh'>Refreshes every 30 seconds</span>
+            </p>
+            
           )}
           <div className='buysec'>
             <button className='buy'>Buy</button>

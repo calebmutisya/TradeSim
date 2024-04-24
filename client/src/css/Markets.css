@@ -305,6 +305,9 @@ hr{
 .calendar p{
     font-size: 10px;
 }
+.refresh{
+    font-size: 10px;
+}
 .tview{
     display: flex;   
 }
