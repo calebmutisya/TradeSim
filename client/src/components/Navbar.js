@@ -4,6 +4,9 @@ import '../css/Navbar.css';
 import logo from '../assets/Logo.svg'
 import hamburgermenu from '../assets/menu.svg'
 import xmark from '../assets/cross.svg'
+import username from '../assets/username.svg'
+import email from '../assets/Message.svg'
+import pass from '../assets/password.svg'
 
 export default function Navbar() {
 
@@ -69,17 +72,37 @@ export default function Navbar() {
           </div>
           {showLogin ? (
             <form className='login3'>
-              <input className='slot3' placeholder='username'/>
-              <input className='slot3' placeholder='password' type="password"/>
-              <button className='accessbtn'>Login</button>
+              <div className='loginslot'>
+                <img src={username}/>
+                <input placeholder='Username'/>
+              </div>
+              <div className='loginslot'>
+                <img src={pass}/>
+                <input placeholder='Password'/>
+              </div>
+              
+              <button className='accessbtn'>LOGIN</button>
             </form>
           ):(
             <form className='signup3'>
-              <input className='slot' placeholder='username'/>
-              <input className='slot' placeholder='email'/>
-              <input className='slot' placeholder='password' type="password"/>
-              <input className='slot' placeholder='confirm password' type="password"/>
-              <button className='accessbtn'>SignUp</button>
+              <div className='signupslot'>
+                <img src={username}/>
+                <input placeholder='Username'/>
+              </div>
+              <div className='signupslot'>
+                <img src={email}/>
+                <input placeholder='Email'/>
+              </div>
+              <div className='signupslot'>
+                <img src={pass}/>
+                <input placeholder='Password'/>
+              </div>
+              <div className='signupslot'>
+                <img src={pass}/>
+                <input placeholder='Confirm Password'/>
+              </div>
+              
+              <button className='accessbtn'>SIGNUP</button>
             </form>
           )}
         </div>
