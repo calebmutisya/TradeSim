@@ -28,6 +28,7 @@ app.register_blueprint(auth_bp)
 app.register_blueprint(user_bp)
 app.register_blueprint(open_bp)
 app.register_blueprint(close_bp)
+app.register_blueprint(mkt_bp)
 
 @jwt.token_in_blocklist_loader
 def token_in_blocklist_callback(jwt_header, jwt_data):

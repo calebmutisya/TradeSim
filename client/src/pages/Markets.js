@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'; // Import Axios for making HTTP requests
 import '../css/Markets.css'
 import { fxpairs } from '../constants/constants'
 import fire from '../assets/fire.svg'
@@ -13,6 +14,23 @@ import Calendar from '../constants/Calendar';
 export default function Markets() {
 
   const [selectedSymbol, setSelectedSymbol] = useState(null);
+  const [marketPrice, setMarketPrice] = useState(null);
+
+  useEffect(() => {
+    // Fetch market price when selectedSymbol changes
+    if (selectedSymbol) {
+      fetchMarketPrice(selectedSymbol);
+    }
+  }, [selectedSymbol]);
+
+  const fetchMarketPrice = async (symbol) => {
+    try {
+      const response = await axios.get(`/api/market-price/${symbol}`);
+      setMarketPrice(response.data.marketPrice);
+    } catch (error) {
+      console.error('Error fetching market price:', error);
+    }
+  };
 
   const handlePairClick = (symbol) => {
     setSelectedSymbol(symbol);
@@ -50,7 +68,9 @@ export default function Markets() {
           )}
         </div>
         <div className='buynsell'>
-          <p className='p9'>MARKET PRICE: 1.53637</p>
+          {marketPrice && (
+            <p className="p9">MARKET PRICE: {marketPrice}</p>
+          )}
           <div className='buysec'>
             <button className='buy'>Buy</button>
             <input className='lotinput' placeholder='Lot: 0.01-10' type='number' min={0.01} max={11.00}/>
