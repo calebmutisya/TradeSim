@@ -27,17 +27,29 @@ export default function Markets() {
   };
 
   useEffect(() => {
-    // Update apiSymbol when selectedSymbol changes
-    if (selectedSymbol && selectedSymbol.pair1 && selectedSymbol.pair2) {
-      const currencyPair = `${selectedSymbol.pair1.toLowerCase()}-${selectedSymbol.pair2.toLowerCase()}`;
-      setApiSymbol(currencyPair);
-    }
-  }, [selectedSymbol]);
-
-  useEffect(() => {
     // Fetch market price when apiSymbol changes
-    fetchMarketPrice(apiSymbol);
-  }, [apiSymbol]);
+    const fetchMarketPriceAndUpdate = async () => {
+      if (selectedSymbol && apiSymbol) {
+        try {
+          const response = await axios.get(`/api/market-price/${apiSymbol}`);
+          setMarketData(response.data);
+        } catch (error) {
+          console.error('Error fetching market price:', error);
+        }
+      }
+    };
+
+    // Call the fetchMarketPriceAndUpdate function immediately
+    fetchMarketPriceAndUpdate();
+
+    // Setup interval to fetch market price every 30 seconds if a symbol is selected
+    const intervalId = setInterval(() => {
+      fetchMarketPriceAndUpdate();
+    }, 15000);
+
+    // Clean up the interval when the component unmounts or when a new symbol is selected
+    return () => clearInterval(intervalId);
+  }, [apiSymbol, selectedSymbol]);
 
   const handlePairClick = (symbol) => {
     setSelectedSymbol(symbol);
