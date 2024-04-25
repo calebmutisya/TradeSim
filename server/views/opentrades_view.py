@@ -1,14 +1,19 @@
 from flask import request, jsonify, Blueprint
 from models import db, User,Opentrades
+from flask_jwt_extended import  jwt_required, get_jwt_identity
+
 
 open_bp = Blueprint('open_bp', __name__)
 
 #add a trade
 @open_bp.route("/opentrades", methods=["POST"])
+@jwt_required()
 def add_opentrade():
+    current_user_id = get_jwt_identity()
+
     data = request.json
     new_opentrade = Opentrades(
-        user_id=data.get('user_id'),
+        user_id=current_user_id,
         currency_pair=data.get('currency_pair'),
         position=data.get('position'),
         tp=data.get('tp'),
@@ -31,19 +36,22 @@ def get_all_opentrades():
     return jsonify(serialized_opentrades), 200
 
 # Get all open trades for a specific user
-@open_bp.route("/opentrades/user/<int:user_id>", methods=["GET"])
-def get_user_opentrades(user_id):
-    user = User.query.get(user_id)
+@open_bp.route("/opentrades/user", methods=["GET"])
+@jwt_required()
+def get_user_opentrades():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
     if not user:
         return jsonify({"error": "User not found"}), 404
 
-    user_opentrades = Opentrades.query.filter_by(user_id=user_id).all()
+    user_opentrades = Opentrades.query.filter_by(user_id=current_user_id).all()
     serialized_opentrades = [opentrade.to_dict() for opentrade in user_opentrades]
     return jsonify(serialized_opentrades), 200
 
 
 #get a single trade
 @open_bp.route('/opentrades/<int:opentrade_id>', methods=["GET"])
+@jwt_required()
 def get_single_opentrade(opentrade_id):
     opentrade = Opentrades.query.get(opentrade_id)
     if not opentrade:
@@ -52,6 +60,7 @@ def get_single_opentrade(opentrade_id):
 
 #edit a trade
 @open_bp.route("/opentrades/<int:opentrade_id>", methods=['PATCH'])
+@jwt_required()
 def edit_opentrade(opentrade_id):
     opentrade = Opentrades.query.get(opentrade_id)
     if not opentrade:
@@ -70,6 +79,7 @@ def edit_opentrade(opentrade_id):
 
 # Edit pnl for a trade
 @open_bp.route("/opentrades/<int:opentrade_id>/pnl", methods=['PATCH'])
+@jwt_required()
 def edit_opentrade_pnl(opentrade_id):
     opentrade = Opentrades.query.get(opentrade_id)
     if not opentrade:
@@ -81,6 +91,7 @@ def edit_opentrade_pnl(opentrade_id):
 
 #delete a trade
 @open_bp.route("/opentrades/<int:opentrade_id>", methods=["DELETE"])
+@jwt_required()
 def delete_opentrade(opentrade_id):
     opentrade = Opentrades.query.get(opentrade_id)
     if not opentrade:
