@@ -94,7 +94,7 @@ def allowed_file(filename):
 @jwt_required()
 def upload_file():
     current_user_id = get_jwt_identity()
-    
+
     if 'image' not in request.files:
         return 'No file part', 400
 
@@ -105,8 +105,9 @@ def upload_file():
     if file and allowed_file(file.filename):
         # Save the file to the desired location
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
+        upload_folder = app.config['UPLOAD_FOLDER']
+        file.save(os.path.join(upload_folder, filename))
+        
         # Update the profile_img_filename for the user
         user = User.query.get(current_user_id)  # Assuming you have access to current_user_id
         user.profile_img = filename
