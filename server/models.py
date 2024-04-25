@@ -16,7 +16,7 @@ class User(db.Model):
     capital=db.Column(db.Integer, default=10000)
     firstname= db.Column(db.String(64), nullable=True)
     lastname= db.Column(db.String(64), nullable=True)
-    profile_img= db.Column(db.LargeBinary, nullable=True)
+    profile_img= db.Column(db.String(255), nullable=True)
 
     # Define relationship with Opentrades
     opentrades = db.relationship('Opentrades', backref='user', cascade="all, delete-orphan", passive_deletes=True)

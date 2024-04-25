@@ -4,7 +4,7 @@ from flask_jwt_extended import  jwt_required, get_jwt_identity
 from werkzeug.utils import secure_filename 
 import os
 from models import db, User
-from forms import RegistrationForm
+from app import app 
 
 user_bp = Blueprint('user_bp', __name__)
 
@@ -82,4 +82,38 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     return jsonify({"message": "User deleted successfully"}), 200
+
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@user_bp.route('/upload',methods=['POST'])
+@jwt_required()
+def upload_file():
+    current_user_id = get_jwt_identity()
+    
+    if 'image' not in request.files:
+        return 'No file part', 400
+
+    file = request.files['image']
+    if file.filename == '':
+        return 'No selected file', 400
+
+    if file and allowed_file(file.filename):
+        # Save the file to the desired location
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        # Update the profile_img_filename for the user
+        user = User.query.get(current_user_id)  # Assuming you have access to current_user_id
+        user.profile_img = filename
+        db.session.commit()
+
+        return 'File uploaded successfully', 200
+    else:
+        return 'Invalid file format', 400
+
 
