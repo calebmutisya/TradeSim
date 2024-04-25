@@ -4,7 +4,7 @@ from flask_jwt_extended import  jwt_required, get_jwt_identity
 from werkzeug.utils import secure_filename 
 import os
 from models import db, User
-from app import app 
+from flask import current_app
 
 user_bp = Blueprint('user_bp', __name__)
 
@@ -105,7 +105,7 @@ def upload_file():
     if file and allowed_file(file.filename):
         # Save the file to the desired location
         filename = secure_filename(file.filename)
-        upload_folder = app.config['UPLOAD_FOLDER']
+        upload_folder = current_app.config['UPLOAD_FOLDER']
         file.save(os.path.join(upload_folder, filename))
         
         # Update the profile_img_filename for the user

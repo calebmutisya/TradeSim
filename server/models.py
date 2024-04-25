@@ -46,7 +46,7 @@ class Opentrades(db.Model):
     tp=db.Column(db.Integer, nullable=True)
     ep=db.Column(db.Integer, nullable=False)
     sl=db.Column(db.Float, nullable=True)
-    lot=db.Column(db.Integer, nullable=False)
+    lot = db.Column(db.Float, nullable=False)
     pnl=db.Column(db.Float, nullable=True)
     open_date = db.Column(db.DateTime, default=func.now(), nullable=False)
 
@@ -75,7 +75,7 @@ class Closedtrades(db.Model):
     tp=db.Column(db.Integer, nullable=True)
     ep=db.Column(db.Integer, nullable=False)
     sl=db.Column(db.Float, nullable=True)
-    lot=db.Column(db.Integer, nullable=False)
+    lot = db.Column(db.Float, nullable=False)
     pnl=db.Column(db.Float, nullable=False)
     open_date = db.Column(db.DateTime, default=func.now(), nullable=False)
 
