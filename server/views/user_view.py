@@ -30,15 +30,16 @@ def add_users():
     # Check if any required fields are missing
     if not (username and email and password ):
         return jsonify({"error": "Missing required fields"}), 400
+    
+    # Hash the password
+    hashed_password = generate_password_hash(password)
 
     # Check if username or email already exist
     if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
         return jsonify({"error": "User with this email/username already exists!"}), 400
 
-    
-
     # Create a new user instance
-    new_user = User(email=email, password=password, username=username)
+    new_user = User(email=email, password=hashed_password, username=username)
 
     # Add and commit the new user to the database
     db.session.add(new_user)
@@ -47,14 +48,12 @@ def add_users():
     return jsonify({"success": "User added successfully!"}), 201
 
 #update user
-@user_bp.route("/users/<int:user_id>", methods=['PATCH'])
+@user_bp.route("/users", methods=['PATCH'])
 @jwt_required()
-def update_user(user_id):
+def update_user():
     current_user_id = get_jwt_identity()
-    if current_user_id != user_id:
-        return jsonify({"error": "Unauthorized"}), 401
-
-    user = User.query.get(user_id)
+    
+    user = User.query.get(current_user_id)
     if not user:
         return jsonify({"message":"User not found"}), 404
     
@@ -71,14 +70,12 @@ def update_user(user_id):
     return jsonify({"message":"User updated successfully"}), 200
 
 #delete user
-@user_bp.route("/users/<int:user_id>", methods=["DELETE"])
+@user_bp.route("/users", methods=["DELETE"])
 @jwt_required()
-def delete_user(user_id):
+def delete_user():
     current_user_id = get_jwt_identity()
-    if current_user_id != user_id:
-        return jsonify({"error": "Unauthorized"}), 401
-
-    user = User.query.get_or_404(user_id)
+    
+    user = User.query.get_or_404(current_user_id)
     db.session.delete(user)
     db.session.commit()
     return jsonify({"message": "User deleted successfully"}), 200
