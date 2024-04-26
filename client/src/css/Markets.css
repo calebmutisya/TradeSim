@@ -254,7 +254,7 @@ hr{
     left: 15%;
     z-index: 11;
     width: 400px;
-    height: 200px;
+    height: 240px;
     padding: 10px;
     background-color: rgb(16, 16, 16, 0.6);
     border-radius: 8px;
@@ -264,7 +264,7 @@ hr{
     display: flex;
 }
 .edittrade label{
-    margin-top: 10px;
+    margin-top: 15px;
 }
 .edittrade input{
     height: 24px;
@@ -302,6 +302,10 @@ hr{
 .cross:hover {
     cursor: pointer;
     background-color: #FF5353;
+}
+.crossed {
+    display: flex;
+    justify-content: flex-end;
 }
 .currency{
     width: 96px;

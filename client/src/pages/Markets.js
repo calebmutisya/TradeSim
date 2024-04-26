@@ -150,7 +150,9 @@ export default function Markets() {
           <div className='tradedata'>
             <div className='tab1'>
               <div className={showEdit ? 'edittrade visible' : 'edittrade'}>
-                <img className='cross' src={cross} onClick={hideTab}/>
+                <div className='crossed'>
+                  <img className='cross' src={cross} onClick={hideTab}/>
+                </div>
                 <label>TP:</label>
                 <input placeholder='Take profit' type='number'></input>
                 <label>SL:</label>
