@@ -56,7 +56,7 @@ export default function Navbar() {
           <NavLink to="/news">News</NavLink>
           <NavLink to="/analysis">Analysis</NavLink>
           <NavLink to="/guide">Guide</NavLink>
-          <NavLink to="/about">About Us</NavLink>
+          <NavLink to="/about">Developer</NavLink>
         </div>
         <div className='btnsect'>
           <button className='navbtn' onClick={showSignup}>Login</button>
