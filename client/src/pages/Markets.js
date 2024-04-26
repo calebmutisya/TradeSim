@@ -17,6 +17,16 @@ export default function Markets() {
   const [apiSymbol,setApiSymbol] = useState('eur-usd');
   const [marketData, setMarketData] = useState(null);
   
+  const [showEdit, setShowEdit] = useState(false)
+
+  const showTab=()=> {
+    setShowEdit(true);
+  }
+
+  const hideTab=()=>{
+    setShowEdit(false);
+  }
+  
   const fetchMarketPrice = async (currencyPair) => {
     try {
       const response = await axios.get(`/api/market-price/${currencyPair}`);
@@ -138,37 +148,56 @@ export default function Markets() {
             <button className='tradebtn2'>Closed Trades</button>
           </div>
           <div className='tradedata'>
-            <div className='trade1'>
-              <img className='dots' src={dots}/>
-              <div className='currency'>EUR/USD</div>
-              <div className='position'>BUY</div>
-              <div className='tp'>TP: 000.000</div>
-              <div className='sl'>SL: 000.000</div>
-              <div className='lot'>LOT: 0.01</div>
-              <div className='pnl'>PNL: 120.21</div>
-              <img className='cross' src={cross}/>
+            <div className='tab1'>
+              <div className={showEdit ? 'edittrade visible' : 'edittrade'}>
+                <img className='cross' src={cross} onClick={hideTab}/>
+                <label>TP:</label>
+                <input placeholder='Take profit' type='number'></input>
+                <label>SL:</label>
+                <input placeholder='Stop Loss' type='number'></input>
+                <button>SAVE</button>
+              </div>
+              <div className='trade1'>
+                <img className='dots' src={dots} onClick={showTab}/>
+                <div className='currency'>EUR/USD</div>
+                <div className='position'>BUY</div>
+                <div className='tp'>TP: 000.000</div>
+                <div className='sl'>SL: 000.000</div>
+                <div className='lot'>LOT: 0.01</div>
+                <div className='pnl'>PNL: 120.21</div>
+                <img className='cross' src={cross}/>
+              </div>
+              <div className='trade1'>
+                <img className='dots' src={dots} onClick={showTab}/>
+                <div className='currency'>EUR/USD</div>
+                <div className='position'>BUY</div>
+                <div className='tp'>TP: 000.000</div>
+                <div className='sl'>SL: 000.000</div>
+                <div className='lot'>LOT: 0.01</div>
+                <div className='pnl'>PNL: 120.21</div>
+                <img className='cross' src={cross}/>
+              </div>
+              <div className='trade1'>
+                <img className='dots' src={dots} onClick={showTab}/>
+                <div className='currency'>EUR/USD</div>
+                <div className='position'>BUY</div>
+                <div className='tp'>TP: 000.000</div>
+                <div className='sl'>SL: 000.000</div>
+                <div className='lot'>LOT: 0.01</div>
+                <div className='pnl'>PNL: 120.21</div>
+                <img className='cross' src={cross}/>
+              </div>
+              <div className='trade1'>
+                <img className='dots' src={dots} onClick={showTab}/>
+                <div className='currency'>EUR/USD</div>
+                <div className='position'>BUY</div>
+                <div className='tp'>TP: 000.000</div>
+                <div className='sl'>SL: 000.000</div>
+                <div className='lot'>LOT: 0.01</div>
+                <div className='pnl'>PNL: 120.21</div>
+                <img className='cross' src={cross}/>
+              </div>
             </div>
-            <div className='trade1'>
-              <img className='dots' src={dots}/>
-              <div className='currency'>EUR/USD</div>
-              <div className='position'>BUY</div>
-              <div className='tp'>TP: 000.000</div>
-              <div className='sl'>SL: 000.000</div>
-              <div className='lot'>LOT: 0.01</div>
-              <div className='pnl'>PNL: 120.21</div>
-              <img className='cross' src={cross}/>
-            </div>
-            <div className='trade1'>
-              <img className='dots' src={dots}/>
-              <div className='currency'>EUR/USD</div>
-              <div className='position'>BUY</div>
-              <div className='tp'>TP: 000.000</div>
-              <div className='sl'>SL: 000.000</div>
-              <div className='lot'>LOT: 0.01</div>
-              <div className='pnl'>PNL: 120.21</div>
-              <img className='cross' src={cross}/>
-            </div>
-            <div>Trade2</div>
           </div>
         </div>
         <div className='tview'>
