@@ -91,7 +91,13 @@ export default function Navbar() {
         </div>
         <div className='btnsect'>
         {authToken ? (
+          <>
+            <div className='profcont'>
+              <img className='loginimg' src={username}/>
+              <p className='userslot'>Lily Wong</p>
+            </div>
             <button className="navbtn" onClick={handleLogout}>Logout</button>
+          </>
         ) : (
             <>
                 <button className="navbtn" onClick={showSignup}>Login</button>
