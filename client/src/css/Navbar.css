@@ -145,9 +145,13 @@ nav{
     margin-right: 15px;
     align-content: center;
     justify-content: center;
-    background-color: red;
     cursor: pointer;
     text-align: center;
+    border-radius: 8px;
+}
+.profcont:hover{
+    border: 1px solid white;
+    transition: 0.15s;
 }
 .loginimg{
     display: inline-block;
@@ -161,6 +165,7 @@ nav{
 .userslot{
     display: inline-block;
     font-size: 14px;
+    font-weight: 700;
     width: 60%;
 }
 .togglebtn{

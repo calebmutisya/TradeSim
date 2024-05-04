@@ -94,7 +94,7 @@ export default function Navbar() {
           <>
             <div className='profcont'>
               <img className='loginimg' src={username}/>
-              <p className='userslot'>Lily Wong</p>
+              <p className='userslot'>LilyWong</p>
             </div>
             <button className="navbtn" onClick={handleLogout}>Logout</button>
           </>
