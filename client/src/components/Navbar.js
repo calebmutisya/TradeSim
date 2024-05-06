@@ -21,7 +21,7 @@ export default function Navbar() {
   const [signupPassword, setSignupPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const { addUser, login, logout, authToken } = useContext(UserContext);
+  const { addUser, login, logout, currentUser,authToken } = useContext(UserContext);
 
   const showSignup=()=> {
     setShowCover(true);
@@ -94,7 +94,9 @@ export default function Navbar() {
           <>
             <div className='profcont'>
               <img className='loginimg' src={username}/>
-              <p className='userslot'>LilyWong</p>
+              {currentUser && (
+                    <p className='userslot'>{currentUser.username}</p>
+                )}
             </div>
             <button className="navbtn" onClick={handleLogout}>Logout</button>
           </>

@@ -166,7 +166,39 @@ export default function UserProvider({children})
         }
     }, [authToken]);
 
-    const contextData={addUser, login, logout, authToken}
+    // Function to fetch a single user's data
+    function fetchUser() {
+        fetch('/singleuser', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch user data');
+            }
+            return response.json();
+        })
+        .then(data => {
+            setCurrentUser(data);
+        })
+        .catch(error => {
+            console.error('Error fetching user data:', error);
+            setCurrentUser(null);
+        });
+    }
+
+    // Fetch user data when component mounts or when authToken changes
+    useEffect(() => {
+        if (authToken) {
+            fetchUser();
+        } else {
+            setCurrentUser(null);
+        }
+    }, [authToken]);
+
+    const contextData={addUser, login, logout, authToken, currentUser}
 
   return (
     <UserContext.Provider value={contextData}>
