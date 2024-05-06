@@ -10,6 +10,8 @@ import TradingViewWidget from '../constants/TradingViewWidget';
 import Heatmap from '../constants/Heatmap';
 import Calendar from '../constants/Calendar';
 import { UserContext } from '../context/UserContext';
+import { OpentradeContext } from '../context/OpentradeContext';
+import Swal from 'sweetalert2'
 
 
 export default function Markets() {
@@ -19,6 +21,7 @@ export default function Markets() {
   const [marketData, setMarketData] = useState(null);
 
   const { currentUser,authToken } = useContext(UserContext);
+  const { opentrades, deleteOpentrade, fetchOpentrades }=useContext(OpentradeContext)
   
   const [showEdit, setShowEdit] = useState(false)
 
@@ -72,6 +75,61 @@ export default function Markets() {
     setApiSymbol(apiSymbol);
   };
 
+  const handleBuySell = (position) => {
+    if (marketData && currentUser && authToken) {
+        const lotInput = document.querySelector('.lotinput');
+        const stopLossInput = document.querySelector('.stoploss-input');
+        const takeProfitInput = document.querySelector('.takeprofit-input');
+
+        const lot = parseFloat(lotInput.value);
+        const stopLoss = parseFloat(stopLossInput.value);
+        const takeProfit = parseFloat(takeProfitInput.value);
+
+        const opentradeData = {
+            currency_pair: apiSymbol.toUpperCase(),
+            position,
+            tp: takeProfit,
+            ep: marketData.marketPrice,
+            sl: stopLoss,
+            lot,
+        };
+
+        // Include JWT token in the request headers
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(opentradeData),
+        };
+
+        fetch('/opentrades', requestOptions)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to add opentrade');
+                }
+                return response.json();
+            })
+            .then(data => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Trade Added Successfully',
+                    text: `Trade ID: ${data.id}`,
+                });
+                fetchOpentrades(); // Refresh opentrades after adding a new trade
+            })
+            .catch(error => {
+                console.error('Error adding opentrade:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to add trade. Please try again later.',
+                });
+            });
+    }
+  };
+
   return (
     <div className='market'>
       <div className='chartsec'>
@@ -115,20 +173,19 @@ export default function Markets() {
               <br/>
               <span className='refresh'>Refreshes every 30 seconds</span>
             </p>
-            
           )}
           <div className='buysec'>
-            <button className='buy'>Buy</button>
+            <button className='buy' onClick={() => handleBuySell('BUY')}>Buy</button>
             <input className='lotinput' placeholder='Lot: 0.01-10' type='number' min={0.01} max={11.00}/>
-            <button className='sell'>Sell</button>
+            <button className='sell' onClick={() => handleBuySell('SELL')}>Sell</button>
           </div>
           <div className=' mpstoploss'>
             <div className='mplabel'>StopLoss</div>
-            <div className='numslot'><input type='number' min={0}/></div>
+            <div className='numslot'><input className='stoploss-input' type='number' min={0}/></div>
           </div>
           <div className='mpstoploss'>
             <div className='mplabel'>Take Profit</div>
-            <div className='numslot'><input type='number' min={0}/></div>
+            <div className='numslot'><input className='takeprofit-input' type='number' min={0}/></div>
           </div>
           <hr/>
         </div>

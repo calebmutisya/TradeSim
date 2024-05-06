@@ -10,24 +10,27 @@ import Article from './pages/Article.js'
 import About from './pages/About.js'
 import Profile from './pages/Profile.js'
 import UserProvider from './context/UserContext.js';
+import OpentradeProvider from './context/OpentradeContext.js';
 
 
 function App() {
   return (
       <Router>
         <UserProvider>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home/>}/>
-              <Route path="/markets" element={<Markets/>}/>
-              <Route path="/news" element={<News/>}/>
-              <Route path="/analysis" element={<Analysis/>}/>
-              <Route path="/guide" element={<Guide/>}/>
-              <Route path="/article" element={<Article/>}/>
-              <Route path="/about" element={<About/>}/>
-              <Route path="/profile" element={<Profile/>}/>
-            </Route>
-          </Routes>
+          <OpentradeProvider>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home/>}/>
+                <Route path="/markets" element={<Markets/>}/>
+                <Route path="/news" element={<News/>}/>
+                <Route path="/analysis" element={<Analysis/>}/>
+                <Route path="/guide" element={<Guide/>}/>
+                <Route path="/article" element={<Article/>}/>
+                <Route path="/about" element={<About/>}/>
+                <Route path="/profile" element={<Profile/>}/>
+              </Route>
+            </Routes>
+          </OpentradeProvider>
         </UserProvider>
       </Router>
   );

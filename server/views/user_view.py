@@ -28,8 +28,6 @@ def get_user():
 
     return jsonify(user.to_dict()), 200
 
-
-
 # add user
 @user_bp.route("/addusers", methods=["POST"])
 def add_users():
