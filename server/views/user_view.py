@@ -16,6 +16,20 @@ def get_users():
     users = [user.to_dict() for user in User.query.order_by(User.capital.desc()).all()]
     return jsonify(users), 200
 
+# Get a single users data
+@user_bp.route("/singleuser", methods=["GET"])
+@jwt_required()
+def get_user():
+    user_id= get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    return jsonify(user.to_dict()), 200
+
+
+
 # add user
 @user_bp.route("/addusers", methods=["POST"])
 def add_users():
