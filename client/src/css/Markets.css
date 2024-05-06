@@ -262,7 +262,7 @@ hr{
     left: 15%;
     z-index: 11;
     width: 400px;
-    height: 240px;
+    height: 280px;
     padding: 10px;
     background-color: rgb(16, 16, 16, 0.6);
     border-radius: 8px;
@@ -272,7 +272,7 @@ hr{
     display: flex;
 }
 .edittrade label{
-    margin-top: 15px;
+    margin-top: 5px;
 }
 .edittrade input{
     height: 24px;
@@ -280,7 +280,7 @@ hr{
     margin-top: 5px;
 }
 .edittrade button{
-    margin-top: 15px;
+    margin-top: 5px;
     height: 34px;
     width: 30%;
     margin: auto;
@@ -295,6 +295,11 @@ hr{
 }
 .edittrade button:active{
     transform: scale(0.7);
+}
+.entryslot{
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
 }
 .dots{
     height: 24px;

@@ -202,6 +202,7 @@ export default function Markets() {
                 <div className='crossed'>
                   <img className='cross' src={cross} onClick={hideTab}/>
                 </div>
+                <p className='entryslot'>Position:Buy   EntryPrice: 1.09876</p>
                 <label>TP:</label>
                 <input placeholder='Take profit' type='number'></input>
                 <label>SL:</label>
