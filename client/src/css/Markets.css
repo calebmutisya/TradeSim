@@ -256,6 +256,19 @@ hr{
     height: 350px;
     overflow-y: scroll;
 }
+.tab1::-webkit-scrollbar {
+    width: 10px; /* width of the scrollbar */
+}
+.tab1::-webkit-scrollbar-track {
+background: white; /* color of the track */
+}
+.tab1::-webkit-scrollbar-thumb {
+background: #00d1ff; /* color of the scrollbar */
+border-radius: 10px; /* roundness of the scrollbar */
+}
+.tab1::-webkit-scrollbar-thumb:hover {
+background: #00d1ff; /* color of the scrollbar on hover */
+}
 .edittrade{
     display: none;
     flex-direction: column;
