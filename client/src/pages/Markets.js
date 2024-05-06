@@ -21,7 +21,7 @@ export default function Markets() {
   const [marketData, setMarketData] = useState(null);
 
   const { currentUser,authToken } = useContext(UserContext);
-  const { opentrades, deleteOpentrade, fetchOpentrades }=useContext(OpentradeContext)
+  const { opentrades, deleteOpentrade, fetchUserOpenTrades }=useContext(OpentradeContext)
   
   const [showEdit, setShowEdit] = useState(false)
 
@@ -117,7 +117,7 @@ export default function Markets() {
                     title: 'Trade Added Successfully',
                     text: `Trade ID: ${data.id}`,
                 });
-                fetchOpentrades(); // Refresh opentrades after adding a new trade
+                fetchUserOpenTrades(); // Refresh opentrades after adding a new trade
             })
             .catch(error => {
                 console.error('Error adding opentrade:', error);
@@ -129,6 +129,7 @@ export default function Markets() {
             });
     }
   };
+
 
   return (
     <div className='market'>
@@ -193,62 +194,40 @@ export default function Markets() {
       <div className='mytrades'>
         <div className='tradelog'>
           <div className='tradebtns'>
-            <button className='tradebtn1'>Open Trades</button>
+            <button className='tradebtn1' >Open Trades</button>
             <button className='tradebtn2'>Closed Trades</button>
           </div>
           <div className='tradedata'>
             <div className='tab1'>
-              <div className={showEdit ? 'edittrade visible' : 'edittrade'}>
-                <div className='crossed'>
-                  <img className='cross' src={cross} onClick={hideTab}/>
+            {currentUser ? (
+              <div>
+                <div className={showEdit ? 'edittrade visible' : 'edittrade'}>
+                  <div className='crossed'>
+                    <img className='cross' src={cross} onClick={hideTab}/>
+                  </div>
+                  <p className='entryslot'>Position:Buy   EntryPrice: 1.09876</p>
+                  <label>TP:</label>
+                  <input placeholder='Take profit' type='number'></input>
+                  <label>SL:</label>
+                  <input placeholder='Stop Loss' type='number'></input>
+                  <button>SAVE</button>
                 </div>
-                <p className='entryslot'>Position:Buy   EntryPrice: 1.09876</p>
-                <label>TP:</label>
-                <input placeholder='Take profit' type='number'></input>
-                <label>SL:</label>
-                <input placeholder='Stop Loss' type='number'></input>
-                <button>SAVE</button>
-              </div>
-              <div className='trade1'>
-                <img className='dots' src={dots} onClick={showTab}/>
-                <div className='currency'>EUR/USD</div>
-                <div className='position'>BUY</div>
-                <div className='tp'>TP: 000.000</div>
-                <div className='sl'>SL: 000.000</div>
-                <div className='lot'>LOT: 0.01</div>
-                <div className='pnl'>PNL: 120.21</div>
-                <img className='cross' src={cross}/>
-              </div>
-              <div className='trade1'>
-                <img className='dots' src={dots} onClick={showTab}/>
-                <div className='currency'>EUR/USD</div>
-                <div className='position'>BUY</div>
-                <div className='tp'>TP: 000.000</div>
-                <div className='sl'>SL: 000.000</div>
-                <div className='lot'>LOT: 0.01</div>
-                <div className='pnl'>PNL: 120.21</div>
-                <img className='cross' src={cross}/>
-              </div>
-              <div className='trade1'>
-                <img className='dots' src={dots} onClick={showTab}/>
-                <div className='currency'>EUR/USD</div>
-                <div className='position'>BUY</div>
-                <div className='tp'>TP: 000.000</div>
-                <div className='sl'>SL: 000.000</div>
-                <div className='lot'>LOT: 0.01</div>
-                <div className='pnl'>PNL: 120.21</div>
-                <img className='cross' src={cross}/>
-              </div>
-              <div className='trade1'>
-                <img className='dots' src={dots} onClick={showTab}/>
-                <div className='currency'>EUR/USD</div>
-                <div className='position'>BUY</div>
-                <div className='tp'>TP: 000.000</div>
-                <div className='sl'>SL: 000.000</div>
-                <div className='lot'>LOT: 0.01</div>
-                <div className='pnl'>PNL: 120.21</div>
-                <img className='cross' src={cross}/>
-              </div>
+                {opentrades.map((trade, index) => (
+                  <div className='trade1' key={index}>
+                    <img className='dots' src={dots} onClick={showTab}/>
+                    <div className='currency'>{trade.currency_pair}</div>
+                    <div className='position'>{trade.position}</div>
+                    <div className='tp'>TP: {trade.tp}</div>
+                    <div className='sl'>SL: {trade.sl}</div>
+                    <div className='lot'>LOT: {trade.lot}</div>
+                    <div className='pnl'>PNL: {trade.pnl}</div>
+                    <img className='cross' src={cross} onClick={() => deleteOpentrade(trade.id)} />
+                  </div>
+                ))}
+                </div>
+              ) : (
+                <p className='message1'>Please login to view your trades</p>
+              )}
             </div>
           </div>
         </div>

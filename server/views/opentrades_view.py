@@ -91,7 +91,6 @@ def edit_opentrade_pnl(opentrade_id):
 
 #delete a trade
 @open_bp.route("/opentrades/<int:opentrade_id>", methods=["DELETE"])
-@jwt_required()
 def delete_opentrade(opentrade_id):
     opentrade = Opentrades.query.get(opentrade_id)
     if not opentrade:

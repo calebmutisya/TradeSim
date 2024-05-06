@@ -1,34 +1,42 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import { UserContext } from './UserContext'
+
 
 export const OpentradeContext= createContext()
 
 export default function OpentradeProvider({children}) {
 
     const [opentrades, setOpentrades] = useState([]);
+    const { currentUser,authToken } = useContext(UserContext);
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchOpentrades();
-    }, []);
+        if (authToken) {
+          fetchUserOpentrades();
+        }
+    }, [authToken]);
 
-    const fetchOpentrades = () => {
-        fetch('/opentrades', {
+    const fetchUserOpentrades = () => {
+        fetch('/opentrades/user', {
             method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch open trades');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setOpentrades(data);
-            })
-            .catch(error => {
-                console.error('Error fetching open trades:', error);
-            });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch user open trades');
+            }
+            return response.json();
+        })
+        .then(data => {
+            setOpentrades(data);
+        })
+        .catch(error => {
+            console.error('Error fetching user open trades:', error);
+        });
     };
 
     const addOpentrade = (opentradeData) => {
@@ -51,7 +59,7 @@ export default function OpentradeProvider({children}) {
                     title: 'Trade Added Successfully',
                     text: `Trade ID: ${data.id}`,
                 });
-                fetchOpentrades(); // Refresh opentrades after adding a new trade
+                fetchUserOpentrades(); // Refresh opentrades after adding a new trade
             })
             .catch(error => {
                 console.error('Error adding opentrade:', error);
@@ -79,7 +87,7 @@ export default function OpentradeProvider({children}) {
                     title: 'Trade Deleted Successfully',
                     text: data.message,
                 });
-                fetchOpentrades(); // Refresh opentrades after deleting a trade
+                fetchUserOpentrades(); // Refresh opentrades after deleting a trade
             })
             .catch(error => {
                 console.error('Error deleting opentrade:', error);
@@ -96,7 +104,7 @@ export default function OpentradeProvider({children}) {
         opentrades,
         addOpentrade,
         deleteOpentrade,
-        fetchOpentrades
+        fetchUserOpentrades
     }
 
   return (
