@@ -105,6 +105,7 @@
     border: 1px solid white;
     color: white;
     font-size: 16px;
+    transition: transform 0.3s;
 }
 .buy:hover {
     cursor: pointer;
@@ -112,6 +113,9 @@
     background-color:  white;
     color: #00d1ff;
     transition: 0.15s;
+}
+.buy:active{
+    transform: scale(0.7);
 }
 .sell{
     width: 135px;
@@ -121,6 +125,7 @@
     color: white;
     border: 1px solid white;
     font-size: 16px;
+    transition: transform 0.3s;
 }
 .sell:hover {
     cursor: pointer;
@@ -128,6 +133,9 @@
     background-color:  white;
     color: #FF5353;
     transition: 0.15s;
+}
+.sell:active{
+    transform: scale(0.7);
 }
 .lotinput{
     width: 110px;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import axios from 'axios'; // Import Axios for making HTTP requests
 import '../css/Markets.css'
 import { fxpairs } from '../constants/constants'
@@ -9,6 +9,7 @@ import dots from '../assets/dots.svg'
 import TradingViewWidget from '../constants/TradingViewWidget';
 import Heatmap from '../constants/Heatmap';
 import Calendar from '../constants/Calendar';
+import { UserContext } from '../context/UserContext';
 
 
 export default function Markets() {
@@ -16,6 +17,8 @@ export default function Markets() {
   const [selectedSymbol, setSelectedSymbol] = useState(null);
   const [apiSymbol,setApiSymbol] = useState('eur-usd');
   const [marketData, setMarketData] = useState(null);
+
+  const { currentUser,authToken } = useContext(UserContext);
   
   const [showEdit, setShowEdit] = useState(false)
 
@@ -126,17 +129,6 @@ export default function Markets() {
           <div className='mpstoploss'>
             <div className='mplabel'>Take Profit</div>
             <div className='numslot'><input type='number' min={0}/></div>
-          </div>
-          <div className='ordersec'>
-            <p className='p9'>ORDER PRICE</p>
-            <div className='orderprice'>
-              <button className='buyat'>Buy@ </button>
-              <input className='orderinput' type='number' min={0}/>
-            </div>
-            <div className='orderprice'>
-              <button className='sellat'>Sell@</button>
-              <input className='orderinput' type='number' min={0}/>
-            </div>
           </div>
           <hr/>
         </div>
