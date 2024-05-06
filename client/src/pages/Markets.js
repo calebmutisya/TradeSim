@@ -19,15 +19,17 @@ export default function Markets() {
   const [selectedSymbol, setSelectedSymbol] = useState(null);
   const [apiSymbol,setApiSymbol] = useState('eur-usd');
   const [marketData, setMarketData] = useState(null);
+  const [selectedTrade, setSelectedTrade] = useState(null);
 
   const { currentUser,authToken } = useContext(UserContext);
   const { opentrades, deleteOpentrade, fetchUserOpenTrades }=useContext(OpentradeContext)
   
   const [showEdit, setShowEdit] = useState(false)
 
-  const showTab=()=> {
+  const showTab = (trade) => {
+    setSelectedTrade(trade);
     setShowEdit(true);
-  }
+  };
 
   const hideTab=()=>{
     setShowEdit(false);
@@ -201,20 +203,22 @@ export default function Markets() {
             <div className='tab1'>
             {currentUser ? (
               <div>
-                <div className={showEdit ? 'edittrade visible' : 'edittrade'}>
-                  <div className='crossed'>
-                    <img className='cross' src={cross} onClick={hideTab}/>
+                {selectedTrade && (
+                  <div className={showEdit ? 'edittrade visible' : 'edittrade'}>
+                    <div className='crossed'>
+                      <img className='cross' src={cross} onClick={hideTab}/>
+                    </div>
+                    <p className='entryslot'>Position: {selectedTrade.position}  EntryPrice: {selectedTrade.ep}</p>
+                    <label>TP:</label>
+                    <input placeholder='Take profit' type='number'></input>
+                    <label>SL:</label>
+                    <input placeholder='Stop Loss' type='number'></input>
+                    <button>SAVE</button>
                   </div>
-                  <p className='entryslot'>Position:Buy   EntryPrice: 1.09876</p>
-                  <label>TP:</label>
-                  <input placeholder='Take profit' type='number'></input>
-                  <label>SL:</label>
-                  <input placeholder='Stop Loss' type='number'></input>
-                  <button>SAVE</button>
-                </div>
+                )}
                 {opentrades.map((trade, index) => (
                   <div className='trade1' key={index}>
-                    <img className='dots' src={dots} onClick={showTab}/>
+                    <img className='dots' src={dots} onClick={() => showTab(trade)}/>
                     <div className='currency'>{trade.currency_pair}</div>
                     <div className='position'>{trade.position}</div>
                     <div className='tp'>TP: {trade.tp}</div>

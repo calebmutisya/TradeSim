@@ -279,7 +279,7 @@ background: #00d1ff; /* color of the scrollbar on hover */
     width: 400px;
     height: 280px;
     padding: 10px;
-    background-color: rgb(16, 16, 16, 0.6);
+    background-color: rgb(16, 16, 16, 0.9);
     border-radius: 8px;
     border: 2px solid white;
 }
