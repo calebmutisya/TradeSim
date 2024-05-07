@@ -66,14 +66,10 @@ def edit_opentrade(opentrade_id):
     if not opentrade:
         return jsonify({"error": "Trade not found"}), 404
     data = request.json
-    opentrade.currency_pair = data.get('currency_pair', opentrade.currency_pair)
-    opentrade.position = data.get('position', opentrade.position)
-    opentrade.tp = data.get('tp', opentrade.tp)
-    opentrade.ep = data.get('ep', opentrade.ep)
-    opentrade.sl = data.get('sl', opentrade.sl)
-    opentrade.lot = data.get('lot', opentrade.lot)
-    opentrade.pnl = data.get('pnl', opentrade.pnl)
-    opentrade.open_date = data.get('open_date', opentrade.open_date)
+    if 'tp' in data:
+        opentrade.tp = data['tp']  # Update take profit
+    if 'sl' in data:
+        opentrade.sl = data['sl']  # Update stop loss
     db.session.commit()
     return jsonify({"message": "Trade updated successfully"}), 200
 

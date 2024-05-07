@@ -70,6 +70,38 @@ export default function OpentradeProvider({children}) {
             });
     };
 
+    const editOpentrade = (opentradeId, newData) => {
+        fetch(`/opentrades/${opentradeId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(newData),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to edit opentrade');
+            }
+            return response.json();
+        })
+        .then(data => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Trade Edited Successfully',
+            });
+            fetchUserOpentrades(); 
+        })
+        .catch(error => {
+            console.error('Error editing opentrade:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to edit trade. Please try again later.',
+            });
+        });
+    };
+
     const deleteOpentrade = (opentradeId) => {
         fetch(`/opentrades/${opentradeId}`, {
             method: 'DELETE',
@@ -102,6 +134,7 @@ export default function OpentradeProvider({children}) {
     const contextData={
         opentrades,
         addOpentrade,
+        editOpentrade,
         deleteOpentrade,
         fetchUserOpentrades
     }

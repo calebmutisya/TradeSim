@@ -22,13 +22,19 @@ export default function Markets() {
   const [selectedTrade, setSelectedTrade] = useState(null);
 
   const { currentUser,authToken } = useContext(UserContext);
-  const { opentrades, deleteOpentrade, fetchUserOpentrades }=useContext(OpentradeContext)
+  const { opentrades, editOpentrade,deleteOpentrade, fetchUserOpentrades }=useContext(OpentradeContext)
   
   const [showEdit, setShowEdit] = useState(false)
+  const [newTP, setNewTP] = useState('');
+  const [newSL, setNewSL] = useState('');
+
 
   const showTab = (trade) => {
     setSelectedTrade(trade);
     setShowEdit(true);
+    // Initialize newTP and newSL with current TP and SL values from the selected trade
+    setNewTP(trade.tp.toString());
+    setNewSL(trade.sl.toString());
   };
 
   const hideTab=()=>{
@@ -131,6 +137,20 @@ export default function Markets() {
     }
   };
 
+  const handleSave = () => {
+    const newData = {};
+    if (newTP !== '') {
+      newData.tp = parseFloat(newTP);
+    }
+    if (newSL !== '') {
+      newData.sl = parseFloat(newSL);
+    }
+    if (selectedTrade && Object.keys(newData).length > 0) {
+      editOpentrade(selectedTrade.id, newData);
+      hideTab();
+    }
+  };
+
   return (
     <div className='market'>
       <div className='chartsec'>
@@ -208,10 +228,20 @@ export default function Markets() {
                     </div>
                     <p className='entryslot'>Position: {selectedTrade.position}  EntryPrice: {selectedTrade.ep}</p>
                     <label>TP:</label>
-                    <input placeholder='Take profit' type='number'></input>
+                    <input
+                      placeholder='Take profit'
+                      type='number'
+                      value={newTP}
+                      onChange={(e) => setNewTP(e.target.value)}
+                    />
                     <label>SL:</label>
-                    <input placeholder='Stop Loss' type='number'></input>
-                    <button>SAVE</button>
+                    <input
+                      placeholder='Stop Loss'
+                      type='number'
+                      value={newSL}
+                      onChange={(e) => setNewSL(e.target.value)}
+                    />
+                    <button onClick={handleSave}>SAVE</button>
                   </div>
                 )}
                 {opentrades.map((trade, index) => (
