@@ -22,7 +22,7 @@ export default function Markets() {
   const [selectedTrade, setSelectedTrade] = useState(null);
 
   const { currentUser,authToken } = useContext(UserContext);
-  const { opentrades, deleteOpentrade, fetchUserOpenTrades }=useContext(OpentradeContext)
+  const { opentrades, deleteOpentrade, fetchUserOpentrades }=useContext(OpentradeContext)
   
   const [showEdit, setShowEdit] = useState(false)
 
@@ -117,9 +117,8 @@ export default function Markets() {
                 Swal.fire({
                     icon: 'success',
                     title: 'Trade Added Successfully',
-                    text: `Trade ID: ${data.id}`,
                 });
-                fetchUserOpenTrades(); // Refresh opentrades after adding a new trade
+                fetchUserOpentrades(); // Refresh opentrades after adding a new trade
             })
             .catch(error => {
                 console.error('Error adding opentrade:', error);
@@ -131,7 +130,6 @@ export default function Markets() {
             });
     }
   };
-
 
   return (
     <div className='market'>

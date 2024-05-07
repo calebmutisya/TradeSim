@@ -1,5 +1,4 @@
-import { createContext, useState, useEffect, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { createContext, useState, useEffect, useContext, useCallback } from 'react'
 import Swal from 'sweetalert2'
 import { UserContext } from './UserContext'
 
@@ -9,16 +8,11 @@ export const OpentradeContext= createContext()
 export default function OpentradeProvider({children}) {
 
     const [opentrades, setOpentrades] = useState([]);
-    const { currentUser,authToken } = useContext(UserContext);
-    const navigate = useNavigate();
+    const { authToken } = useContext(UserContext);
 
-    useEffect(() => {
-        if (authToken) {
-          fetchUserOpentrades();
-        }
-    }, [authToken]);
+    
 
-    const fetchUserOpentrades = () => {
+    const fetchUserOpentrades = useCallback(() => {
         fetch('/opentrades/user', {
             method: 'GET',
             headers: {
@@ -37,7 +31,13 @@ export default function OpentradeProvider({children}) {
         .catch(error => {
             console.error('Error fetching user open trades:', error);
         });
-    };
+    },[authToken]);
+
+    useEffect(() => {
+        if (authToken) {
+          fetchUserOpentrades();
+        }
+    }, [authToken, fetchUserOpentrades]);
 
     const addOpentrade = (opentradeData) => {
         fetch('/opentrades', {
@@ -57,9 +57,8 @@ export default function OpentradeProvider({children}) {
                 Swal.fire({
                     icon: 'success',
                     title: 'Trade Added Successfully',
-                    text: `Trade ID: ${data.id}`,
                 });
-                fetchUserOpentrades(); // Refresh opentrades after adding a new trade
+                fetchUserOpentrades(); 
             })
             .catch(error => {
                 console.error('Error adding opentrade:', error);

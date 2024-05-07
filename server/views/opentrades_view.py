@@ -25,7 +25,7 @@ def add_opentrade():
     )
     db.session.add(new_opentrade)
     db.session.commit()
-    return jsonify({"message": "Trade added successfully", "id": new_opentrade.id}), 201
+    return jsonify({"message": "Trade added successfully"}), 200
 
 
 #get all open trades
