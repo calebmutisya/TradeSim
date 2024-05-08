@@ -102,6 +102,39 @@ export default function OpentradeProvider({children}) {
         });
     };
 
+    const editPnltrade = (opentradeId, newData) => {
+        fetch(`/opentrades/${opentradeId}/pnl`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(newData),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to edit opentrade pnl');
+            }
+            return response.json();
+        })
+        .then(data => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Trade PNL Edited Successfully',
+            });
+            fetchUserOpentrades(); 
+        })
+        .catch(error => {
+            console.error('Error editing opentrade pnl:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to edit trade PNL. Please try again later.',
+            });
+        });
+    };
+
+
     const deleteOpentrade = (opentradeId) => {
         fetch(`/opentrades/${opentradeId}`, {
             method: 'DELETE',
@@ -134,6 +167,7 @@ export default function OpentradeProvider({children}) {
     const contextData={
         opentrades,
         addOpentrade,
+        editPnltrade,
         editOpentrade,
         deleteOpentrade,
         fetchUserOpentrades
