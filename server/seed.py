@@ -30,7 +30,7 @@ def seed_opentrades():
         for _ in range(3):
             trade = Opentrades(
                 user_id=user.id,
-                currency_pair='EUR/USD',
+                currency_pair='EUR-USD',
                 position='BUY',
                 tp=1.15,
                 ep=1.10,
@@ -51,7 +51,7 @@ def seed_closedtrades():
         for _ in range(3):
             trade = Closedtrades(
                 user_id=user.id,
-                currency_pair='EUR/USD',
+                currency_pair='EUR-USD',
                 position='BUY',
                 tp=1.15,
                 ep=1.10,
