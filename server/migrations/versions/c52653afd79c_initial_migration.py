@@ -1,8 +1,8 @@
-"""initial migration
+"""Initial migration
 
-Revision ID: 9cba8109499f
+Revision ID: c52653afd79c
 Revises: 
-Create Date: 2024-04-25 12:58:20.808753
+Create Date: 2024-05-09 11:13:34.216855
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '9cba8109499f'
+revision = 'c52653afd79c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -45,7 +45,8 @@ def upgrade():
     sa.Column('tp', sa.Integer(), nullable=True),
     sa.Column('ep', sa.Integer(), nullable=False),
     sa.Column('sl', sa.Float(), nullable=True),
-    sa.Column('lot', sa.Integer(), nullable=False),
+    sa.Column('mp', sa.Float(), nullable=True),
+    sa.Column('lot', sa.Float(), nullable=False),
     sa.Column('pnl', sa.Float(), nullable=False),
     sa.Column('open_date', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
@@ -59,7 +60,8 @@ def upgrade():
     sa.Column('tp', sa.Integer(), nullable=True),
     sa.Column('ep', sa.Integer(), nullable=False),
     sa.Column('sl', sa.Float(), nullable=True),
-    sa.Column('lot', sa.Integer(), nullable=False),
+    sa.Column('mp', sa.Float(), nullable=True),
+    sa.Column('lot', sa.Float(), nullable=False),
     sa.Column('pnl', sa.Float(), nullable=True),
     sa.Column('open_date', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),

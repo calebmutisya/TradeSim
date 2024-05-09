@@ -46,6 +46,7 @@ class Opentrades(db.Model):
     tp=db.Column(db.Integer, nullable=True)
     ep=db.Column(db.Integer, nullable=False)
     sl=db.Column(db.Float, nullable=True)
+    mp=db.Column(db.Float, nullable=True)
     lot = db.Column(db.Float, nullable=False)
     pnl=db.Column(db.Float, nullable=True)
     open_date = db.Column(db.DateTime, default=func.now(), nullable=False)
@@ -59,6 +60,7 @@ class Opentrades(db.Model):
             "tp": self.tp,
             "ep": self.ep,
             "sl": self.sl,
+            "mp": self.mp,
             "lot": self.lot,
             "pnl": self.pnl,
             "open_date": self.open_date.strftime('%Y-%m-%d %H:%M:%S')
@@ -75,6 +77,7 @@ class Closedtrades(db.Model):
     tp=db.Column(db.Integer, nullable=True)
     ep=db.Column(db.Integer, nullable=False)
     sl=db.Column(db.Float, nullable=True)
+    mp=db.Column(db.Float, nullable=True)
     lot = db.Column(db.Float, nullable=False)
     pnl=db.Column(db.Float, nullable=False)
     open_date = db.Column(db.DateTime, default=func.now(), nullable=False)
@@ -88,6 +91,7 @@ class Closedtrades(db.Model):
             "tp": self.tp,
             "ep": self.ep,
             "sl": self.sl,
+            "mp": self.mp,
             "lot": self.lot,
             "pnl": self.pnl,
             "open_date": self.open_date.strftime('%Y-%m-%d %H:%M:%S')
