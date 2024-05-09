@@ -150,19 +150,19 @@ export default function OpentradeProvider({children}) {
             return response.json();
         })
         .then(data => {
-            Swal.fire({
-                icon: 'success',
-                title: 'Trade PNL Edited Successfully',
-            });
+            // Swal.fire({
+            //     icon: 'success',
+            //     title: 'Trade PNL Edited Successfully',
+            // });
             fetchUserOpentrades(); 
         })
         .catch(error => {
             console.error('Error editing opentrade pnl:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Failed to edit trade PNL. Please try again later.',
-            });
+            // Swal.fire({
+            //     icon: 'error',
+            //     title: 'Error',
+            //     text: 'Failed to edit trade PNL. Please try again later.',
+            // });
         });
     };
 
