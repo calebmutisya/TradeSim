@@ -102,6 +102,38 @@ export default function OpentradeProvider({children}) {
         });
     };
 
+    const editOpentradeMp = (opentradeId, newMp) => {
+        fetch(`/opentrades/${opentradeId}/mp`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify({ mp: newMp }), // Send the new market price in the request body
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to edit opentrade market price');
+                }
+                return response.json();
+            })
+            .then(data => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Trade Market Price Edited Successfully',
+                });
+                fetchUserOpentrades(); // Refresh opentrades after editing the market price
+            })
+            .catch(error => {
+                console.error('Error editing opentrade market price:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to edit trade market price. Please try again later.',
+                });
+            });
+    };
+
     const editPnltrade = (opentradeId, newData) => {
         fetch(`/opentrades/${opentradeId}/pnl`, {
             method: 'PATCH',
@@ -167,6 +199,7 @@ export default function OpentradeProvider({children}) {
     const contextData={
         opentrades,
         addOpentrade,
+        editOpentradeMp,
         editPnltrade,
         editOpentrade,
         deleteOpentrade,

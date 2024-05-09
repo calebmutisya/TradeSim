@@ -22,7 +22,7 @@ export default function Markets() {
   const [selectedTrade, setSelectedTrade] = useState(null);
 
   const { currentUser,authToken } = useContext(UserContext);
-  const { opentrades, editPnltrade,editOpentrade,deleteOpentrade, fetchUserOpentrades }=useContext(OpentradeContext)
+  const { opentrades, editOpentradeMp,editPnltrade,editOpentrade,deleteOpentrade, fetchUserOpentrades }=useContext(OpentradeContext)
   
   const [showEdit, setShowEdit] = useState(false)
   const [newTP, setNewTP] = useState('');
@@ -153,11 +153,12 @@ export default function Markets() {
 
   // Inside the useEffect hook, automatically save PNL after it's calculated
   useEffect(() => {
-    const interval = setInterval(() => {
+    const interval = setInterval(async () => {
         // Check if there's an authenticated user
-        if (currentUser) {
+        if (currentUser && opentrades.length > 0) {
             // Save PNL for each trade after it's calculated
-            opentrades.forEach(async (trade) => {
+            for (let i = 0; i < opentrades.length; i++) {
+                const trade = opentrades[i];
                 try {
                     const currencyPairLowerCase = trade.currency_pair.toLowerCase();
                     const response = await fetch(`/api/market-price/${currencyPairLowerCase}`);
@@ -166,14 +167,13 @@ export default function Markets() {
                     }
                     const data = await response.json();
                     const marketPrice = parseFloat(data.marketPrice);
-                    console.log('Market price:', marketPrice);
-                    const newData = { pnl: calculatePNL(trade, marketPrice) };
-                    editPnltrade(trade.id, newData);
-                    console.log('New PNL data:', newData);
+                    console.log('Market price for', currencyPairLowerCase, ':', marketPrice);
+                    await editOpentradeMp(trade.id, marketPrice);
+                    console.log('Trade market price edited successfully');
                 } catch (error) {
-                    console.error('Error calculating PNL and updating trade:', error);
+                    console.error('Error editing trade market price:', error);
                 }
-            });
+            }
         }
     }, 60000); // Execute every minute (60000 milliseconds)
 
@@ -183,10 +183,11 @@ export default function Markets() {
 
 
   // Update calculatePNL to accept marketPrice as a parameter
-  const calculatePNL = (trade, marketPrice) => {
+  const calculatePNL = (trade) => {
+    const marketPrice = trade.mp;
     const entryPrice = trade.ep;
     const position = trade.position;
-    const lot = trade.lot;
+    const lot = trade.lot * 100000;
     let pnl = 0;
 
     console.log('Entry price:', entryPrice);
@@ -198,7 +199,7 @@ export default function Markets() {
     } else if (position === 'SELL') {
         pnl = (entryPrice - marketPrice) * lot;
     }
-
+    
     console.log('Calculated PNL:', pnl);
 
     return pnl.toFixed(2); // Assuming pnl is in USD, you may need to adjust based on your currency
@@ -305,7 +306,7 @@ export default function Markets() {
                     <div className='tp'>TP: {trade.tp}</div>
                     <div className='sl'>SL: {trade.sl}</div>
                     <div className='lot'>LOT: {trade.lot}</div>
-                    <div className='pnl'>PNL:$ {calculatePNL(trade)}</div>
+                    <div className='pnl'>PNL: ${calculatePNL(trade)}</div>
                     <img className='cross' src={cross} onClick={() => deleteOpentrade(trade.id)} />
                   </div>
                 ))}

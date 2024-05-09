@@ -85,6 +85,18 @@ def edit_opentrade_pnl(opentrade_id):
     db.session.commit()
     return jsonify({"message": "Trade pnl updated successfully"}), 200
 
+# Edit mp for a trade
+@open_bp.route("/opentrades/<int:opentrade_id>/mp", methods=['PATCH'])
+@jwt_required()
+def edit_opentrade_mp(opentrade_id):
+    opentrade = Opentrades.query.get(opentrade_id)
+    if not opentrade:
+        return jsonify({"error": "Trade not found"}), 404
+    data = request.json
+    opentrade.mp = data.get('mp', opentrade.mp)
+    db.session.commit()
+    return jsonify({"message": "Trade mp updated successfully"}), 200
+
 #delete a trade
 @open_bp.route("/opentrades/<int:opentrade_id>", methods=["DELETE"])
 def delete_opentrade(opentrade_id):
