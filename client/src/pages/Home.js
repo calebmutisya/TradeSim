@@ -54,7 +54,7 @@ export default function Home() {
           <div className='imgslot'>
             <img className='cardimg' src={card1}/>
           </div>
-          <p className='p4'>Learn And Improve Your <br/> Tradng Skills</p>
+          <p className='p4'>Learn And Improve Your <br/> Trading Skills</p>
         </div>
         <div className='card'>
           <div class="cardbg"></div>
@@ -70,7 +70,7 @@ export default function Home() {
           <div className='imgslot'>
             <img className='cardimg' src={card3}/>
           </div>
-          <p className='p4'>Gain confidence in Your <br/> Tradng Decisions</p>
+          <p className='p4'>Gain confidence in Your <br/> Trading Decisions</p>
         </div>
       </div>
       <div className='practice'>
