@@ -81,6 +81,27 @@ def update_user():
 
     return jsonify({"message":"User updated successfully"}), 200
 
+@user_bp.route("/users/capital", methods=['PATCH'])
+@jwt_required()
+def update_user_capital():
+    current_user_id = get_jwt_identity()
+    
+    user = User.query.get(current_user_id)
+    if not user:
+        return jsonify({"message":"User not found"}), 404
+    
+    data = request.get_json()
+    new_capital = data.get('capital')
+
+    if new_capital is None:
+        return jsonify({"error": "Missing 'capital' field in request body"}), 400
+
+    # Update user's capital
+    user.capital = new_capital
+    db.session.commit()
+
+    return jsonify({"message":"User's capital updated successfully"}), 200
+
 #delete user
 @user_bp.route("/users", methods=["DELETE"])
 @jwt_required()

@@ -189,6 +189,52 @@ export default function UserProvider({children})
         });
     }
 
+    // Function to update user's capital
+    function updateUserCapital(newCapital) {
+        fetch('/users/capital', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify({
+                capital: newCapital
+            }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to update user capital');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Handle success
+            // For example, show a success message
+            Swal.fire({
+                icon: 'success',
+                title: 'User Capital Updated Successfully',
+                text: 'User capital has been successfully updated!',
+            });
+            // Optionally, you can perform additional actions
+            // For example, update current user state
+            setCurrentUser(prevUser => ({
+                ...prevUser,
+                capital: newCapital
+            }));
+        })
+        .catch(error => {
+            // Handle error
+            console.error('Error updating user capital:', error);
+            // For example, show an error message
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to update user capital. Please try again later.',
+            });
+        });
+    }
+
+
     // Fetch user data when component mounts or when authToken changes
     useEffect(() => {
         if (authToken) {
@@ -198,7 +244,7 @@ export default function UserProvider({children})
         }
     }, [authToken]);
 
-    const contextData={addUser, login, logout, authToken, currentUser}
+    const contextData={addUser, login, logout, authToken, currentUser, updateUserCapital}
 
   return (
     <UserContext.Provider value={contextData}>
