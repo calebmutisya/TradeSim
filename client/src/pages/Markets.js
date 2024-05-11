@@ -22,7 +22,7 @@ export default function Markets() {
   const [selectedTrade, setSelectedTrade] = useState(null);
 
   const { currentUser,authToken } = useContext(UserContext);
-  const { opentrades, editOpentradeMp,editPnltrade,editOpentrade,deleteOpentrade, fetchUserOpentrades }=useContext(OpentradeContext)
+  const { opentrades, editOpentradeMp,editPnltrade,editOpentrade,deleteOpentrade, fetchUserOpentrades, setOpentrades }=useContext(OpentradeContext)
   
   const [showEdit, setShowEdit] = useState(false)
   const [newTP, setNewTP] = useState('');
@@ -182,27 +182,35 @@ export default function Markets() {
   }, [currentUser, opentrades]);
 
 
-  // Update calculatePNL to accept marketPrice as a parameter
-  const calculatePNL = (trade) => {
-    const marketPrice = trade.mp;
-    const entryPrice = trade.ep;
-    const position = trade.position;
-    const lot = trade.lot * 100000;
-    let pnl = 0;
+  // Inside the calculatePNL function
+  const calculatePNL = async (trade) => {
+    // Your existing code to calculate pnl
 
-    console.log('Entry price:', entryPrice);
-    console.log('Position:', position);
-    console.log('Lot:', lot);
-
-    if (position === 'BUY') {
-        pnl = (marketPrice - entryPrice) * lot;
-    } else if (position === 'SELL') {
-        pnl = (entryPrice - marketPrice) * lot;
-    }
+    let pnl=0;
     
-    console.log('Calculated PNL:', pnl);
+    try {
+      // Call editPnltrade to update PNL in the backend
+      await editPnltrade(trade.id, { pnl: pnl.toFixed(2) });
+      console.log('Trade PNL edited successfully');
+      
+      // Update the trade object with the new PNL
+      const updatedTrade = { ...trade, pnl: pnl.toFixed(2) };
 
-    return pnl.toFixed(2); // Assuming pnl is in USD, you may need to adjust based on your currency
+      // Update the opentrades state with the updated trade object
+      setOpentrades(prevOpentrades => prevOpentrades.map(prevTrade => {
+        if (prevTrade.id === trade.id) {
+          return updatedTrade;
+        } else {
+          return prevTrade;
+        }
+      }));
+
+      // Return the calculated PNL
+      return pnl.toFixed(2);
+    } catch (error) {
+      console.error('Error editing trade PNL:', error);
+      return ''; // Return an empty string or handle the error accordingly
+    }
   };
   
   return (
@@ -305,7 +313,7 @@ export default function Markets() {
                     <div className='tp'>TP: {trade.tp}</div>
                     <div className='sl'>SL: {trade.sl}</div>
                     <div className='lot'>LOT: {trade.lot}</div>
-                    <div className='pnl'>PNL: ${calculatePNL(trade)}</div>
+                    <div className='pnl'>PNL: ${trade.pnl}</div>
                     <img className='cross' src={cross} onClick={() => deleteOpentrade(trade.id)} />
                   </div>
                 ))}
