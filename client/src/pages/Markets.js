@@ -269,7 +269,6 @@ export default function Markets() {
         <div className='tradelog'>
           <div className='tradebtns'>
             <button className='tradebtn1' >Open Trades</button>
-            <button className='tradebtn2'>Closed Trades</button>
           </div>
           <div className='tradedata'>
             <div className='tab1'>
