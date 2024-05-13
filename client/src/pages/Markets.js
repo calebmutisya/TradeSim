@@ -274,7 +274,7 @@ export default function Markets() {
           <hr/>
           <div>
             <div className='walletcont'>
-              <img className='coin' src={coin}/> 10000
+              <img className='coin' src={coin}/> 10,000
             </div>
             <button className='tradebtn1' >Closed Trades</button>
             <div className='tradeslot1'>
