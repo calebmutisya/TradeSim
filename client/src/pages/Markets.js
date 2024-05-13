@@ -6,6 +6,7 @@ import fire from '../assets/fire.svg'
 import robot from '../assets/robot.svg'
 import cross from '../assets/cross.svg'
 import dots from '../assets/dots.svg'
+import coin from '../assets/coin.png'
 import TradingViewWidget from '../constants/TradingViewWidget';
 import Heatmap from '../constants/Heatmap';
 import Calendar from '../constants/Calendar';
@@ -271,6 +272,26 @@ export default function Markets() {
             <div className='numslot'><input className='takeprofit-input' type='number' min={0}/></div>
           </div>
           <hr/>
+          <div>
+            <div className='walletcont'>
+              <img className='coin' src={coin}/> 10000
+            </div>
+            <button className='tradebtn1' >Closed Trades</button>
+            <div className='tradeslot1'>
+              <div className='slot5cont'>
+                <div className='slot5'>EUR-USD</div>
+                <div className='slot5'>BUY</div>
+                <div className='slot5'>PNL: $ 100</div>
+                <div className='slot5'>13-05-2023</div>
+              </div>
+              <div className='slot5cont'>
+                <div className='slot5'>EUR-USD</div>
+                <div className='slot5'>BUY</div>
+                <div className='slot5'>PNL: $ 100</div>
+                <div className='slot5'>13-05-2023</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className='mytrades'>
