@@ -314,7 +314,7 @@ export default function Markets() {
                     <div className='sl'>SL: {trade.sl}</div>
                     <div className='lot'>LOT: {trade.lot}</div>
                     <div className='pnl'>PNL: ${trade.pnl}</div>
-                    <img className='cross' src={cross} onClick={() => deleteOpentrade(trade.id)} />
+                    <img className='cross' src={cross} onClick={() => deleteOpentrade(trade.id, trade)} />
                   </div>
                 ))}
                 </div>

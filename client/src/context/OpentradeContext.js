@@ -8,7 +8,7 @@ export const OpentradeContext= createContext()
 export default function OpentradeProvider({children}) {
 
     const [opentrades, setOpentrades] = useState([]);
-    const { authToken } = useContext(UserContext);
+    const { authToken, currentUser } = useContext(UserContext);
 
     
 
@@ -167,30 +167,50 @@ export default function OpentradeProvider({children}) {
     };
 
 
-    const deleteOpentrade = (opentradeId) => {
-        fetch(`/opentrades/${opentradeId}`, {
+    const deleteOpentrade = (tradeId, tradeData) => {
+        fetch(`/opentrades/${tradeId}`, {
             method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            },
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to delete opentrade');
-                }
-                return response.json();
-            })
+        .then(response => {
+            if (!response.ok) {
+              throw new Error('Failed to Close Trade');
+            }
+            // Construct closed trade data
+            const closedTradeData = {
+              // Assuming you have the necessary data for closed trades
+              // Modify or add properties as needed
+                user_id: currentUser.id,
+                currency_pair: tradeData.currency_pair,
+                position: tradeData.position,
+                tp: tradeData.tp,
+                sl: tradeData.sl,
+                mp: tradeData.mp,
+                lot: tradeData.lot,
+                pnl: tradeData.pnl,
+                open_date: tradeData.open_date
+              // Add more properties based on your closed trade data requirements
+            };
+            // Add the closed trade
+            addClosedTrade(closedTradeData);
+            return response.json();
+          })
             .then(data => {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Trade Deleted Successfully',
+                    title: 'Trade Closed Successfully',
                     text: data.message,
                 });
                 fetchUserOpentrades(); // Refresh opentrades after deleting a trade
             })
             .catch(error => {
-                console.error('Error deleting opentrade:', error);
+                console.error('Error Closing Trade:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Failed to delete trade. Please try again later.',
+                    text: 'Failed to Close Trade. Please try again later.',
                 });
             });
     };
@@ -230,30 +250,7 @@ export default function OpentradeProvider({children}) {
         });
     };
 
-    // Define deleteOpentradeAndAddToClosedTrade function
-    const deleteOpentradeAndAddToClosedTrade = async (opentradeId) => {
-        try {
-            // Find the trade to delete from the opentrades array
-            const tradeToDelete = opentrades.find(trade => trade.id === opentradeId);
-            // Add the trade to the closed trades table
-            await addClosedTrade(tradeToDelete);
-            // Delete the trade from the opentrades array
-            deleteOpentrade(opentradeId);
-            // Show success message
-            Swal.fire({
-                icon: 'success',
-                title: 'Trade successfully closed.',
-            });
-        } catch (error) {
-            // Show error message if an error occurs
-            console.error('Error closing trade:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Failed to close trade. Please try again later.',
-            });
-        }
-    };
+    
 
 
     const contextData={
@@ -262,7 +259,7 @@ export default function OpentradeProvider({children}) {
         editOpentradeMp,
         editPnltrade,
         editOpentrade,
-        deleteOpentrade: deleteOpentradeAndAddToClosedTrade,
+        deleteOpentrade,
         fetchUserOpentrades,
         addClosedTrade
     }
