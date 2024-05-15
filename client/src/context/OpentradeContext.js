@@ -8,6 +8,7 @@ export const OpentradeContext= createContext()
 export default function OpentradeProvider({children}) {
 
     const [opentrades, setOpentrades] = useState([]);
+    const [closedtrades, setClosedTrades] = useState([]);
     const { authToken, currentUser } = useContext(UserContext);
 
     
@@ -33,11 +34,40 @@ export default function OpentradeProvider({children}) {
         });
     },[authToken]);
 
+    const fetchClosedTrades = useCallback(() => {
+        // Fetch closed trades from the backend
+        fetch('/closedtrades', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch closed trades');
+            }
+            return response.json();
+        })
+        .then(data => {
+            setClosedTrades(data); // Update state with fetched closed trades
+        })
+        .catch(error => {
+            console.error('Error fetching closed trades:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to fetch closed trades. Please try again later.',
+            });
+        });
+    }, [authToken]);
+
     useEffect(() => {
         if (authToken) {
           fetchUserOpentrades();
+          fetchClosedTrades();
         }
-    }, [authToken, fetchUserOpentrades]);
+    }, [authToken, fetchUserOpentrades, fetchClosedTrades]);
+
 
     const addOpentrade = (opentradeData) => {
         fetch('/opentrades', {
@@ -252,15 +282,19 @@ export default function OpentradeProvider({children}) {
 
     
 
+    
+
 
     const contextData={
         opentrades,
+        closedtrades,
         addOpentrade,
         editOpentradeMp,
         editPnltrade,
         editOpentrade,
         deleteOpentrade,
         fetchUserOpentrades,
+        fetchClosedTrades,
         addClosedTrade
     }
 

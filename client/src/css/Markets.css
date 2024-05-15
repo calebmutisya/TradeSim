@@ -392,7 +392,7 @@ background: #00d1ff; /* color of the scrollbar on hover */
     flex-direction: column;
     font-size: 12px;
     overflow-y: scroll;
-    height: 490px;
+    height: 420px;
 }
 .slot5cont{
     width: 99%;
