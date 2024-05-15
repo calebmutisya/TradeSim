@@ -214,6 +214,7 @@ export default function OpentradeProvider({children}) {
                 currency_pair: tradeData.currency_pair,
                 position: tradeData.position,
                 tp: tradeData.tp,
+                ep: tradeData.ep,
                 sl: tradeData.sl,
                 mp: tradeData.mp,
                 lot: tradeData.lot,
