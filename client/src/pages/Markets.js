@@ -171,6 +171,7 @@ export default function Markets() {
                     console.log('Market price for', currencyPairLowerCase, ':', marketPrice);
                     await editOpentradeMp(trade.id, marketPrice);
                     console.log('Trade market price edited successfully');
+                    await calculatePNL(trade);
                 } catch (error) {
                     console.error('Error editing trade market price:', error);
                 }
@@ -185,11 +186,27 @@ export default function Markets() {
 
   // Inside the calculatePNL function
   const calculatePNL = async (trade) => {
-    // Your existing code to calculate pnl
-
-    let pnl=0;
-    
     try {
+      // Fetch the market price for the trade's currency pair
+      const currencyPairLowerCase = trade.currency_pair.toLowerCase();
+      const response = await fetch(`/api/market-price/${currencyPairLowerCase}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch market price');
+      }
+      const data = await response.json();
+      const marketPrice = parseFloat(data.marketPrice);
+
+      // Calculate pnl based on the entry price and market price
+      const entryPrice = parseFloat(trade.ep);
+      const position = trade.position;
+      const lot = trade.lot * 100000;
+      let pnl = 0;
+
+      if (position === 'BUY') {
+        pnl = (marketPrice - entryPrice) * lot;
+      } else if (position === 'SELL') {
+        pnl = (entryPrice - marketPrice) * lot;
+      }
       // Call editPnltrade to update PNL in the backend
       await editPnltrade(trade.id, { pnl: pnl.toFixed(2) });
       console.log('Trade PNL edited successfully');

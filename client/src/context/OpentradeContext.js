@@ -118,10 +118,10 @@ export default function OpentradeProvider({children}) {
                 return response.json();
             })
             .then(data => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Trade Market Price Edited Successfully',
-                });
+                // Swal.fire({
+                //     icon: 'success',
+                //     title: 'Trade Market Price Edited Successfully',
+                // });
                 fetchUserOpentrades(); // Refresh opentrades after editing the market price
             })
             .catch(error => {
