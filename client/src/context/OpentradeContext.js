@@ -11,8 +11,6 @@ export default function OpentradeProvider({children}) {
     const [closedtrades, setClosedTrades] = useState([]);
     const { authToken, currentUser } = useContext(UserContext);
 
-    
-
     const fetchUserOpentrades = useCallback(() => {
         fetch('/opentrades/user', {
             method: 'GET',
@@ -220,7 +218,7 @@ export default function OpentradeProvider({children}) {
                 mp: tradeData.mp,
                 lot: tradeData.lot,
                 pnl: tradeData.pnl,
-                open_date: tradeData.open_date
+                open_date: new Date(tradeData.open_date).toISOString()
               // Add more properties based on your closed trade data requirements
             };
             // Add the closed trade
@@ -279,11 +277,6 @@ export default function OpentradeProvider({children}) {
             });
         });
     };
-
-    
-
-    
-
 
     const contextData={
         opentrades,

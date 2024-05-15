@@ -75,7 +75,7 @@ class Closedtrades(db.Model):
     currency_pair=db.Column(db.String(50))
     position=db.Column(db.String, nullable=False)
     tp=db.Column(db.Integer, nullable=True)
-    ep=db.Column(db.Integer, nullable=False)
+    ep=db.Column(db.Integer, nullable=True)
     sl=db.Column(db.Float, nullable=True)
     mp=db.Column(db.Float, nullable=True)
     lot = db.Column(db.Float, nullable=False)
@@ -96,6 +96,12 @@ class Closedtrades(db.Model):
             "pnl": self.pnl,
             "open_date": self.open_date.strftime('%Y-%m-%d %H:%M:%S')
         }
+    @validates('open_date')
+    def validate_open_date(self, key, open_date):
+        if isinstance(open_date, str):
+            # Convert string to datetime object
+            open_date = datetime.strptime(open_date, '%Y-%m-%dT%H:%M:%S.%fZ')
+        return open_date
 
 class TokenBlocklist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
