@@ -233,6 +233,7 @@ export default function OpentradeProvider({children}) {
                     text: data.message,
                 });
                 fetchUserOpentrades(); // Refresh opentrades after deleting a trade
+                fetchClosedTrades();
             })
             .catch(error => {
                 console.error('Error Closing Trade:', error);

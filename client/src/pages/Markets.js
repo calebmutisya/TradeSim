@@ -272,7 +272,7 @@ export default function Markets() {
             <p className="p9">
               MARKET PRICE: {marketData.marketPrice}
               <br/>
-              <span className='refresh'>Refreshes every 30 seconds</span>
+              <span className='refresh'>Refreshes every 5 seconds</span>
             </p>
           )}
           <div className='buysec'>
