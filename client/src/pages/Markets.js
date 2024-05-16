@@ -23,7 +23,7 @@ export default function Markets() {
   const [selectedTrade, setSelectedTrade] = useState(null);
 
   const { currentUser,authToken } = useContext(UserContext);
-  const { opentrades, editOpentradeMp,editPnltrade,editOpentrade,deleteOpentrade, fetchUserOpentrades, setOpentrades }=useContext(OpentradeContext)
+  const { opentrades, closedtrades, editOpentradeMp,editPnltrade,editOpentrade,deleteOpentrade, fetchUserOpentrades, setOpentrades }=useContext(OpentradeContext)
   
   const [showEdit, setShowEdit] = useState(false)
   const [newTP, setNewTP] = useState('');
@@ -294,20 +294,21 @@ export default function Markets() {
               <img className='coin' src={coin}/> 10,000
             </div>
             <button className='tradebtn1' >Closed Trades</button>
-            <div className='tradeslot1'>
-              <div className='slot5cont'>
-                <div className='slot5'>EUR-USD</div>
-                <div className='slot5'>BUY</div>
-                <div className='slot5'>PNL: $ 100</div>
-                <div className='slot5'>13-05-2023</div>
+            {currentUser ? (
+              <div className='tradeslot1'>
+                {closedtrades.map((trade, index)=>(
+                  
+                    <div className='slot5cont' key={index}>
+                      <div className='slot5'>{trade.currency_pair}</div>
+                      <div className='slot5'>{trade.position}</div>
+                      <div className='slot5'>PNL: {trade.pnl}</div>
+                      <div className='slot6'>{new Date(trade.open_date).toLocaleDateString()}</div>
+                    </div>
+                ))}
               </div>
-              <div className='slot5cont'>
-                <div className='slot5'>EUR-USD</div>
-                <div className='slot5'>BUY</div>
-                <div className='slot5'>PNL: $ 100</div>
-                <div className='slot5'>13-05-2023</div>
-              </div>
-            </div>
+            ):(
+              <p className='message1'>Please login to view Closed Trades</p>
+            )}
           </div>
         </div>
       </div>
@@ -357,7 +358,7 @@ export default function Markets() {
                 ))}
                 </div>
               ) : (
-                <p className='message1'>Please login to view your trades</p>
+                <p className='message1'>Please login to view Open Trades</p>
               )}
             </div>
           </div>

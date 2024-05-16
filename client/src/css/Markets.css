@@ -406,6 +406,11 @@ background: #00d1ff; /* color of the scrollbar on hover */
     width: 25%;
     padding: 5px;
 }
+.slot6{
+    width: 25%;
+    padding: 5px;
+    font-size: 12px;
+}
 .slot5cont:hover{
     cursor: pointer;
     color: black;
