@@ -177,7 +177,7 @@ export default function Markets() {
                 }
             }
         }
-    }, 15000); // Execute every minute (60000 milliseconds)
+    }, 30000); // Execute every minute (60000 milliseconds)
 
     // Cleanup function to clear the interval on component unmount or when opentrades changes
     return () => clearInterval(interval);
