@@ -177,7 +177,7 @@ export default function Markets() {
                 }
             }
         }
-    }, 60000); // Execute every minute (60000 milliseconds)
+    }, 15000); // Execute every minute (60000 milliseconds)
 
     // Cleanup function to clear the interval on component unmount or when opentrades changes
     return () => clearInterval(interval);
@@ -291,7 +291,15 @@ export default function Markets() {
           <hr/>
           <div>
             <div className='walletcont'>
-              <img className='coin' src={coin}/> 10,000
+              {authToken ? (
+                <>
+                <img className='coin' src={coin}/> {currentUser.capital}
+                </>
+              ):(
+                <>
+                <img className='coin' src={coin}/> 9,000
+                </>
+              )}
             </div>
             <button className='tradebtn1' >Closed Trades</button>
             {currentUser ? (

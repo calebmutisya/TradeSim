@@ -9,7 +9,7 @@ export default function OpentradeProvider({children}) {
 
     const [opentrades, setOpentrades] = useState([]);
     const [closedtrades, setClosedTrades] = useState([]);
-    const { authToken, currentUser } = useContext(UserContext);
+    const { authToken, currentUser, updateUserCapital } = useContext(UserContext);
 
     const fetchUserOpentrades = useCallback(() => {
         fetch('/opentrades/user', {
@@ -206,6 +206,10 @@ export default function OpentradeProvider({children}) {
             if (!response.ok) {
               throw new Error('Failed to Close Trade');
             }
+            // Calculate new capital by adding the trade's pnl to the current capital
+            const newCapital = currentUser.capital + tradeData.pnl;
+            // Update user's capital
+            updateUserCapital(newCapital);
             // Construct closed trade data
             const closedTradeData = {
               // Assuming you have the necessary data for closed trades
@@ -224,6 +228,8 @@ export default function OpentradeProvider({children}) {
             };
             // Add the closed trade
             addClosedTrade(closedTradeData);
+            fetchUserOpentrades();
+            fetchClosedTrades();
             return response.json();
           })
             .then(data => {
@@ -232,8 +238,8 @@ export default function OpentradeProvider({children}) {
                     title: 'Trade Closed Successfully',
                     text: data.message,
                 });
-                fetchUserOpentrades(); // Refresh opentrades after deleting a trade
-                fetchClosedTrades();
+                // fetchUserOpentrades(); 
+                // fetchClosedTrades();
             })
             .catch(error => {
                 console.error('Error Closing Trade:', error);

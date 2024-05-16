@@ -210,11 +210,11 @@ export default function UserProvider({children})
         .then(data => {
             // Handle success
             // For example, show a success message
-            Swal.fire({
-                icon: 'success',
-                title: 'User Capital Updated Successfully',
-                text: 'User capital has been successfully updated!',
-            });
+            // Swal.fire({
+            //     icon: 'success',
+            //     title: 'User Capital Updated Successfully',
+            //     text: 'User capital has been successfully updated!',
+            // });
             // Optionally, you can perform additional actions
             // For example, update current user state
             setCurrentUser(prevUser => ({
