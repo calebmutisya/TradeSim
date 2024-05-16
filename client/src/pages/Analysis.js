@@ -14,6 +14,11 @@ export default function Analysis() {
   const { currentUser,authToken } = useContext(UserContext);
   const { opentrades, closedtrades, editOpentradeMp,editPnltrade,editOpentrade,deleteOpentrade, fetchUserOpentrades, setOpentrades }=useContext(OpentradeContext)
 
+  // Calculate the number of trades with positive PNL
+  const winningTrades = closedtrades.filter(trade => trade.pnl > 0);
+
+  // Calculate the winning rate as a percentage
+  const winningRate = closedtrades.length > 0 ? (winningTrades.length / closedtrades.length) * 100 : 0;
 
   return (
     <div className='analysis'>
@@ -34,9 +39,19 @@ export default function Analysis() {
           <div className='cardname'>Capital</div>
         </div>
         <div className='analysiscard'>
-          <img className='dollar' src={rate}/>
-          <div className='cash'>72%</div>
-          <div className='cardname'>Winning Rate</div>
+          {currentUser ?(
+            <>
+              <img className='dollar' src={rate}/>
+              <div className='cash'>{winningRate.toFixed(2)}%</div>
+              <div className='cardname'>Winning Rate</div>
+            </>
+          ):(
+            <>
+            <img className='dollar' src={rate}/>
+            <div className='cash'>72%</div>
+            <div className='cardname'>Winning Rate</div>
+            </>
+          )}
         </div>
         <div className='analysiscard'>
           <img className='dollar' src={graph}/>
