@@ -339,6 +339,12 @@ background: #00d1ff; /* color of the scrollbar on hover */
     text-align: center;
     color: #00d1ff;
 }
+.position2{
+    width: 58px;
+    line-height: 24px;
+    text-align: center;
+    color: #FF5353;
+}
 .tp{
     width: 97px;
     line-height: 24px;
@@ -358,6 +364,13 @@ background: #00d1ff; /* color of the scrollbar on hover */
     width: 140px;
     line-height: 24px;
     text-align: center;
+    color: rgb(27, 65, 255);
+}
+.pnl2{
+    width: 140px;
+    line-height: 24px;
+    text-align: center;
+    color: rgb(255, 28, 28);
 }
 .message1{
     text-align: center;
@@ -406,6 +419,19 @@ background: #00d1ff; /* color of the scrollbar on hover */
     width: 25%;
     padding: 5px;
 }
+.slotbuy{
+    width: 25%;
+    padding: 5px;
+    color: #00D1FF;
+}
+.slotsell{
+    width: 25%;
+    padding: 5px;
+    color: #FF5353;
+}
+.white{
+    color: white;
+}
 .slot6{
     width: 25%;
     padding: 5px;
@@ -413,9 +439,9 @@ background: #00d1ff; /* color of the scrollbar on hover */
 }
 .slot5cont:hover{
     cursor: pointer;
-    color: black;
-    background-color: white;
+    background-color: rgb(109, 109, 109);
 }
+
 .walletcont{
     display: flex;
     justify-content: center;

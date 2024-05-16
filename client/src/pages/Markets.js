@@ -300,8 +300,8 @@ export default function Markets() {
                   
                     <div className='slot5cont' key={index}>
                       <div className='slot5'>{trade.currency_pair}</div>
-                      <div className='slot5'>{trade.position}</div>
-                      <div className='slot5'>PNL: {trade.pnl}</div>
+                      <div className={trade.position === 'BUY' ? 'slotbuy' : 'slotsell'}>{trade.position}</div>
+                      <div className={trade.pnl >= 0 ? 'slotbuy' : 'slotsell'}><span className='white'>PNL:</span> {trade.pnl}</div>
                       <div className='slot6'>{new Date(trade.open_date).toLocaleDateString()}</div>
                     </div>
                 ))}
@@ -348,11 +348,11 @@ export default function Markets() {
                   <div className='trade1' key={index}>
                     <img className='dots' src={dots} onClick={() => showTab(trade)}/>
                     <div className='currency'>{trade.currency_pair}</div>
-                    <div className='position'>{trade.position}</div>
+                    <div className={trade.position === 'BUY' ? 'position' : 'position2'}>{trade.position}</div>
                     <div className='tp'>TP: {trade.tp}</div>
                     <div className='sl'>SL: {trade.sl}</div>
                     <div className='lot'>LOT: {trade.lot}</div>
-                    <div className='pnl'>PNL: ${trade.pnl}</div>
+                    <div className={trade.pnl >= 0 ? 'pnl' : 'pnl2'}>PNL: ${trade.pnl}</div>
                     <img className='cross' src={cross} onClick={() => deleteOpentrade(trade.id, trade)} />
                   </div>
                 ))}
