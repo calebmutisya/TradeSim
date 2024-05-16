@@ -11,7 +11,7 @@
     width: 80%;
     display: flex;
     margin: auto;
-    margin-top: 50px;
+    padding-top: 50px;
     margin-bottom: 50px;
     justify-content: space-around;
 }
@@ -23,7 +23,7 @@
     border: 1px solid white;
     border-radius: 8px;
     margin: 10px;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 .analysislog{
     display: flex;
