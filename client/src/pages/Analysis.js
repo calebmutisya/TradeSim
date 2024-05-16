@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect, useContext} from 'react';
 import '../css/Analysis.css'
+import '../css/Markets.css'
 import dollar from '../assets/dollar.svg'
 import rate from '../assets/rate.svg'
 import graph from '../assets/graph.svg'
 import rank from '../assets/rank.svg'
 import profimg from '../assets/profimg.png'
+import { UserContext } from '../context/UserContext';
+import { OpentradeContext } from '../context/OpentradeContext';
 
 export default function Analysis() {
+
+  const { currentUser,authToken } = useContext(UserContext);
+  const { opentrades, closedtrades, editOpentradeMp,editPnltrade,editOpentrade,deleteOpentrade, fetchUserOpentrades, setOpentrades }=useContext(OpentradeContext)
+
+
   return (
     <div className='analysis'>
       <div className='cardcont'>
@@ -34,48 +42,22 @@ export default function Analysis() {
       <div className='analysislog'>
         <div className='pasttrades'>
           <div className='contname'>Trades Log</div>
-          <div className='ranksec'>
-            <div className='logdetails'>
-              <div className='date'>25 March 2024</div>
-              <div className='pastpair'>EUR/USD</div>
-              <div className='pastposition'>BUY</div>
-              <div className='takeprofit'>TP:156.676</div>
-              <div className='stoploss'>SL: 132.378</div>
-              <div className='profit'>PNL: 120.00</div>
-            </div>
-            <div className='logdetails'>
-              <div className='date'>25 March 2024</div>
-              <div className='pastpair'>EUR/USD</div>
-              <div className='pastposition'>BUY</div>
-              <div className='takeprofit'>TP:156.676</div>
-              <div className='stoploss'>SL: 132.378</div>
-              <div className='profit'>PNL: -120.00</div>
-            </div>
-            <div className='logdetails'>
-              <div className='date'>25 March 2024</div>
-              <div className='pastpair'>EUR/USD</div>
-              <div className='pastposition'>BUY</div>
-              <div className='takeprofit'>TP:156.676</div>
-              <div className='stoploss'>SL: 132.378</div>
-              <div className='profit'>PNL: -120.00</div>
-            </div>
-            <div className='logdetails'>
-              <div className='date'>25 March 2024</div>
-              <div className='pastpair'>EUR/USD</div>
-              <div className='pastposition'>BUY</div>
-              <div className='takeprofit'>TP:156.676</div>
-              <div className='stoploss'>SL: 132.378</div>
-              <div className='profit'>PNL: -120.00</div>
-            </div>
-            <div className='logdetails'>
-              <div className='date'>25 March 2024</div>
-              <div className='pastpair'>EUR/USD</div>
-              <div className='pastposition'>BUY</div>
-              <div className='takeprofit'>TP:156.676</div>
-              <div className='stoploss'>SL: 132.378</div>
-              <div className='profit'>PNL: -120.00</div>
-            </div>
-          </div>
+            { currentUser ? (
+              <div className='ranksec'>
+                { closedtrades.map((trade,index)=>(
+                  <div className='logdetails' key={index}>
+                    <div className='date'>{new Date(trade.open_date).toLocaleDateString()}</div>
+                    <div className='pastpair'>{trade.currency_pair}</div>
+                    <div className='pastposition'>{trade.position}</div>
+                    <div className='takeprofit'>TP: {trade.tp}</div>
+                    <div className='stoploss'>SL: {trade.sl}</div>
+                    <div className='profit'>PNL: {trade.pnl}</div>
+                  </div>
+                ))}
+              </div>
+            ):(
+              <p className='message1'>Please login to view Closed Trades</p>
+            )}
         </div>
         <div className='rankcont'>
           <div className='contname2'>Rankings</div>
