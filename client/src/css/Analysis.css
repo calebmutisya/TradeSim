@@ -76,6 +76,7 @@
     font-size: 12px;
     margin-top: 5px;
     margin-bottom: 5px;
+
 }
 .logdetails:hover{
     background-color: black;
@@ -118,6 +119,7 @@
     background-color: white;
     color: black;
     border-radius: 4px;
+    overflow-y: auto;
 }
 .rankdet{
     display: flex;

@@ -20,8 +20,18 @@ export default function Analysis() {
       <div className='cardcont'>
         <div className='analysiscard'>
           <img className='dollar' src={dollar}/>
-          <div className='cash'>1000.00</div>
-          <div className='cardname'>Profit/Loss</div>
+          <div className='cash'>
+            { currentUser ? (
+              <>
+              {currentUser.capital}
+              </>
+
+            ):(
+              <>
+              10000</>
+            )}
+          </div>
+          <div className='cardname'>Capital</div>
         </div>
         <div className='analysiscard'>
           <img className='dollar' src={rate}/>
