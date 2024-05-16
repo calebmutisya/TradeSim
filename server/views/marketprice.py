@@ -35,7 +35,7 @@ def get_market_price(currency_pair):
         driver.get(url)
 
         # Wait for div element with the specified class to appear
-        wait = WebDriverWait(driver, 5)  # Adjust timeout as needed
+        wait = WebDriverWait(driver, 10)  # Adjust timeout as needed
         div_element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "dfx-singleInstrument__price")))
 
         # Parse the HTML content
