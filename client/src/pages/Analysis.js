@@ -40,7 +40,15 @@ export default function Analysis() {
         </div>
         <div className='analysiscard'>
           <img className='dollar' src={graph}/>
-          <div className='cash'>12</div>
+          <div className='cash'>
+            { currentUser ? (
+              <>
+              {closedtrades.length}
+              </>
+            ):(
+              <>12</>
+            )}
+          </div>
           <div className='cardname'>Trades Made</div>
         </div>
         <div className='analysiscard'>
