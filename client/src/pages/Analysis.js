@@ -16,6 +16,7 @@ export default function Analysis() {
   const { closedtrades }=useContext(OpentradeContext);
   const [userTrades, setUserTrades] = useState({});
   const [userWinRates, setUserWinRates] = useState({});
+  const [userRank, setUserRank] = useState(null);
 
   // Calculate the number of trades with positive PNL
   const winningTrades = closedtrades.filter(trade => trade.pnl > 0);
@@ -48,10 +49,17 @@ export default function Analysis() {
       setUserWinRates(winRatesData);
     };
 
+    const calculateUserRank = () => {
+      const sortedUsers = [...allUsers].sort((a, b) => b.capital - a.capital);
+      const rank = sortedUsers.findIndex(user => user.id === currentUser.id) + 1;
+      setUserRank(rank);
+    };
+
     if (allUsers.length > 0) {
       fetchAllUserTrades();
+      calculateUserRank();
     }
-  }, [allUsers]);
+  }, [allUsers, currentUser]);
 
   return (
     <div className='analysis'>
@@ -101,7 +109,7 @@ export default function Analysis() {
         </div>
         <div className='analysiscard'>
           <img className='dollar' src={rank}/>
-          <div className='cash'>15</div>
+          <div className='cash'>{userRank !== null ? userRank : '15'}</div>
           <div className='cardname'>Rank</div>
         </div>
       </div>
