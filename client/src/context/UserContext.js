@@ -8,6 +8,7 @@ export default function UserProvider({children})
  {
     const [authToken, setAuthToken] = useState(()=> sessionStorage.getItem("authToken")? sessionStorage.getItem("authToken"): null )
     const [currentUser, setCurrentUser] = useState(null)
+    const [allUsers, setAllUsers] = useState([])
 
     const navigate = useNavigate()
 
@@ -189,6 +190,28 @@ export default function UserProvider({children})
         });
     }
 
+    function fetchAllUsers(){
+        fetch('/users', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch user data');
+            }
+            return response.json()
+        })
+        .then(data => {
+            setAllUsers(data)
+        })
+        .catch(error => {
+            console.error('Error fetching user data:', error);
+            setAllUsers([]);
+        });
+    }
+
     // Function to update user's capital
     function updateUserCapital(newCapital) {
         fetch('/users/capital', {
@@ -239,12 +262,14 @@ export default function UserProvider({children})
     useEffect(() => {
         if (authToken) {
             fetchUser();
+            fetchAllUsers();
         } else {
             setCurrentUser(null);
+            setAllUsers([]);
         }
     }, [authToken]);
 
-    const contextData={addUser, login, logout, authToken, currentUser, updateUserCapital}
+    const contextData={addUser, login, logout, authToken, currentUser, updateUserCapital, allUsers}
 
   return (
     <UserContext.Provider value={contextData}>

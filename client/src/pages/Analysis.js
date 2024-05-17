@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext} from 'react';
+import axios from 'axios';
 import '../css/Analysis.css'
 import '../css/Markets.css'
 import dollar from '../assets/dollar.svg'
@@ -11,14 +12,46 @@ import { OpentradeContext } from '../context/OpentradeContext';
 
 export default function Analysis() {
 
-  const { currentUser,authToken } = useContext(UserContext);
-  const { opentrades, closedtrades, editOpentradeMp,editPnltrade,editOpentrade,deleteOpentrade, fetchUserOpentrades, setOpentrades }=useContext(OpentradeContext)
+  const { currentUser,authToken, allUsers } = useContext(UserContext);
+  const { closedtrades }=useContext(OpentradeContext);
+  const [userTrades, setUserTrades] = useState({});
+  const [userWinRates, setUserWinRates] = useState({});
 
   // Calculate the number of trades with positive PNL
   const winningTrades = closedtrades.filter(trade => trade.pnl > 0);
 
   // Calculate the winning rate as a percentage
   const winningRate = closedtrades.length > 0 ? (winningTrades.length / closedtrades.length) * 100 : 0;
+
+  useEffect(() => {
+    const fetchTrades = async (userId) => {
+      try {
+        const response = await axios.get(`/closedtrades/${userId}`);
+        return response.data;
+      } catch (error) {
+        console.error(`Error fetching trades for user ${userId}:`, error);
+        return [];
+      }
+    };
+
+    const fetchAllUserTrades = async () => {
+      const tradesData = {};
+      const winRatesData = {};
+      for (const user of allUsers) {
+        const trades = await fetchTrades(user.id);
+        tradesData[user.id] = trades.length;
+        const winningTrades = trades.filter(trade => trade.pnl > 0);
+        const winRate = trades.length > 0 ? (winningTrades.length / trades.length) * 100 : 0;
+        winRatesData[user.id] = winRate;
+      }
+      setUserTrades(tradesData);
+      setUserWinRates(winRatesData);
+    };
+
+    if (allUsers.length > 0) {
+      fetchAllUserTrades();
+    }
+  }, [allUsers]);
 
   return (
     <div className='analysis'>
@@ -89,45 +122,27 @@ export default function Analysis() {
                 ))}
               </div>
             ):(
-              <p className='message1'>Please login to view Closed Trades</p>
+              <p className='message1'>Please Login to view Closed Trades</p>
             )}
         </div>
         <div className='rankcont'>
           <div className='contname2'>Rankings</div>
-          <div className='ranksec'>
-            <div className='rankdet'>
-              <div className='rankno'>1</div>
-              <img src={profimg}/>
-              <div className='name'>Molly Whitaker</div>
-              <div className='tradesnums'>Trades Made: 56</div>
-              <div className='winrate'>Win Rate: 90%</div>
-              <div className='capital'>$ 50000</div>
+          { currentUser ? (
+            <div className='ranksec'>
+              { allUsers.map((user, index)=>(
+                 <div className='rankdet' key={index}>
+                  <div className='rankno'>{index + 1}</div>
+                  <img src={profimg} alt='Profile'/>
+                  <div className='name'>{user.username}</div>
+                  <div className='tradesnums'>Trades Made: {userTrades[user.id] || 0}</div>
+                  <div className='winrate'>Win Rate: {userWinRates[user.id] !== undefined ? userWinRates[user.id].toFixed(2) : 'N/A'}%</div>
+                  <div className='capital'>$ {user.capital}</div>
+                </div>
+              ))}
             </div>
-            <div className='rankdet'>
-              <div className='rankno'>1</div>
-              <img src={profimg}/>
-              <div className='name'>Molly Whitaker</div>
-              <div className='tradesnums'>Trades Made: 56</div>
-              <div className='winrate'>Win Rate: 90%</div>
-              <div className='capital'>$ 50000</div>
-            </div>
-            <div className='rankdet'>
-              <div className='rankno'>1</div>
-              <img src={profimg}/>
-              <div className='name'>Molly Whitaker</div>
-              <div className='tradesnums'>Trades Made: 56</div>
-              <div className='winrate'>Win Rate: 90%</div>
-              <div className='capital'>$ 50000</div>
-            </div>
-            <div className='rankdet'>
-              <div className='rankno'>1</div>
-              <img src={profimg}/>
-              <div className='name'>Whitaker</div>
-              <div className='tradesnums'>Trades Made: 56</div>
-              <div className='winrate'>Win Rate: 90%</div>
-              <div className='capital'>$ 50000</div>
-            </div>
-          </div>
+          ):(
+            <p className='message1'>Please Login to view Rankings</p>
+          )}
         </div>
       </div>
     </div>
