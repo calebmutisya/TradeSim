@@ -9,6 +9,7 @@ import Guide from './pages/Guide.js'
 import Article from './pages/Article.js'
 import About from './pages/About.js'
 import Profile from './pages/Profile.js'
+import ResetPassword from './pages/ResetPassword.js';
 import UserProvider from './context/UserContext.js';
 import OpentradeProvider from './context/OpentradeContext.js';
 
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/article" element={<Article/>}/>
                 <Route path="/about" element={<About/>}/>
                 <Route path="/profile" element={<Profile/>}/>
+                <Route path="/resetpassword" element={<ResetPassword/>}/>
               </Route>
             </Routes>
           </OpentradeProvider>

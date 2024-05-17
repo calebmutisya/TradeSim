@@ -129,6 +129,7 @@ export default function Navbar() {
               </div>
               
               <button type="submit" className='accessbtn'>LOGIN</button>
+              <p className='forgot' onClick={hideSignup}><NavLink to="/resetpassword">Forgot Password ?</NavLink></p>
             </form>
           ):(
             <form className='signup3' onSubmit={handleAddUser}>
