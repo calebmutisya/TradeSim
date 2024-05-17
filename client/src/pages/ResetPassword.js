@@ -1,20 +1,72 @@
-import React,{useState, useContext} from 'react'
-import '../css/Reset.css'
-import { NavLink } from 'react-router-dom'
-import { UserContext } from '../context/UserContext';
-import { OpentradeContext } from '../context/OpentradeContext';
+import React, { useState, useContext } from 'react';
+import '../css/Reset.css';
+import { useNavigate } from 'react-router-dom'
+
 
 export default function ResetPassword() {
-  return (
-    <div className='resetcont'>
-        <h2>Reset Password</h2>
-        <form className='resetform'>
-            <input type='text' placeholder='Username'/>
-            <input type='email' placeholder='Email'/>
-            <input type='password' placeholder='New Password'/>
-            <button className='resetbtn'>SUBMIT</button>
-        </form>
-        <p>Insert corrrect username and email to change your password.</p>
-    </div>
-  )
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [message, setMessage] = useState('');
+
+    const navigate = useNavigate()
+
+    const handleResetPassword = async (e) => {
+        e.preventDefault();
+
+        const response = await fetch('/reset-password', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username,
+                email,
+                password: newPassword,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            setMessage('Password updated successfully');
+            navigate('/')
+        } else {
+            setMessage(data.message || 'An error occurred');
+        }
+    };
+
+    return (
+        <div className='resetcont'>
+            <h2>Reset Password</h2>
+            <form className='resetform' onSubmit={handleResetPassword}>
+                <input
+                    type='text'
+                    placeholder='Username'
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                />
+                <input
+                    type='email'
+                    placeholder='Email'
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                />
+                <input
+                    type='password'
+                    placeholder='New Password'
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                />
+                <button type='submit' className='resetbtn'>
+                    SUBMIT
+                </button>
+            </form>
+            {message && <p>{message}</p>}
+            <p>Insert correct username and email to change your password.</p>
+        </div>
+    );
 }

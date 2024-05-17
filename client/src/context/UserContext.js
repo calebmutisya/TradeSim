@@ -257,7 +257,6 @@ export default function UserProvider({children})
         });
     }
 
-
     // Fetch user data when component mounts or when authToken changes
     useEffect(() => {
         if (authToken) {

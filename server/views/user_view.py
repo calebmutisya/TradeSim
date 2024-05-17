@@ -71,8 +71,10 @@ def update_user():
     
     data = request.get_json()
 
-    # Remove password field from data
-    data.pop('password', None)
+    # Check for password and update if provided
+    if 'password' in data:
+        user.password = generate_password_hash(data['password'])
+        data.pop('password', None)
 
     # Update user attributes
     for key, value in data.items():
@@ -80,6 +82,30 @@ def update_user():
     db.session.commit()
 
     return jsonify({"message":"User updated successfully"}), 200
+
+@user_bp.route("/reset-password", methods=['PATCH'])
+def reset_password():
+    data = request.get_json()
+
+    if 'username' not in data or 'email' not in data or 'password' not in data:
+        return jsonify({"message": "Username, email, and new password are required"}), 400
+
+    username = data['username']
+    email = data['email']
+    new_password = data['password']
+
+    # Find the user with the provided username and email
+    user = User.query.filter_by(username=username, email=email).first()
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    # Update the user's password
+    user.password = generate_password_hash(new_password)
+    db.session.commit()
+
+    return jsonify({"message": "Password updated successfully"}), 200
+
+
 
 @user_bp.route("/users/capital", methods=['PATCH'])
 @jwt_required()
