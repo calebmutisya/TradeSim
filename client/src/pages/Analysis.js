@@ -122,7 +122,8 @@ export default function Analysis() {
           <div className='contname'>Trades Log</div>
             { currentUser ? (
               <div className='ranksec'>
-                { Array.isArray(closedtrades) && closedtrades.map((trade,index)=>(
+                {isClosedTradesArray && closedtrades.length > 0 ? (
+                  Array.isArray(closedtrades) && closedtrades.map((trade,index)=>(
                   <div className='logdetails' key={index}>
                     <div className='date'>{new Date(trade.open_date).toLocaleDateString()}</div>
                     <div className='pastpair'>{trade.currency_pair}</div>
@@ -131,7 +132,9 @@ export default function Analysis() {
                     <div className='stoploss'>SL: {trade.sl}</div>
                     <div className='profit'>PNL: {trade.pnl}</div>
                   </div>
-                ))}
+                ))):(
+                  <p className='message1'> No closed trades available.</p>
+                )}
               </div>
             ):(
               <p className='message1'>Please Login to view Closed Trades</p>

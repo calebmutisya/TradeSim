@@ -291,7 +291,7 @@ export default function Markets() {
           <hr/>
           <div>
             <div className='walletcont'>
-              {authToken ? (
+              {currentUser ? (
                 <>
                 <img className='coin' src={coin}/> {currentUser.capital}
                 </>
