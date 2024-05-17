@@ -304,7 +304,7 @@ export default function Markets() {
             <button className='tradebtn1' >Closed Trades</button>
             {currentUser ? (
               <div className='tradeslot1'>
-                {closedtrades.map((trade, index)=>(
+                { Array.isArray(closedtrades) && closedtrades.map((trade, index)=>(
                   
                     <div className='slot5cont' key={index}>
                       <div className='slot5'>{trade.currency_pair}</div>
@@ -352,7 +352,7 @@ export default function Markets() {
                     <button onClick={handleSave}>SAVE</button>
                   </div>
                 )}
-                {opentrades.map((trade, index) => (
+                { Array.isArray(opentrades) && opentrades.map((trade, index) => (
                   <div className='trade1' key={index}>
                     <img className='dots' src={dots} onClick={() => showTab(trade)}/>
                     <div className='currency'>{trade.currency_pair}</div>

@@ -18,17 +18,20 @@ export default function Analysis() {
   const [userWinRates, setUserWinRates] = useState({});
   const [userRank, setUserRank] = useState(null);
 
+  // Ensure closedtrades is an array
+  const isClosedTradesArray = Array.isArray(closedtrades);
+
   // Calculate the number of trades with positive PNL
-  const winningTrades = closedtrades.filter(trade => trade.pnl > 0);
+  const winningTrades = isClosedTradesArray ? closedtrades.filter(trade => trade.pnl > 0) : [];
 
   // Calculate the winning rate as a percentage
-  const winningRate = closedtrades.length > 0 ? (winningTrades.length / closedtrades.length) * 100 : 0;
+  const winningRate = isClosedTradesArray && closedtrades.length > 0 ? (winningTrades.length / closedtrades.length) * 100 : 0;
 
   useEffect(() => {
     const fetchTrades = async (userId) => {
       try {
         const response = await axios.get(`/closedtrades/${userId}`);
-        return response.data;
+        return Array.isArray(response.data) ? response.data : [];
       } catch (error) {
         console.error(`Error fetching trades for user ${userId}:`, error);
         return [];
@@ -41,8 +44,9 @@ export default function Analysis() {
       for (const user of allUsers) {
         const trades = await fetchTrades(user.id);
         tradesData[user.id] = trades.length;
-        const winningTrades = trades.filter(trade => trade.pnl > 0);
+        const winningTrades = Array.isArray(trades) ? trades.filter(trade => trade.pnl > 0) : [];
         const winRate = trades.length > 0 ? (winningTrades.length / trades.length) * 100 : 0;
+        tradesData[user.id] = trades.length;
         winRatesData[user.id] = winRate;
       }
       setUserTrades(tradesData);
@@ -118,7 +122,7 @@ export default function Analysis() {
           <div className='contname'>Trades Log</div>
             { currentUser ? (
               <div className='ranksec'>
-                { closedtrades.map((trade,index)=>(
+                { Array.isArray(closedtrades) && closedtrades.map((trade,index)=>(
                   <div className='logdetails' key={index}>
                     <div className='date'>{new Date(trade.open_date).toLocaleDateString()}</div>
                     <div className='pastpair'>{trade.currency_pair}</div>
