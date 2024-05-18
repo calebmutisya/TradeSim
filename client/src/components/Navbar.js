@@ -5,6 +5,7 @@ import logo from '../assets/Logo.svg'
 import hamburgermenu from '../assets/menu.svg'
 import xmark from '../assets/cross.svg'
 import username from '../assets/username.svg'
+import profimg from '../assets/profimg.png'
 import email from '../assets/Message.svg'
 import pass from '../assets/password.svg'
 import { UserContext } from '../context/UserContext';
@@ -93,7 +94,7 @@ export default function Navbar() {
         {authToken ? (
           <>
             <div className='profcont'>
-              <img className='loginimg' src={username}/>
+              <img className='loginimg' src={profimg}/>
               {currentUser && (
                     <p className='userslot'>{currentUser.username}</p>
                 )}

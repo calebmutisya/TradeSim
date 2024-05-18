@@ -181,9 +181,9 @@ nav{
 }
 .loginimg{
     display: inline-block;
-    height: 24px;
-    border-radius: 24px;
-    margin-top: 8px;
+    height: 32px;
+    border-radius: 16px;
+    margin-top: 6px;
     background-color: white;
     border: none;
     margin-right: 10px;
