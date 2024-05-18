@@ -1,0 +1,118 @@
+.profcontainer{
+    height: 70vh;
+    width: 600px;
+    margin: auto;
+    background-color: rgb(0, 0, 0);
+}
+.alldetails{
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+    margin: auto;
+    margin-top: 30px;
+    position: relative;
+}
+.imageslot{
+    padding: 12px;
+    justify-items: center;
+}
+.image1{
+    width: 80px;
+    border-radius: 40px;
+}
+.detailscont{
+    padding: 12px;
+    font-size: 12px;
+    margin-left: 50px;
+    width: 50%;
+}
+.settingscont{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    text-align: center;
+}
+.settingscont p{
+    text-align: center;
+    font-size: 12px;
+}
+.reset{
+    cursor: pointer;
+    width: 100px;
+    height: 34px;
+    margin: auto;
+    background: linear-gradient(270deg, rgb(250, 18, 18) 0%, rgb(255, 55, 55) 42%, rgb(255, 0, 0) 76%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 30px;
+    border-radius: 4px;
+    border: none;
+    transition: transform 0.3s;
+}
+.reset:active {
+    transform: scale(0.7);
+}
+.pencil{
+    height: 14px;
+    cursor: pointer;
+    margin-left: 4px;
+}
+.editprofile{
+    display: none;
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    top: 10%;
+    left: 0px;
+    background-color: rgb(2, 2, 2,0.9);
+    border-radius: 4px;
+    border: 1px solid white;
+    padding: 10px;
+}
+.editprofile h3{
+    margin-top: 20px;
+    text-align: center;
+}
+.profileform{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: auto;
+    margin-top: 20px;
+}
+.profileform input{
+    height: 32px;
+    border-radius: 4px;
+    outline: none;  
+    border: none;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.upload{
+    width: 80%;
+    margin: auto;
+    margin-top: 10px;
+}
+.xmark{
+    width: 24px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.save{
+    cursor: pointer;
+    width: 100px;
+    height: 34px;
+    margin: auto;
+    background: linear-gradient(270deg, rgba(117,205,255,1) 0%, rgba(117,205,255,1) 42%, rgba(0,163,255,1) 76%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 30px;
+    border-radius: 4px;
+    border: none;
+    transition: transform 0.3s;
+}
+.save:active {
+    transform: scale(0.7);
+}

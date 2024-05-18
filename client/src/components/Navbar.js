@@ -100,7 +100,6 @@ export default function Navbar() {
                 )}
               <div className='profilelink'>
                 <p className='plinks'><NavLink to="/profile">Profile</NavLink></p>
-                <p className='plinks'><NavLink to="/settings">Settings</NavLink></p>
               </div>
             </div>
             <button className="navbtn" onClick={handleLogout}>Logout</button>
