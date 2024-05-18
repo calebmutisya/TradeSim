@@ -9,22 +9,36 @@ import ProfileImageUpload from '../components/FileUpload';
 export default function Profile() {
 
   const { currentUser,authToken } = useContext(UserContext);
+  const [ showEditForm, setEditForm]= useState(false);
+
+  const showForm=()=>{
+    setEditForm(true);
+  }
+
+  const hideForm=()=>{
+    setEditForm(false);
+  }
 
   return (
     <div className='profcontainer'>
       <div className='alldetails'>
         <div className='imageslot'>
           <img className='image1' src={profimg}/>
-          
-          <p>Username <img className='pencil' src={pencil}/></p>
+          <div className='editcontainer'>
+            <p>Username </p>
+            <div className='userslot'>
+              <img className='pencil' onClick={showForm} src={pencil} />
+              <p className='tag1'>Edit Profile</p>
+            </div>
+          </div>
         </div>
         <div className='detailscont'>
           <p>Full Name: Lili Wackby</p>
           <p>Email: lili@gmail.com</p>
           <p>Capital: 10000</p>
         </div>
-        <div className='editprofile'>
-          <img className='xmark' src={xmark}/>
+        <div className={ showEditForm ? 'editprofile visible':'editprofile'}>
+          <img className='xmark' onClick={hideForm} src={xmark}/>
           <h3>Upload profile image</h3>
           <div className='upload'>
             <ProfileImageUpload/>

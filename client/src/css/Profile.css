@@ -36,6 +36,18 @@
     text-align: center;
     font-size: 12px;
 }
+.editcontainer{
+    display: flex;
+    flex-direction: row;
+    width: 100px;
+    height: 30px;
+    justify-content: center; 
+    align-items: center;
+    margin-top: 10px;
+}
+.editcontainer p{
+    line-height: 30px;
+}
 .reset{
     cursor: pointer;
     width: 100px;
@@ -56,10 +68,30 @@
 .pencil{
     height: 14px;
     cursor: pointer;
-    margin-left: 4px;
+    margin-left: 8px;
+    position: relative;
+}
+.userslot:hover .tag1{
+    display: flex;
+}
+.tag1{
+    display: none;
+    position: absolute;
+    top: 10px;
+    left: -100%;
+    font-size: 12px;
+    width: 100px;
+    height: 24px;
+    border-radius: 4px;
+    background-color: rgb(54, 54, 54);
+    text-align: center;
+    justify-content: center; 
+    align-items: center;
+    z-index: 1;
 }
 .editprofile{
     display: none;
+    flex-direction: column;
     width: 400px;
     height: 400px;
     position: absolute;
@@ -69,6 +101,9 @@
     border-radius: 4px;
     border: 1px solid white;
     padding: 10px;
+}
+.editprofile.visible{
+    display: flex;
 }
 .editprofile h3{
     margin-top: 20px;
@@ -115,4 +150,9 @@
 }
 .save:active {
     transform: scale(0.7);
+}
+.userslot{
+    display: flex;
+    flex-direction: row;
+    position: relative;
 }
