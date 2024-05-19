@@ -257,6 +257,44 @@ export default function UserProvider({children})
         });
     }
 
+    // Function to update user details
+    function updateUser(data) {
+        fetch('/users', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to update user');
+                }
+                return response.json();
+            })
+            .then(data => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'User Updated Successfully',
+                    text: 'User details have been successfully updated!',
+                });
+                setCurrentUser(prevUser => ({
+                    ...prevUser,
+                    ...data
+                }));
+            })
+            .catch(error => {
+                console.error('Error updating user:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to update user. Please try again later.',
+                });
+            });
+    }
+
+
     // Fetch user data when component mounts or when authToken changes
     useEffect(() => {
         if (authToken) {
@@ -268,7 +306,7 @@ export default function UserProvider({children})
         }
     }, [authToken]);
 
-    const contextData={addUser, login, logout, authToken, currentUser, updateUserCapital, allUsers}
+    const contextData={addUser, login, logout, authToken, currentUser, updateUserCapital, allUsers, updateUser}
 
   return (
     <UserContext.Provider value={contextData}>
