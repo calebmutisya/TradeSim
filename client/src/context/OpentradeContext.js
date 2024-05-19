@@ -286,6 +286,66 @@ export default function OpentradeProvider({children}) {
         });
     };
 
+    const deleteAllUserOpentrades = useCallback(() => {
+        fetch('/opentrades/user', {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Failed to delete user open trades');
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Swal.fire({
+            //   icon: 'success',
+            //   title: 'Open Trades Deleted Successfully',
+            // });
+            fetchUserOpentrades();
+          })
+          .catch((error) => {
+            console.error('Error deleting user open trades:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Failed to delete user open trades. Please try again later.',
+            });
+          });
+    }, [authToken, fetchUserOpentrades]);
+
+    const deleteAllUserClosedTrades = useCallback(() => {
+        fetch('/closedtrades/user', {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Failed to delete user closed trades');
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Swal.fire({
+            //   icon: 'success',
+            //   title: 'Closed Trades Deleted Successfully',
+            // });
+            fetchClosedTrades();
+          })
+          .catch((error) => {
+            console.error('Error deleting user closed trades:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Failed to delete user closed trades. Please try again later.',
+            });
+          });
+      }, [authToken, fetchClosedTrades]);
+
     const contextData={
         opentrades,
         closedtrades,
@@ -296,7 +356,9 @@ export default function OpentradeProvider({children}) {
         deleteOpentrade,
         fetchUserOpentrades,
         fetchClosedTrades,
-        addClosedTrade
+        addClosedTrade,
+        deleteAllUserOpentrades,
+        deleteAllUserClosedTrades,
     }
 
   return (

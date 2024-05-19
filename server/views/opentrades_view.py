@@ -106,3 +106,19 @@ def delete_opentrade(opentrade_id):
     db.session.delete(opentrade)
     db.session.commit()
     return jsonify({"message": "Trade deleted successfully"}), 200
+
+# Delete all open trades for the authenticated user
+@open_bp.route("/opentrades/user", methods=["DELETE"])
+@jwt_required()
+def delete_user_opentrades():
+    current_user_id = get_jwt_identity()
+    user_opentrades = Opentrades.query.filter_by(user_id=current_user_id).all()
+    
+    if not user_opentrades:
+        return jsonify({"message": "No open trades found for the user"}), 404
+    
+    for opentrade in user_opentrades:
+        db.session.delete(opentrade)
+    
+    db.session.commit()
+    return jsonify({"message": "All open trades for the user have been deleted successfully"}), 200

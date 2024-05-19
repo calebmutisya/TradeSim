@@ -62,3 +62,19 @@ def get_closed_trades_by_user_id(user_id):
 
     serialized_trades = [trade.to_dict() for trade in closed_trades]
     return jsonify(serialized_trades), 200
+
+# Delete all closed trades for the authenticated user
+@close_bp.route("/closedtrades/user", methods=["DELETE"])
+@jwt_required()
+def delete_user_closed_trades():
+    current_user_id = get_jwt_identity()
+    user_closed_trades = Closedtrades.query.filter_by(user_id=current_user_id).all()
+    
+    if not user_closed_trades:
+        return jsonify({"message": "No closed trades found for the user"}), 404
+    
+    for trade in user_closed_trades:
+        db.session.delete(trade)
+    
+    db.session.commit()
+    return jsonify({"message": "All closed trades for the user have been deleted successfully"}), 200

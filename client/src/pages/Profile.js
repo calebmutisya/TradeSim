@@ -1,14 +1,17 @@
 import React,{useState, useContext, useEffect} from 'react'
 import '../css/Profile.css';
 import profimg from '../assets/profimg.png';
+import Swal from 'sweetalert2'
 import pencil from '../assets/pencil.svg';
 import xmark from '../assets/cross.svg'
 import { UserContext } from '../context/UserContext'
+import { OpentradeContext } from '../context/OpentradeContext';
 import ProfileImageUpload from '../components/FileUpload';
 
 export default function Profile() {
 
   const { currentUser,authToken, updateUser } = useContext(UserContext);
+  const { editPnltrade,deleteAllUserOpentrades,deleteAllUserClosedTrades } = useContext(OpentradeContext);
   const [ showEditForm, setEditForm]= useState(false);
   const [firstname, setFirstName] = useState(currentUser?.firstname || '');
   const [lastname, setLastName] = useState(currentUser?.lastname || '');
@@ -39,6 +42,32 @@ export default function Profile() {
     };
     updateUser(updatedData);
     hideForm();
+  };
+
+  const handleReset = async () => {
+    try {
+      // Reset the user's capital to 10,000
+      await editPnltrade(currentUser.id, { capital: 10000 });
+      
+      // Delete all open trades
+      await deleteAllUserOpentrades();
+
+      // Delete all closed trades
+      await deleteAllUserClosedTrades();
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Account Reset Successfully',
+        text: 'Your capital has been reset to 10,000 and all trades have been deleted.',
+      });
+    } catch (error) {
+      console.error('Error resetting account:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to reset account. Please try again later.',
+      });
+    }
   };
 
   return (
@@ -76,10 +105,10 @@ export default function Profile() {
           </form>
         </div>
       </div>
-      <div className='settingscont'>
+      <div className='settingscont' onClick={handleReset}>
         <h3>Restart</h3>
         <p>Note that by restarting, capital balance<br/> will be reset to 10,000 and all progress deleted.</p>
-        <button className='reset'>RESET</button>
+        <button className='reset' type='submit'>RESET</button>
       </div>
       
     </div>
