@@ -244,6 +244,7 @@ export default function UserProvider({children})
                 ...prevUser,
                 capital: newCapital
             }));
+            fetchUser();
         })
         .catch(error => {
             // Handle error
