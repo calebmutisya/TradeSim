@@ -283,6 +283,7 @@ export default function UserProvider({children})
                     ...prevUser,
                     ...data
                 }));
+                fetchUser();
             })
             .catch(error => {
                 console.error('Error updating user:', error);
