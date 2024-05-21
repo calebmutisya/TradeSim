@@ -179,17 +179,61 @@ export default function Markets() {
 
   const handleSave = () => {
     const newData = {};
+    const marketPrice = parseFloat(selectedTrade.ep);  // Assuming selectedTrade.ep is the market price
+    const position = selectedTrade.position;
+
     if (newTP !== '') {
-      newData.tp = parseFloat(newTP);
+        const takeProfit = parseFloat(newTP);
+
+        // Validate takeProfit based on the trade position
+        if (position === 'BUY' && takeProfit <= marketPrice) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Take Profit',
+                text: 'For a buy trade, the take profit must be higher than the market price.',
+            });
+            return;
+        } else if (position === 'SELL' && takeProfit >= marketPrice) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Take Profit',
+                text: 'For a sell trade, the take profit must be lower than the market price.',
+            });
+            return;
+        }
+
+        newData.tp = takeProfit;
     }
+
     if (newSL !== '') {
-      newData.sl = parseFloat(newSL);
+        const stopLoss = parseFloat(newSL);
+
+        // Validate stopLoss based on the trade position
+        if (position === 'BUY' && stopLoss >= marketPrice) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Stop Loss',
+                text: 'For a buy trade, the stop loss must be lower than the market price.',
+            });
+            return;
+        } else if (position === 'SELL' && stopLoss <= marketPrice) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Stop Loss',
+                text: 'For a sell trade, the stop loss must be higher than the market price.',
+            });
+            return;
+        }
+
+        newData.sl = stopLoss;
     }
+
     if (selectedTrade && Object.keys(newData).length > 0) {
-      editOpentrade(selectedTrade.id, newData);
-      hideTab();
+        editOpentrade(selectedTrade.id, newData);
+        hideTab();
     }
   };
+
 
   // Inside the useEffect hook, automatically save PNL after it's calculated
   useEffect(() => {
