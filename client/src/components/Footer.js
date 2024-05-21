@@ -25,7 +25,6 @@ export default function Footer() {
             <NavLink to="/news">News</NavLink>
             <NavLink to="/analysis">Analysis</NavLink>
             <NavLink to="/guide">Guide</NavLink>
-            <NavLink to="/about">About Us</NavLink>
           </div>
           <div className='footlogo'><img src={logo}/>TRADESIM</div>
         </div>

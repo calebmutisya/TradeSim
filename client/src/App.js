@@ -7,7 +7,6 @@ import News from './pages/News.js'
 import Analysis from './pages/Analysis.js'
 import Guide from './pages/Guide.js'
 import Article from './pages/Article.js'
-import About from './pages/About.js'
 import Profile from './pages/Profile.js'
 import ResetPassword from './pages/ResetPassword.js';
 import UserProvider from './context/UserContext.js';
@@ -27,7 +26,6 @@ function App() {
                 <Route path="/analysis" element={<Analysis/>}/>
                 <Route path="/guide" element={<Guide/>}/>
                 <Route path="/article" element={<Article/>}/>
-                <Route path="/about" element={<About/>}/>
                 <Route path="/profile" element={<Profile/>}/>
                 <Route path="/resetpassword" element={<ResetPassword/>}/>
               </Route>
