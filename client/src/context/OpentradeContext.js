@@ -32,31 +32,30 @@ export default function OpentradeProvider({children}) {
         });
     },[authToken]);
 
-    const fetchClosedTrades = useCallback(() => {
-        // Fetch closed trades from the backend
-        fetch('/closedtrades', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${authToken}`
-            }
-        })
-        .then(response => {
+    const fetchClosedTrades = useCallback(async () => {
+        try {
+            const response = await fetch('/closedtrades', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                }
+            });
+    
             if (!response.ok) {
                 throw new Error('Failed to fetch closed trades');
             }
-            return response.json();
-        })
-        .then(data => {
+    
+            const data = await response.json();
             setClosedTrades(data); // Update state with fetched closed trades
-        })
-        .catch(error => {
+    
+        } catch (error) {
             console.error('Error fetching closed trades:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
                 text: 'Failed to fetch closed trades. Please try again later.',
             });
-        });
+        }
     }, [authToken]);
 
     useEffect(() => {
@@ -195,25 +194,26 @@ export default function OpentradeProvider({children}) {
     };
 
 
-    const deleteOpentrade = (tradeId, tradeData) => {
-        fetch(`/opentrades/${tradeId}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${authToken}`
-            },
-        })
-        .then(response => {
+    const deleteOpentrade = async (tradeId, tradeData) => {
+        try {
+            const response = await fetch(`/opentrades/${tradeId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                },
+            });
+    
             if (!response.ok) {
-              throw new Error('Failed to Close Trade');
+                throw new Error('Failed to Close Trade');
             }
+    
             // Calculate new capital by adding the trade's pnl to the current capital
             const newCapital = currentUser.capital + tradeData.pnl;
             // Update user's capital
-            updateUserCapital(newCapital);
+            await updateUserCapital(newCapital);
+    
             // Construct closed trade data
             const closedTradeData = {
-              // Assuming you have the necessary data for closed trades
-              // Modify or add properties as needed
                 user_id: currentUser.id,
                 currency_pair: tradeData.currency_pair,
                 position: tradeData.position,
@@ -224,31 +224,30 @@ export default function OpentradeProvider({children}) {
                 lot: tradeData.lot,
                 pnl: tradeData.pnl,
                 open_date: new Date(tradeData.open_date).toISOString()
-              // Add more properties based on your closed trade data requirements
             };
+    
             // Add the closed trade
             addClosedTrade(closedTradeData);
-            fetchUserOpentrades();
-            fetchClosedTrades();
-            return response.json();
-          })
-            .then(data => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Trade Closed Successfully',
-                    text: data.message,
-                });
-                // fetchUserOpentrades(); 
-                // fetchClosedTrades();
-            })
-            .catch(error => {
-                console.error('Error Closing Trade:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Failed to Close Trade. Please try again later.',
-                });
+            
+            const data = await response.json();
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Trade Closed Successfully',
+                text: data.message,
             });
+            // Fetch the latest trades
+            fetchClosedTrades();
+            fetchUserOpentrades();
+    
+        } catch (error) {
+            console.error('Error Closing Trade:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to Close Trade. Please try again later.',
+            });
+        }
     };
 
     // Function to add a closed trade
@@ -287,33 +286,38 @@ export default function OpentradeProvider({children}) {
     };
 
     const deleteAllUserOpentrades = useCallback(() => {
-        fetch('/opentrades/user', {
-          method: 'DELETE',
-          headers: {
+    fetch('/opentrades/user', {
+        method: 'DELETE',
+        headers: {
             Authorization: `Bearer ${authToken}`,
-          },
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error('Failed to delete user open trades');
-            }
-            return response.json();
-          })
-          .then((data) => {
-            // Swal.fire({
-            //   icon: 'success',
-            //   title: 'Open Trades Deleted Successfully',
-            // });
-            fetchUserOpentrades();
-          })
-          .catch((error) => {
-            console.error('Error deleting user open trades:', error);
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'Failed to delete user open trades. Please try again later.',
-            });
-          });
+        },
+    })
+    .then((response) => {
+        if (response.status === 404) {
+            // No open trades exist
+            throw new Error('No open trades to delete');
+        } else if (!response.ok) {
+            throw new Error('Failed to delete user open trades');
+        }
+        return response.json();
+    })
+    .then((data) => {
+        // Swal.fire({
+        //   icon: 'success',
+        //   title: 'Open Trades Deleted Successfully',
+        // });
+        fetchUserOpentrades();
+    })
+    .catch((error) => {
+        console.error('Error deleting user open trades:', error);
+        // Swal.fire({
+        //     icon: 'error',
+        //     title: 'Error',
+        //     text: error.message === 'No open trades to delete'
+        //         ? 'No open trades found to delete.'
+        //         : 'Failed to delete user open trades. Please try again later.',
+        // });
+    });
     }, [authToken, fetchUserOpentrades]);
 
     const deleteAllUserClosedTrades = useCallback(() => {
@@ -338,11 +342,11 @@ export default function OpentradeProvider({children}) {
           })
           .catch((error) => {
             console.error('Error deleting user closed trades:', error);
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'Failed to delete user closed trades. Please try again later.',
-            });
+            // Swal.fire({
+            //   icon: 'error',
+            //   title: 'Error',
+            //   text: 'Failed to delete user closed trades. Please try again later.',
+            // });
           });
       }, [authToken, fetchClosedTrades]);
 
