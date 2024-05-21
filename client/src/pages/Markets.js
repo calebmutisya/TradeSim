@@ -177,7 +177,7 @@ export default function Markets() {
                 }
             }
         }
-    }, 30000); // Execute every minute (60000 milliseconds)
+    }, 15000); // Execute every minute (60000 milliseconds)
 
     // Cleanup function to clear the interval on component unmount or when opentrades changes
     return () => clearInterval(interval);
@@ -272,7 +272,10 @@ export default function Markets() {
             <p className="p9">
               MARKET PRICE: {marketData.marketPrice}
               <br/>
-              <span className='refresh'>Refreshes every 5 seconds</span>
+              <span className='refresh'>
+                Refreshes every 10 seconds<br/>
+                Error may occcur due to scraping source.
+              </span>
             </p>
           )}
           <div className='buysec'>
@@ -301,7 +304,7 @@ export default function Markets() {
                 </>
               )}
             </div>
-            <button className='tradebtn1' >Closed Trades</button>
+            <button className='tradebtn1'>Closed Trades</button>
             {currentUser ? (
               <div className='tradeslot1'>
                 { Array.isArray(closedtrades) && closedtrades.map((trade, index)=>(
