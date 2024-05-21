@@ -93,12 +93,50 @@ export default function Markets() {
         const lot = parseFloat(lotInput.value);
         const stopLoss = parseFloat(stopLossInput.value);
         const takeProfit = parseFloat(takeProfitInput.value);
+        const marketPrice = parseFloat(marketData.marketPrice);
+
+        // Validate takeProfit and stopLoss based on the trade position
+        if (position === 'BUY') {
+            if (takeProfit <= marketPrice) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Take Profit',
+                    text: 'For a buy trade, the take profit must be higher than the market price.',
+                });
+                return;
+            }
+            if (stopLoss >= marketPrice) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Stop Loss',
+                    text: 'For a buy trade, the stop loss must be lower than the market price.',
+                });
+                return;
+            }
+        } else if (position === 'SELL') {
+            if (takeProfit >= marketPrice) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Take Profit',
+                    text: 'For a sell trade, the take profit must be lower than the market price.',
+                });
+                return;
+            }
+            if (stopLoss <= marketPrice) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Stop Loss',
+                    text: 'For a sell trade, the stop loss must be higher than the market price.',
+                });
+                return;
+            }
+        }
 
         const opentradeData = {
             currency_pair: apiSymbol.toUpperCase(),
             position,
             tp: takeProfit,
-            ep: marketData.marketPrice,
+            ep: marketPrice,
             sl: stopLoss,
             lot,
         };
@@ -137,6 +175,7 @@ export default function Markets() {
             });
     }
   };
+
 
   const handleSave = () => {
     const newData = {};
