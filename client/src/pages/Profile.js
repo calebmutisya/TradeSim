@@ -10,7 +10,7 @@ import ProfileImageUpload from '../components/FileUpload';
 
 export default function Profile() {
 
-  const { currentUser,authToken, updateUser } = useContext(UserContext);
+  const { currentUser,authToken, updateUser, updateUserCapital } = useContext(UserContext);
   const { editPnltrade,deleteAllUserOpentrades,deleteAllUserClosedTrades } = useContext(OpentradeContext);
   const [ showEditForm, setEditForm]= useState(false);
   const [firstname, setFirstName] = useState(currentUser?.firstname || '');
@@ -46,29 +46,48 @@ export default function Profile() {
 
   const handleReset = async () => {
     try {
-      // Reset the user's capital to 10,000
-      await editPnltrade(currentUser.id, { capital: 10000 });
-      
-      // Delete all open trades
-      await deleteAllUserOpentrades();
+        // Reset the user's capital to 10,000
+        await updateUserCapital(10000);
+    } catch (error) {
+        console.error('Error updating user capital:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to update user capital. Continuing with trade deletions.',
+        });
+    }
 
-      // Delete all closed trades
-      await deleteAllUserClosedTrades();
+    try {
+        // Delete all open trades
+        await deleteAllUserOpentrades();
+    } catch (error) {
+        console.error('Error deleting user open trades:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to delete user open trades. Continuing with closed trades deletion.',
+        });
+    }
 
-      Swal.fire({
+    try {
+        // Delete all closed trades
+        await deleteAllUserClosedTrades();
+    } catch (error) {
+        console.error('Error deleting user closed trades:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to delete user closed trades. Please try again later.',
+        });
+    }
+
+    Swal.fire({
         icon: 'success',
         title: 'Account Reset Successfully',
         text: 'Your capital has been reset to 10,000 and all trades have been deleted.',
-      });
-    } catch (error) {
-      console.error('Error resetting account:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Failed to reset account. Please try again later.',
-      });
-    }
+    });
   };
+
 
   return (
     <div className='profcontainer'>
