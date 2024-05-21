@@ -36,13 +36,13 @@ def get_market_price(currency_pair):
 
         # Wait for div element with the specified class to appear
         wait = WebDriverWait(driver, 10)  # Adjust timeout as needed
-        div_element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "dfx-singleInstrument__price")))
+        div_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.dfx-singleInstrument__price[data-type='bid']")))
 
         # Parse the HTML content
         soup = BeautifulSoup(driver.page_source, "html.parser")
 
         # Find the div element with the specified class
-        div_element = soup.find("div", class_="dfx-singleInstrument__price")
+        div_element = soup.find("div", class_="dfx-singleInstrument__price", attrs={"data-type": "bid"})
 
         # Extract the market price
         if div_element:
@@ -61,3 +61,7 @@ def cleanup():
 # Register cleanup function to be executed when the server shuts down
 import atexit
 atexit.register(cleanup)
+
+
+# <div class="dfx-singleInstrument__price dfx-rate dfx-font-size-3 font-weight-bold text-right dfx-singleInstrument__bid" data-stream-type="price" data-stream-delay="0" data-symbol="AUDUSD" data-market-id="AUDUSD" data-type="bid" data-change-scale="-2" data-unscaling-factor="10000" data-unscaled-decimals="5" data-value="0.66675">
+# </div>
