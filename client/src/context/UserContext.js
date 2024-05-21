@@ -308,7 +308,7 @@ export default function UserProvider({children})
         }
     }, [authToken]);
 
-    const contextData={addUser, login, logout, authToken, currentUser, updateUserCapital, allUsers, updateUser}
+    const contextData={addUser, login, logout, authToken, currentUser, updateUserCapital, allUsers, updateUser, fetchUser}
 
   return (
     <UserContext.Provider value={contextData}>

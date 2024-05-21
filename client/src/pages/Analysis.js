@@ -147,7 +147,7 @@ export default function Analysis() {
               { allUsers.map((user, index)=>(
                  <div className='rankdet' key={index}>
                   <div className='rankno'>{index + 1}</div>
-                  <img src={profimg} alt='Profile'/>
+                  <img className='profimage4' src={user.profile_img || profimg} alt='Profile'/>
                   <div className='name'>{user.username}</div>
                   <div className='tradesnums'>Trades Made: {userTrades[user.id] || 0}</div>
                   <div className='winrate'>Win Rate: {userWinRates[user.id] !== undefined ? userWinRates[user.id].toFixed(2) : 'N/A'}%</div>

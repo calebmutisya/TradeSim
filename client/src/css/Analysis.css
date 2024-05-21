@@ -168,6 +168,10 @@
     font-size: 14px;
     text-align: center;
 }
+.profimage4{
+    width: 24px;
+    border-radius: 12px;
+}
 
 @media(max-width:1280px){
     .analysiscard{

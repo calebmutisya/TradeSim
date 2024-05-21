@@ -93,7 +93,7 @@ export default function Profile() {
     <div className='profcontainer'>
       <div className='alldetails'>
         <div className='imageslot'>
-          <img className='image1' src={profimg}/>
+          <img className='image1' src={currentUser.profile_img || profimg}/>
           <div className='editcontainer'>
             <p>{currentUser.username}</p>
             <div className='userslot'>

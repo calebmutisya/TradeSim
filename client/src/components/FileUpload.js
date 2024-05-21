@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import { UserContext } from '../context/UserContext';
 
 const ProfileImageUpload = () => {
+  const { authToken, fetchUser } = useContext(UserContext);
   const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
@@ -14,12 +17,19 @@ const ProfileImageUpload = () => {
     formData.append('image', file);
 
     try {
-      await axios.post('/upload', formData, {
+      const response = await axios.post('/upload', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${authToken}`
+        },
       });
-      console.log('Image uploaded successfully');
+      console.log('Image uploaded successfully:', response.data.image_url);
+      Swal.fire({
+        icon: 'success',
+        title: 'Image Uploaded Successfully',
+        text: '',
+      });
+      fetchUser();
     } catch (error) {
       console.error('Error uploading image:', error);
     }

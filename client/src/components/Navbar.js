@@ -92,7 +92,7 @@ export default function Navbar() {
         {authToken ? (
           <>
             <div className='profcont'>
-              <img className='loginimg' src={profimg}/>
+              <img className='loginimg' src={(currentUser && currentUser.profile_img) ? currentUser.profile_img : profimg}/>
               {currentUser && (
                     <p className='userslot'>{currentUser.username}</p>
                 )}

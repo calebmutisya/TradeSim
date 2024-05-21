@@ -9,11 +9,22 @@ from flask_jwt_extended import JWTManager
 
 import os
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
 app.config['UPLOAD_FOLDER'] = './imguploads'
 db.init_app(app)
 migrate = Migrate(app, db)
+
+# Set your Cloudinary credentials
+cloudinary.config(
+  cloud_name = 'dxi0bnriw',
+  api_key = '496475473161481',
+  api_secret = 'I2rO8XBiXAlYLnliHXSIXYdjwSI'
+)
 
 jwt = JWTManager()
 app.config["JWT_SECRET_KEY"] = "fjhjdjhfiskyfvdgvydklvsrfl"

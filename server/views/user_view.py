@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 import os
 from models import db, User
 from flask import current_app
+import cloudinary.uploader
 
 user_bp = Blueprint('user_bp', __name__)
 
@@ -145,8 +146,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
-@user_bp.route('/upload',methods=['POST'])
+@user_bp.route('/upload', methods=['POST'])
 @jwt_required()
 def upload_file():
     current_user_id = get_jwt_identity()
@@ -159,17 +159,21 @@ def upload_file():
         return 'No selected file', 400
 
     if file and allowed_file(file.filename):
-        # Save the file to the desired location
-        filename = secure_filename(file.filename)
-        upload_folder = current_app.config['UPLOAD_FOLDER']
-        file.save(os.path.join(upload_folder, filename))
-        
-        # Update the profile_img_filename for the user
-        user = User.query.get(current_user_id)  # Assuming you have access to current_user_id
-        user.profile_img = filename
+        # Upload the image to Cloudinary
+        result = cloudinary.uploader.upload(file)
+
+        # Get the URL of the uploaded image
+        image_url = result.get('secure_url')
+
+        # Update the profile_img field for the user
+        user = User.query.get(current_user_id)
+
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+        user.profile_img = image_url
         db.session.commit()
 
-        return 'File uploaded successfully', 200
+        return jsonify({"message": "File uploaded successfully", "image_url": image_url}), 200
     else:
         return 'Invalid file format', 400
 
