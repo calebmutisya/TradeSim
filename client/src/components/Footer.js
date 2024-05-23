@@ -6,6 +6,7 @@ import footimg from '../assets/footerimg.png'
 import twitter from '../assets/twitter.svg'
 import insta from '../assets/insta.svg'
 import linkedin from '../assets/linkedin.svg'
+import github from '../assets/github.svg'
 
 export default function Footer() {
   return (
@@ -13,9 +14,9 @@ export default function Footer() {
         <div className='intouch'>
           <div>Get In Touch :</div>
           <div className='iconscont'>
-            <a><img src={twitter}/></a>
-            <a><img src={insta}/></a>
-            <a><img src={linkedin}/></a>
+            <a href='https://x.com/MutisyaCal59031' target="_blank"><img src={twitter}/></a>
+            <a href='https://github.com/calebmutisya/TradeSim' target="_blank"><img src={github}/></a>
+            <a href='https://www.linkedin.com/in/caleb-mutisya-302037290/' target="_blank"><img src={linkedin}/></a>
           </div>
         </div>
         <div className='footdet'>
