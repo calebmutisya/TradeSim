@@ -50,13 +50,13 @@ A user can:
 ## Technologies Used
  - React, Javascript
  - Flask,Python & SQLite
- - BeautifylSoup and Selenium were instrumental in scraping data.
+ - BeautifulSoup and Selenium were instrumental in scraping data.
  - HTML and CSS.
 
 ## Support and contact details
  - mutisyacalebmusau@gmail.com
  - +254741050611
- 
+
 ### License
 MIT License
 
