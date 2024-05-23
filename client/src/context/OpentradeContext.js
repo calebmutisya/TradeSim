@@ -207,9 +207,12 @@ export default function OpentradeProvider({children}) {
                 throw new Error('Failed to Close Trade');
             }
     
+            // Parse the current user capital as a number
+            const currentCapital = parseFloat(currentUser.capital);
+            const tradePNL = parseFloat(tradeData.pnl);
+
             // Calculate new capital by adding the trade's pnl to the current capital
-            const newCapital = currentUser.capital + tradeData.pnl;
-            // Update user's capital
+            const newCapital = currentCapital + tradePNL;
             await updateUserCapital(newCapital);
     
             // Construct closed trade data

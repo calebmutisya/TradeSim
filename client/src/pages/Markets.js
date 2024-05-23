@@ -236,41 +236,27 @@ export default function Markets() {
 
 
   // Inside the useEffect hook, automatically save PNL after it's calculated
+  
   useEffect(() => {
     const interval = setInterval(async () => {
-        // Check if there's an authenticated user
-        if (currentUser && opentrades.length > 0) {
-            // Save PNL for each trade after it's calculated
-            for (let i = 0; i < opentrades.length; i++) {
-                const trade = opentrades[i];
-                try {
-                    const currencyPairLowerCase = trade.currency_pair.toLowerCase();
-                    const response = await fetch(`/api/market-price/${currencyPairLowerCase}`);
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch market price');
-                    }
-                    const data = await response.json();
-                    const marketPrice = parseFloat(data.marketPrice);
-                    console.log('Market price for', currencyPairLowerCase, ':', marketPrice);
-                    await editOpentradeMp(trade.id, marketPrice);
-                    console.log('Trade market price edited successfully');
-                    await calculatePNL(trade);
-                } catch (error) {
-                    console.error('Error editing trade market price:', error);
-                }
-            }
+      if (currentUser && opentrades.length > 0) {
+        for (let i = 0; i < opentrades.length; i++) {
+          const trade = opentrades[i];
+          try {
+            const updatedTrade = await calculatePNL(trade);
+            await checkTakeProfitAndStopLoss(updatedTrade);
+          } catch (error) {
+            console.error('Error processing trade:', error);
+          }
         }
-    }, 15000); // Execute every minute (60000 milliseconds)
+      }
+    }, 15000);
 
-    // Cleanup function to clear the interval on component unmount or when opentrades changes
     return () => clearInterval(interval);
   }, [currentUser, opentrades]);
 
-
-  // Inside the calculatePNL function
   const calculatePNL = async (trade) => {
     try {
-      // Fetch the market price for the trade's currency pair
       const currencyPairLowerCase = trade.currency_pair.toLowerCase();
       const response = await fetch(`/api/market-price/${currencyPairLowerCase}`);
       if (!response.ok) {
@@ -279,38 +265,93 @@ export default function Markets() {
       const data = await response.json();
       const marketPrice = parseFloat(data.marketPrice);
 
-      // Calculate pnl based on the entry price and market price
+      if (isNaN(marketPrice)) {
+        throw new Error('Market price is NaN');
+      }
+
       const entryPrice = parseFloat(trade.ep);
+      const takeProfit = parseFloat(trade.tp);
+      const stopLoss = parseFloat(trade.sl);
       const position = trade.position;
       const lot = trade.lot * 100000;
       let pnl = 0;
 
       if (position === 'BUY') {
-        pnl = (marketPrice - entryPrice) * lot;
-      } else if (position === 'SELL') {
-        pnl = (entryPrice - marketPrice) * lot;
-      }
-      // Call editPnltrade to update PNL in the backend
-      await editPnltrade(trade.id, { pnl: pnl.toFixed(2) });
-      console.log('Trade PNL edited successfully');
-      
-      // Update the trade object with the new PNL
-      const updatedTrade = { ...trade, pnl: pnl.toFixed(2) };
-
-      // Update the opentrades state with the updated trade object
-      setOpentrades(prevOpentrades => prevOpentrades.map(prevTrade => {
-        if (prevTrade.id === trade.id) {
-          return updatedTrade;
+        if (marketPrice <= stopLoss) {
+          pnl = (stopLoss - entryPrice) * lot;
+        } else if (marketPrice >= takeProfit) {
+          pnl = (takeProfit - entryPrice) * lot;
         } else {
-          return prevTrade;
+          pnl = (marketPrice - entryPrice) * lot;
         }
-      }));
+      } else if (position === 'SELL') {
+        if (marketPrice >= stopLoss) {
+          pnl = (entryPrice - stopLoss) * lot;
+        } else if (marketPrice <= takeProfit) {
+          pnl = (entryPrice - takeProfit) * lot;
+        } else {
+          pnl = (entryPrice - marketPrice) * lot;
+        }
+      }
 
-      // Return the calculated PNL
-      return pnl.toFixed(2);
+      await editPnltrade(trade.id, { pnl: pnl.toFixed(2) });
+
+      const updatedTrade = { ...trade, pnl: pnl.toFixed(2), marketPrice: marketPrice };
+
+      setOpentrades(prevOpentrades =>
+        prevOpentrades.map(prevTrade =>
+          prevTrade.id === trade.id ? updatedTrade : prevTrade
+        )
+      );
+
+      return updatedTrade;
     } catch (error) {
       console.error('Error editing trade PNL:', error);
-      return ''; // Return an empty string or handle the error accordingly
+      return trade;
+    }
+  };
+
+  const checkTakeProfitAndStopLoss = async (trade) => {
+    try {
+      const marketPrice = parseFloat(trade.marketPrice);
+      console.log(`Checking trade ${trade.id}: Market Price: ${marketPrice}`);
+      const entryPrice = parseFloat(trade.ep);
+      const takeProfit = parseFloat(trade.tp);
+      const stopLoss = parseFloat(trade.sl);
+      const position = trade.position;
+      let shouldCloseTrade = false;
+      let closingPNL = 0;
+  
+      if (position === 'BUY') {
+        if (marketPrice >= takeProfit) {
+          console.log(`Closing BUY trade ${trade.id} at take profit: ${takeProfit}`);
+          closingPNL = (takeProfit - entryPrice) * trade.lot * 100000;
+          shouldCloseTrade = true;
+        } else if (marketPrice <= stopLoss) {
+          console.log(`Closing BUY trade ${trade.id} at stop loss: ${stopLoss}`);
+          closingPNL = (stopLoss - entryPrice) * trade.lot * 100000;
+          shouldCloseTrade = true;
+        }
+      } else if (position === 'SELL') {
+        if (marketPrice <= takeProfit) {
+          console.log(`Closing SELL trade ${trade.id} at take profit: ${takeProfit}`);
+          closingPNL = (entryPrice - takeProfit) * trade.lot * 100000;
+          shouldCloseTrade = true;
+        } else if (marketPrice >= stopLoss) {
+          console.log(`Closing SELL trade ${trade.id} at stop loss: ${stopLoss}`);
+          closingPNL = (entryPrice - stopLoss) * trade.lot * 100000;
+          shouldCloseTrade = true;
+        }
+      }
+  
+      if (shouldCloseTrade) {
+        console.log(`Trade ${trade.id} should be closed with PNL: ${closingPNL.toFixed(2)}`);
+        await editPnltrade(trade.id, { pnl: closingPNL.toFixed(2) });
+  
+        await deleteOpentrade(trade.id, trade);
+      }
+    } catch (error) {
+      console.error('Error checking take profit and stop loss:', error);
     }
   };
   
