@@ -40,8 +40,7 @@ nav{
     width: 250px;
     height: 100vh;
     background-color: rgb(0, 0, 0,0.9);
-    border: 1px solid white;
-    border-radius: 8px;
+    border: none;
 }
 .ulinks.visible {
     display: flex; /* Show the sidebar when 'visible' class is applied */
