@@ -1,0 +1,38 @@
+.guide{
+    padding-top: 36px;
+    width: 40vw;
+    min-width: 400px;
+    margin: auto;
+    margin-bottom: 50px;
+}
+.guide h2{
+    text-align: center;
+}
+.topic{
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding: 10px;
+    border-radius: 4px;
+}
+.topic:hover {
+    background-color: rgb(36, 36, 36);
+    cursor: pointer;
+}
+.videocont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.imagecont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.editimg{
+    width: 90%;
+}
+.p {
+    text-align: justify;
+}
+
