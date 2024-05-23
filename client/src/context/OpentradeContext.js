@@ -352,6 +352,7 @@ export default function OpentradeProvider({children}) {
 
     const contextData={
         opentrades,
+        setOpentrades,
         closedtrades,
         addOpentrade,
         editOpentradeMp,
