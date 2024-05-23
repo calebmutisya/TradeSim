@@ -74,6 +74,10 @@
     height: 400px;
     animation: bounceAnimation 0.5s infinite alternate;
 }
+.copy{
+    height: 14px;
+    cursor: pointer;
+}
 @keyframes bounceAnimation {
     0% {
         transform: translateY(10px); /* Start position */

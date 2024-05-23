@@ -7,6 +7,7 @@ import robot from '../assets/robot.svg'
 import cross from '../assets/cross.svg'
 import dots from '../assets/dots.svg'
 import coin from '../assets/coin.png'
+import copy from '../assets/copy.png'
 import TradingViewWidget from '../constants/TradingViewWidget';
 import Heatmap from '../constants/Heatmap';
 import Calendar from '../constants/Calendar';
@@ -94,6 +95,16 @@ export default function Markets() {
         const stopLoss = parseFloat(stopLossInput.value);
         const takeProfit = parseFloat(takeProfitInput.value);
         const marketPrice = parseFloat(marketData.marketPrice);
+
+        // Check if stopLoss and takeProfit are filled
+        if (isNaN(stopLoss) || isNaN(takeProfit)) {
+          Swal.fire({
+              icon: 'error',
+              title: 'Missing Values',
+              text: 'Both Stop Loss and Take Profit values must be filled.',
+          });
+          return;
+        }
 
         // Validate takeProfit and stopLoss based on the trade position
         if (position === 'BUY') {
@@ -354,6 +365,29 @@ export default function Markets() {
       console.error('Error checking take profit and stop loss:', error);
     }
   };
+
+  const handleCopyClick = () => {
+    if (marketData) {
+      navigator.clipboard.writeText(marketData.marketPrice)
+        .then(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Market price copied to clipboard',
+            timer: 1000, // Set the timer to automatically close the alert after 2 seconds
+            timerProgressBar: true, // Show a progress bar for the timer
+            showConfirmButton: false // Hide the "OK" button
+          });
+        })
+        .catch((error) => {
+          console.error('Error copying to clipboard: ', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to copy market price to clipboard'
+          });
+        });
+    }
+  }
   
   return (
     <div className='market'>
@@ -394,7 +428,7 @@ export default function Markets() {
         <div className='buynsell'>
           {marketData && (
             <p className="p9">
-              MARKET PRICE: {marketData.marketPrice}
+              MARKET PRICE: {marketData.marketPrice} <img className='copy' src={copy} onClick={handleCopyClick}/>
               <br/>
               <span className='refresh'>
                 Refreshes every 10 seconds<br/>
