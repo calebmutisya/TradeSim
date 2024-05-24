@@ -12,7 +12,7 @@ export default function OpentradeProvider({children}) {
     const { authToken, currentUser, updateUserCapital } = useContext(UserContext);
 
     const fetchUserOpentrades = useCallback(() => {
-        fetch('http://127.0.0.1:5000/opentrades/user', {
+        fetch('https://tradesimserver.onrender.com/opentrades/user', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${authToken}`
@@ -34,7 +34,7 @@ export default function OpentradeProvider({children}) {
 
     const fetchClosedTrades = useCallback(async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/closedtrades', {
+            const response = await fetch('https://tradesimserver.onrender.com/closedtrades', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${authToken}`
@@ -67,7 +67,7 @@ export default function OpentradeProvider({children}) {
 
 
     const addOpentrade = (opentradeData) => {
-        fetch('http://127.0.0.1:5000/opentrades', {
+        fetch('https://tradesimserver.onrender.com/opentrades', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ export default function OpentradeProvider({children}) {
     };
 
     const editOpentrade = (opentradeId, newData) => {
-        fetch(`http://127.0.0.1:5000/opentrades/${opentradeId}`, {
+        fetch(`https://tradesimserver.onrender.com/opentrades/${opentradeId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export default function OpentradeProvider({children}) {
     };
 
     const editOpentradeMp = (opentradeId, newMp) => {
-        fetch(`http://127.0.0.1:5000/opentrades/${opentradeId}/mp`, {
+        fetch(`https://tradesimserver.onrender.com/opentrades/${opentradeId}/mp`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -162,7 +162,7 @@ export default function OpentradeProvider({children}) {
     };
 
     const editPnltrade = (opentradeId, newData) => {
-        fetch(`http://127.0.0.1:5000/opentrades/${opentradeId}/pnl`, {
+        fetch(`https://tradesimserver.onrender.com/opentrades/${opentradeId}/pnl`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -196,7 +196,7 @@ export default function OpentradeProvider({children}) {
 
     const deleteOpentrade = async (tradeId, tradeData) => {
         try {
-            const response = await fetch(`http://127.0.0.1:5000/opentrades/${tradeId}`, {
+            const response = await fetch(`https://tradesimserver.onrender.com/opentrades/${tradeId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${authToken}`
@@ -255,7 +255,7 @@ export default function OpentradeProvider({children}) {
 
     // Function to add a closed trade
     const addClosedTrade = (closedTradeData) => {
-        fetch('http://127.0.0.1:5000/closedtrades', {
+        fetch('https://tradesimserver.onrender.com/closedtrades', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -289,7 +289,7 @@ export default function OpentradeProvider({children}) {
     };
 
     const deleteAllUserOpentrades = useCallback(() => {
-    fetch('http://127.0.0.1:5000/opentrades/user', {
+    fetch('https://tradesimserver.onrender.com/opentrades/user', {
         method: 'DELETE',
         headers: {
             Authorization: `Bearer ${authToken}`,
@@ -324,7 +324,7 @@ export default function OpentradeProvider({children}) {
     }, [authToken, fetchUserOpentrades]);
 
     const deleteAllUserClosedTrades = useCallback(() => {
-        fetch('http://127.0.0.1:5000/closedtrades/user', {
+        fetch('https://tradesimserver.onrender.com/closedtrades/user', {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${authToken}`,

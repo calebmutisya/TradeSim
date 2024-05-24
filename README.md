@@ -41,7 +41,7 @@ A user can:
 
  ## Live server
  - You can view the web live on [Frontend](https://leafy-otter-831027.netlify.app/)
- - You can view the backend routes on [Backend](https://opentableweb.onrender.com)
+ - You can view the backend routes on [Backend](https://tradesimserver.onrender.com)
 
  ## Limitations.
  - The application faces the issue of incorrect market prices being scraped from the source website(dailyfx.com). Instead of the last quoted price the daily high or low may be scraped instead.

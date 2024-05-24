@@ -14,7 +14,7 @@ export default function UserProvider({children})
 
     // Function to add a new user
     function addUser(username, email, password) {
-        fetch('http://127.0.0.1:5000/addusers', {
+        fetch('https://tradesimserver.onrender.com/addusers', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export default function UserProvider({children})
 
     // Function to log in a user
     function login(username, password) {
-        fetch('http://127.0.0.1:5000/login', {
+        fetch('https://tradesimserver.onrender.com/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ export default function UserProvider({children})
 
     // Function to log out a user
     function logout() {
-        fetch('http://127.0.0.1:5000/logout', {
+        fetch('https://tradesimserver.onrender.com/logout', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${authToken}`
@@ -169,7 +169,7 @@ export default function UserProvider({children})
 
     // Function to fetch a single user's data
     function fetchUser() {
-        fetch('http://127.0.0.1:5000/singleuser', {
+        fetch('https://tradesimserver.onrender.com/singleuser', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${authToken}`
@@ -191,7 +191,7 @@ export default function UserProvider({children})
     }
 
     function fetchAllUsers(){
-        fetch('http://127.0.0.1:5000/users', {
+        fetch('https://tradesimserver.onrender.com/users', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${authToken}`
@@ -214,7 +214,7 @@ export default function UserProvider({children})
 
     // Function to update user's capital
     function updateUserCapital(newCapital) {
-        fetch('http://127.0.0.1:5000/users/capital', {
+        fetch('https://tradesimserver.onrender.com/users/capital', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -260,7 +260,7 @@ export default function UserProvider({children})
 
     // Function to update user details
     function updateUser(data) {
-        fetch('http://127.0.0.1:5000/users', {
+        fetch('https://tradesimserver.onrender.com/users', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
