@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
 from models import db,User,Opentrades,Closedtrades
-
+from dotenv import load_dotenv
 from views import *
 from flask_jwt_extended import JWTManager
 
@@ -15,10 +15,16 @@ import cloudinary.uploader
 import cloudinary.api
 import psycopg2
 
+load_dotenv()
+
 app = Flask(__name__)
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
 # Update the database URI to use PostgreSQL
-app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://avnadmin:AVNS_2gkbkUa2LzKS3uCz9X6@pg-32d7ed7-tradesim.c.aivencloud.com:26085/defaultdb?sslmode=require'
+database_url = os.getenv('DATABASE_URL')
+if database_url and database_url.startswith('postgres://'):
+    database_url = database_url.replace('postgres://', 'postgresql://', 1)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 
 CORS(app)
 
@@ -29,7 +35,7 @@ migrate = Migrate(app, db)
 cloudinary.config(
   cloud_name = 'dxi0bnriw',
   api_key = '496475473161481',
-  api_secret = 'I2rO8XBiXAlYLnliHXSIXYdjwSI'
+  api_secret=os.getenv('CLOUDINARY_API_SECRET')
 )
 
 jwt = JWTManager()
