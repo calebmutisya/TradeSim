@@ -33,18 +33,18 @@ migrate = Migrate(app, db)
 
 # Set your Cloudinary credentials
 cloudinary.config(
-  cloud_name = 'dxi0bnriw',
-  api_key = '496475473161481',
+  cloud_name = os.getenv('CLOUDINARY_CLOUD_NAME'),
+  api_key = os.getenv('CLOUDINARY_API_KEY'),
   api_secret=os.getenv('CLOUDINARY_API_SECRET')
 )
 
 jwt = JWTManager()
-app.config["JWT_SECRET_KEY"] = "fjhjdjhfiskyfvdgvydklvsrfl"
+app.config["JWT_SECRET_KEY"] = os.getenv('JWT_SECRET_KEY')
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt.init_app(app)
 
 # Set secret key for Flask-WTF
-app.config['SECRET_KEY'] = '1396f8e2aa42a3ad4142ef2617691495'
+app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY')
 
 
 app.register_blueprint(auth_bp)
