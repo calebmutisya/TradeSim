@@ -1,5 +1,6 @@
 from flask import request, jsonify, Blueprint
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -7,6 +8,8 @@ from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 import logging
 import atexit
+import os
+import selenium.common.exceptions
 
 # Initialize the Flask blueprint
 mkt_bp = Blueprint('mkt_bp', __name__)
@@ -17,6 +20,7 @@ chrome_options.add_argument("--headless")  # Run Chrome in headless mode
 chrome_options.add_argument("--disable-gpu")  # Disable GPU usage to save resources
 chrome_options.add_argument("--no-sandbox")  # Disable sandbox for better performance
 chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+chrome_options.add_argument("--remote-debugging-port=9222")  # Enable remote debugging
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -32,7 +36,9 @@ def get_driver():
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    return webdriver.Chrome(options=options)
+    options.add_argument("--remote-debugging-port=9222")
+    chrome_service = Service(os.getenv('CHROMEDRIVER_PATH', '/usr/local/bin/chromedriver'))  # Default path for Render
+    return webdriver.Chrome(service=chrome_service, options=options)
 
 @mkt_bp.route('/api/market-price/<currency_pair>', methods=['GET'])
 def get_market_price(currency_pair):
