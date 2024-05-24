@@ -17,21 +17,32 @@ chrome_options.add_argument("--headless")  # Run Chrome in headless mode
 chrome_options.add_argument("--disable-gpu")  # Disable GPU usage to save resources
 chrome_options.add_argument("--no-sandbox")  # Disable sandbox for better performance
 chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
-chrome_options.add_argument("--remote-debugging-port=9222")  # Remote debugging port
-
-# Initialize WebDriver once
-driver = webdriver.Chrome(options=chrome_options)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Initialize WebDriver dictionary to store instances
+drivers = {}
+
+def get_driver():
+    """Get or create a WebDriver instance."""
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    return webdriver.Chrome(options=options)
+
 @mkt_bp.route('/api/market-price/<currency_pair>', methods=['GET'])
 def get_market_price(currency_pair):
     url = f"https://www.dailyfx.com/{currency_pair.lower()}"
 
+    if currency_pair not in drivers:
+        drivers[currency_pair] = get_driver()
+    driver = drivers[currency_pair]
+
     try:
-        # Fetch the URL
         driver.get(url)
 
         # Wait for the specific div element to appear
@@ -45,7 +56,7 @@ def get_market_price(currency_pair):
         div_element = soup.find("div", class_="dfx-singleInstrument__price", attrs={"data-type": "bid"})
 
         # Extract the market price
-        if (div_element):
+        if div_element:
             market_price = div_element.get("data-value")
             logger.info(f"Market price for {currency_pair} fetched successfully: {market_price}")
             return jsonify({'marketPrice': market_price})
@@ -54,12 +65,17 @@ def get_market_price(currency_pair):
             return jsonify({'error': 'Market price not found'})
     except Exception as e:
         logger.exception(f"Error fetching market price for {currency_pair}: {str(e)}")
+        # Reinitialize the WebDriver session if it's invalid
+        if isinstance(e, selenium.common.exceptions.InvalidSessionIdException):
+            drivers[currency_pair].quit()
+            drivers[currency_pair] = get_driver()
         return jsonify({'error': str(e)})
 
-# Cleanup function to quit WebDriver instance
+# Cleanup function to quit all WebDriver instances
 def cleanup():
-    driver.quit()
-    logger.info("WebDriver instance has been closed")
+    for driver in drivers.values():
+        driver.quit()
+    logger.info("All WebDriver instances have been closed")
 
 # Register cleanup function to be executed when the server shuts down
 atexit.register(cleanup)
