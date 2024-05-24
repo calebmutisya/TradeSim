@@ -30,7 +30,7 @@ export default function Analysis() {
   useEffect(() => {
     const fetchTrades = async (userId) => {
       try {
-        const response = await axios.get(`/closedtrades/${userId}`);
+        const response = await axios.get(`http://127.0.0.1:5000/closedtrades/${userId}`);
         return Array.isArray(response.data) ? response.data : [];
       } catch (error) {
         console.error(`Error fetching trades for user ${userId}:`, error);

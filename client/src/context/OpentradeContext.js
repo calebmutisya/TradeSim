@@ -12,7 +12,7 @@ export default function OpentradeProvider({children}) {
     const { authToken, currentUser, updateUserCapital } = useContext(UserContext);
 
     const fetchUserOpentrades = useCallback(() => {
-        fetch('/opentrades/user', {
+        fetch('http://127.0.0.1:5000/opentrades/user', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${authToken}`
@@ -34,7 +34,7 @@ export default function OpentradeProvider({children}) {
 
     const fetchClosedTrades = useCallback(async () => {
         try {
-            const response = await fetch('/closedtrades', {
+            const response = await fetch('http://127.0.0.1:5000/closedtrades', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${authToken}`
@@ -67,7 +67,7 @@ export default function OpentradeProvider({children}) {
 
 
     const addOpentrade = (opentradeData) => {
-        fetch('/opentrades', {
+        fetch('http://127.0.0.1:5000/opentrades', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ export default function OpentradeProvider({children}) {
     };
 
     const editOpentrade = (opentradeId, newData) => {
-        fetch(`/opentrades/${opentradeId}`, {
+        fetch(`http://127.0.0.1:5000/opentrades/${opentradeId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export default function OpentradeProvider({children}) {
     };
 
     const editOpentradeMp = (opentradeId, newMp) => {
-        fetch(`/opentrades/${opentradeId}/mp`, {
+        fetch(`http://127.0.0.1:5000/opentrades/${opentradeId}/mp`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -162,7 +162,7 @@ export default function OpentradeProvider({children}) {
     };
 
     const editPnltrade = (opentradeId, newData) => {
-        fetch(`/opentrades/${opentradeId}/pnl`, {
+        fetch(`http://127.0.0.1:5000/opentrades/${opentradeId}/pnl`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -196,7 +196,7 @@ export default function OpentradeProvider({children}) {
 
     const deleteOpentrade = async (tradeId, tradeData) => {
         try {
-            const response = await fetch(`/opentrades/${tradeId}`, {
+            const response = await fetch(`http://127.0.0.1:5000/opentrades/${tradeId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${authToken}`
@@ -255,7 +255,7 @@ export default function OpentradeProvider({children}) {
 
     // Function to add a closed trade
     const addClosedTrade = (closedTradeData) => {
-        fetch('/closedtrades', {
+        fetch('http://127.0.0.1:5000/closedtrades', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -289,7 +289,7 @@ export default function OpentradeProvider({children}) {
     };
 
     const deleteAllUserOpentrades = useCallback(() => {
-    fetch('/opentrades/user', {
+    fetch('http://127.0.0.1:5000/opentrades/user', {
         method: 'DELETE',
         headers: {
             Authorization: `Bearer ${authToken}`,
@@ -324,7 +324,7 @@ export default function OpentradeProvider({children}) {
     }, [authToken, fetchUserOpentrades]);
 
     const deleteAllUserClosedTrades = useCallback(() => {
-        fetch('/closedtrades/user', {
+        fetch('http://127.0.0.1:5000/closedtrades/user', {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${authToken}`,

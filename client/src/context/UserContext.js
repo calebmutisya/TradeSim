@@ -14,7 +14,7 @@ export default function UserProvider({children})
 
     // Function to add a new user
     function addUser(username, email, password) {
-        fetch('/addusers', {
+        fetch('http://127.0.0.1:5000/addusers', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export default function UserProvider({children})
 
     // Function to log in a user
     function login(username, password) {
-        fetch('/login', {
+        fetch('http://127.0.0.1:5000/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ export default function UserProvider({children})
 
     // Function to log out a user
     function logout() {
-        fetch('/logout', {
+        fetch('http://127.0.0.1:5000/logout', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${authToken}`
@@ -169,7 +169,7 @@ export default function UserProvider({children})
 
     // Function to fetch a single user's data
     function fetchUser() {
-        fetch('/singleuser', {
+        fetch('http://127.0.0.1:5000/singleuser', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${authToken}`
@@ -191,7 +191,7 @@ export default function UserProvider({children})
     }
 
     function fetchAllUsers(){
-        fetch('/users', {
+        fetch('http://127.0.0.1:5000/users', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${authToken}`
@@ -214,7 +214,7 @@ export default function UserProvider({children})
 
     // Function to update user's capital
     function updateUserCapital(newCapital) {
-        fetch('/users/capital', {
+        fetch('http://127.0.0.1:5000/users/capital', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -260,7 +260,7 @@ export default function UserProvider({children})
 
     // Function to update user details
     function updateUser(data) {
-        fetch('/users', {
+        fetch('http://127.0.0.1:5000/users', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

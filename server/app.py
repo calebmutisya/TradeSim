@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_cors import CORS
 from models import db,User,Opentrades,Closedtrades
 
 from views import *
@@ -12,10 +13,15 @@ import os
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import psycopg2
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
-app.config['UPLOAD_FOLDER'] = './imguploads'
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
+# Update the database URI to use PostgreSQL
+app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://avnadmin:AVNS_2gkbkUa2LzKS3uCz9X6@pg-32d7ed7-tradesim.c.aivencloud.com:26085/defaultdb?sslmode=require'
+
+CORS(app)
+
 db.init_app(app)
 migrate = Migrate(app, db)
 
@@ -49,6 +55,26 @@ def token_in_blocklist_callback(jwt_header, jwt_data):
         return token 
     else:
         return None
+
+# Example route to check database version
+@app.route('/db_version')
+def get_db_version():
+    try:
+        # Connect to PostgreSQL
+        conn = psycopg2.connect(app.config["SQLALCHEMY_DATABASE_URI"])
+        cur = conn.cursor()
+        
+        # Execute query
+        cur.execute('SELECT VERSION()')
+        version = cur.fetchone()[0]
+        
+        # Close connection
+        cur.close()
+        conn.close()
+        
+        return jsonify({"db_version": version})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

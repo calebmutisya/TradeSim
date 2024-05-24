@@ -45,7 +45,7 @@ export default function Markets() {
   
   const fetchMarketPrice = async (currencyPair) => {
     try {
-      const response = await axios.get(`/api/market-price/${currencyPair}`);
+      const response = await axios.get(`http://127.0.0.1:5000/api/market-price/${currencyPair}`);
       setMarketData(response.data);
     } catch (error) {
       console.error('Error fetching market price:', error);
@@ -57,7 +57,7 @@ export default function Markets() {
     const fetchMarketPriceAndUpdate = async () => {
       if (selectedSymbol && apiSymbol) {
         try {
-          const response = await axios.get(`/api/market-price/${apiSymbol}`);
+          const response = await axios.get(`http://127.0.0.1:5000/api/market-price/${apiSymbol}`);
           setMarketData(response.data);
         } catch (error) {
           console.error('Error fetching market price:', error);
@@ -162,7 +162,7 @@ export default function Markets() {
             body: JSON.stringify(opentradeData),
         };
 
-        fetch('/opentrades', requestOptions)
+        fetch('http://127.0.0.1:5000/opentrades', requestOptions)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to add opentrade');
@@ -269,7 +269,7 @@ export default function Markets() {
   const calculatePNL = async (trade) => {
     try {
       const currencyPairLowerCase = trade.currency_pair.toLowerCase();
-      const response = await fetch(`/api/market-price/${currencyPairLowerCase}`);
+      const response = await fetch(`http://127.0.0.1:5000/api/market-price/${currencyPairLowerCase}`);
       if (!response.ok) {
         throw new Error('Failed to fetch market price');
       }
