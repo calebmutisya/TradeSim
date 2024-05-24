@@ -17,12 +17,10 @@ chrome_options.add_argument("--headless")  # Run Chrome in headless mode
 chrome_options.add_argument("--disable-gpu")  # Disable GPU usage to save resources
 chrome_options.add_argument("--no-sandbox")  # Disable sandbox for better performance
 chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+chrome_options.add_argument("--remote-debugging-port=9222")  # Remote debugging port
 
-# Initialize WebDriver outside of route handler function
+# Initialize WebDriver once
 driver = webdriver.Chrome(options=chrome_options)
-
-# Dictionary to store WebDriver instances for different currency pairs
-drivers = {}
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -33,12 +31,7 @@ def get_market_price(currency_pair):
     url = f"https://www.dailyfx.com/{currency_pair.lower()}"
 
     try:
-        # Reuse existing WebDriver instance if available
-        if currency_pair not in drivers:
-            drivers[currency_pair] = webdriver.Chrome(options=chrome_options)
-        
         # Fetch the URL
-        driver = drivers[currency_pair]
         driver.get(url)
 
         # Wait for the specific div element to appear
@@ -52,7 +45,7 @@ def get_market_price(currency_pair):
         div_element = soup.find("div", class_="dfx-singleInstrument__price", attrs={"data-type": "bid"})
 
         # Extract the market price
-        if div_element:
+        if (div_element):
             market_price = div_element.get("data-value")
             logger.info(f"Market price for {currency_pair} fetched successfully: {market_price}")
             return jsonify({'marketPrice': market_price})
@@ -63,11 +56,10 @@ def get_market_price(currency_pair):
         logger.exception(f"Error fetching market price for {currency_pair}: {str(e)}")
         return jsonify({'error': str(e)})
 
-# Cleanup function to quit all WebDriver instances
+# Cleanup function to quit WebDriver instance
 def cleanup():
-    for driver in drivers.values():
-        driver.quit()
-    logger.info("All WebDriver instances have been closed")
+    driver.quit()
+    logger.info("WebDriver instance has been closed")
 
 # Register cleanup function to be executed when the server shuts down
 atexit.register(cleanup)
