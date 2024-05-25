@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: my-service
-    env: python
-    plan: free
-    buildCommand: |
-      pip install -r requirements.txt
-      ./install_chrome.sh
-    startCommand: gunicorn marketprice:app

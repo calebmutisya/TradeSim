@@ -68,10 +68,10 @@ export default function Markets() {
     // Call the fetchMarketPriceAndUpdate function immediately
     fetchMarketPriceAndUpdate();
 
-    // Setup interval to fetch market price every 30 seconds if a symbol is selected
+    // Setup interval to fetch market price every 60 seconds if a symbol is selected
     const intervalId = setInterval(() => {
       fetchMarketPriceAndUpdate();
-    }, 15000);
+    }, 60000);
 
     // Clean up the interval when the component unmounts or when a new symbol is selected
     return () => clearInterval(intervalId);
