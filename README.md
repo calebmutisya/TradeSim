@@ -44,13 +44,12 @@ A user can:
  - You can view the backend routes on [Backend](https://tradesimserver.onrender.com)
 
  ## Limitations.
- - The application faces the issue of incorrect market prices being scraped from the source website(dailyfx.com). Instead of the last quoted price the daily high or low may be scraped instead.
- - The use of web scraping rather than using a restful api was to enable more features and also avoid limitations on requests imposed by api's which would have been costly to pay for.
+ - The application uses an api to fetch live market prices which is limited to 200 requests per day.
 
 ## Technologies Used
  - React, Javascript
  - Flask,Python & SQLite
- - BeautifulSoup and Selenium were instrumental in scraping data.
+ - Rapid Api: Forex.APISED
  - HTML and CSS.
 
 ## Support and contact details
