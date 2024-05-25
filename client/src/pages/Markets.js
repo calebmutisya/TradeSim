@@ -431,8 +431,8 @@ export default function Markets() {
               MARKET PRICE: {marketData.marketPrice} <img className='copy' src={copy} onClick={handleCopyClick}/>
               <br/>
               <span className='refresh'>
-                Refreshes every 10 seconds<br/>
-                Error may occcur due to scraping source.
+                Refreshes every 1 minute<br/>
+                Api limited to 200 requests daily.
               </span>
             </p>
           )}
