@@ -97,11 +97,11 @@ export default function Markets() {
         const marketPrice = parseFloat(marketData.marketPrice);
 
         // Check if stopLoss and takeProfit are filled
-        if (isNaN(stopLoss) || isNaN(takeProfit)) {
+        if (isNaN(stopLoss) || isNaN(takeProfit) || isNaN(marketPrice) || isNaN(lot)) {
           Swal.fire({
               icon: 'error',
               title: 'Missing Values',
-              text: 'Both Stop Loss and Take Profit values must be filled.',
+              text: 'Please ensure all values are valid numbers.',
           });
           return;
         }
@@ -144,13 +144,15 @@ export default function Markets() {
         }
 
         const opentradeData = {
-            currency_pair: apiSymbol.toUpperCase(),
-            position,
-            tp: takeProfit,
-            ep: marketPrice,
-            sl: stopLoss,
-            lot,
+          currency_pair: apiSymbol.toUpperCase(),
+          position,
+          tp: takeProfit.toFixed(5),
+          ep: marketPrice.toFixed(5),
+          sl: stopLoss.toFixed(5),
+          lot,
         };
+
+        console.log('Sending opentradeData:', opentradeData); 
 
         // Include JWT token in the request headers
         const requestOptions = {
@@ -261,7 +263,7 @@ export default function Markets() {
           }
         }
       }
-    }, 15000);
+    }, 60000);
 
     return () => clearInterval(interval);
   }, [currentUser, opentrades]);
@@ -443,11 +445,11 @@ export default function Markets() {
           </div>
           <div className=' mpstoploss'>
             <div className='mplabel'>StopLoss</div>
-            <div className='numslot'><input className='stoploss-input' type='number' min={0}/></div>
+            <div className='numslot'><input className='stoploss-input' type='number' min={0} step={0.00001}/></div>
           </div>
           <div className='mpstoploss'>
             <div className='mplabel'>Take Profit</div>
-            <div className='numslot'><input className='takeprofit-input' type='number' min={0}/></div>
+            <div className='numslot'><input className='takeprofit-input' type='number' min={0} step={0.00001}/></div>
           </div>
           <hr/>
           <div>
