@@ -13,7 +13,7 @@ class User(db.Model):
     username= db.Column(db.String(80),nullable=False ,unique=True)
     email= db.Column(db.String(120),nullable=False ,unique=True)
     password = db.Column(db.String, nullable=False)
-    capital=db.Column(db.Integer, default=10000)
+    capital=db.Column(db.Float, default=10000)
     firstname= db.Column(db.String(64), nullable=True)
     lastname= db.Column(db.String(64), nullable=True)
     profile_img= db.Column(db.String(255), nullable=True)
