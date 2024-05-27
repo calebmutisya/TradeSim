@@ -40,7 +40,7 @@ A user can:
  - Access a forex economic calendar.
 
  ## Live server
- - You can view the web live on [Frontend](https://6651c78aeb7d051a4b5fb9c6--singular-hamster-fa1a52.netlify.app/)
+ - You can view the web live on [Frontend](https://cute-bonbon-386cc0.netlify.app/)
  - You can view the backend routes on [Backend](https://tradesimserver.onrender.com)
 
  ## Limitations.
